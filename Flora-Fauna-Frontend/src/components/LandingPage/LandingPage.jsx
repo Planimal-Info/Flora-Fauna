@@ -1,12 +1,18 @@
-import * as React from "react"
+import { useState } from "react"
 import "./LandingPage.css"
 
 export default function LandingPage() {
-  return (
+   const [searchInput, setSearchInput] = useState("");
+   function handleOnChange(e){
+      setSearchInput(e.target.value);
+   }    
+
+ console.log(searchInput)
+   return (
     <div className="landing-page">
         <div className="content">
-           <h1>Landing Page</h1>
-        </div>
-    </div>
-  )
+            <input className="landing-page-input" value={searchInput} type="text" placeholder="Search" onChange={e => handleOnChange(e)}></input>
+      </div>
+   </div>
+)
 }

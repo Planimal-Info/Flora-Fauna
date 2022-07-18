@@ -1,5 +1,6 @@
 .login-page {
     display: flex;
+    justify-content: center;
 }
 
 .login-form {

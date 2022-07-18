@@ -16,7 +16,7 @@ export default function RegistrationPage() {
 export function RegistrationForm() {
   
   let navigate = useNavigate()
-  const [isProcessing, setIsProcessing] = useState()
+  const [isProcessing, setIsProcessing] = useState(false)
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email:  "",
@@ -35,6 +35,21 @@ export function RegistrationForm() {
     
   }
 
+  ///////// SIGN UP FUNCTION (incomplete: waiting for api client)
+  const signupUser = () => {
+    setIsProcessing(true)
+    setErrors(validation(values))
+
+    if (values.passwordConfirm !== values.password) {
+      setErrors(validation(values.passwordConfirm))
+      setIsProcessing(false)
+      return
+    } else {
+      setErrors((e) => ({...e, passwordConfirm: null}))
+    }
+  }
+  ////////////////////////
+
   return (
     <div className="registration-form">
       <div className="card">
@@ -49,7 +64,7 @@ export function RegistrationForm() {
               placeholder="Enter a valid email" 
               value={values.email}
               onChange={handleChange} />
-              {/* {errors.email && <span className="error">{errors.email}</span>} */}
+              {errors.email && <span className="error">{errors.email}</span>}
           </div>
           <div className="input-field">
             <label htmlFor="username">Username</label>
@@ -60,7 +75,7 @@ export function RegistrationForm() {
               placeholder="your username" 
               value={values.username}
               onChange={handleChange} />
-              {/* {errors.username && <span className="error">{errors.username}</span>} */}
+              {errors.username && <span className="error">{errors.username}</span>}
           </div>
           <div className="split-input-field">
             <div className="input-field">
@@ -72,7 +87,7 @@ export function RegistrationForm() {
                 placeholder="First Name" 
                 value={values.firstName}
                 onChange={handleChange} />
-                {/* {errors.firstName && <span className="error">{errors.firstName}</span>} */}
+                {errors.firstName && <span className="error">{errors.firstName}</span>}
             </div>
             <div className="input-field">
               <label htmlFor="last-name">Last Name</label>
@@ -83,7 +98,7 @@ export function RegistrationForm() {
                 placeholder="Last Name" 
                 value={values.lastName}
                 onChange={handleChange} />
-                {/* {errors.lastName && <span className="error">{errors.lastName}</span>} */}
+                {errors.lastName && <span className="error">{errors.lastName}</span>}
             </div>
           </div>
           <div className="input-field">
@@ -95,7 +110,7 @@ export function RegistrationForm() {
               placeholder="Enter a secure password" 
               value={values.password}
               onChange={handleChange} />
-              {/* {errors.password && <span className="error">{errors.password}</span>} */}
+              {errors.password && <span className="error">{errors.password}</span>}
           </div>
           <div className="input-field">
             <label htmlFor="passwordConfirm">Confirm Password</label>
@@ -106,9 +121,9 @@ export function RegistrationForm() {
               placeholder="Confirm your password" 
               value={values.passwordConfirm}
               onChange={handleChange} />
-              {/* {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>} */}
+              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
           </div>
-          <button className="submit-registration btn">Create Account</button>
+          <button className="submit-registration btn" onClick={signupUser}>Create Account</button>
           {/* {onClick={signupUser}} */}
         </div>
         <div className="footer">

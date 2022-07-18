@@ -15,59 +15,72 @@ export default function LoginPage({ user, setUser }) {
 
 export function LoginForm({ user, setUser }) {
 
-    let navigate = useNavigate()
+  let navigate = useNavigate()
 
-    const [isProcessing, setIsProcessing] = useState(false)
-    const [errors, setErrors] = useState({});
-    const [values, setValues] = useState({
-        email:  "",
-        password: "",
-    });
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
+      email:  "",
+      password: "",
+  });
 
-      const handleChange = (e) => {
-        setValues({
-          ...values,
-          [e.target.name]: e.target.value,
-        })
-      }
+    const handleChange = (e) => {
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+      })
+    }
 
-    return(
-        <div className="login-form">
-            <div className="card">
-                <h2>Login</h2>
-                <div className="form">
-                    <div className="input-field">
-                        <label htmlFor="email">Email</label>
-                        <input className="form-input"
-                               type="email" 
-                               name="email" 
-                               placeholder="user@email.com"
-                               autoComplete="off"
-                               onChange={handleChange}
-                               value={values.email}
-                               required
-                               />
-                               {/* {errors.email && <span className="error">{errors.email}</span>} */}
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="email">Password</label>
-                        <input className="form-input" 
-                               type="password" 
-                               name="password" 
-                               placeholder="•••••••"
-                               onChange={handleChange}
-                               value={values.password}
-                               required
-                               />
-                               {/* {errors.password && <span className="error">{errors.password}</span>} */}
-                    </div>
-                    <button className="submit-login btn">Login</button>
-                    {/* {onClick={loginUser}} */}
-                </div>
-                <div className="footer">
-                    <p>Don't have an account? Sign up <Link className="auth-link" to='/registration'>here.</Link></p>
-                </div>
-            </div>
-        </div>
-    )
+    const loginUser = () => {
+    setIsProcessing(true)
+    setErrors(validation(values))
+
+    // if (values.passwordConfirm !== values.password) {
+    //   setErrors(validation(values.passwordConfirm))
+    //   setIsProcessing(false)
+    //   return
+    // } else {
+    //   setErrors((e) => ({...e, passwordConfirm: null}))
+    // }
+  }
+
+  return(
+      <div className="login-form">
+          <div className="card">
+              <h2>Login</h2>
+              <div className="form">
+                  <div className="input-field">
+                      <label htmlFor="email">Email</label>
+                      <input className="form-input"
+                              type="email" 
+                              name="email" 
+                              placeholder="user@email.com"
+                              autoComplete="off"
+                              onChange={handleChange}
+                              value={values.email}
+                              required
+                              />
+                              {errors.email && <span className="error">{errors.email}</span>}
+                  </div>
+                  <div className="input-field">
+                      <label htmlFor="email">Password</label>
+                      <input className="form-input" 
+                              type="password" 
+                              name="password" 
+                              placeholder="•••••••"
+                              onChange={handleChange}
+                              value={values.password}
+                              required
+                              />
+                              {errors.password && <span className="error">{errors.password}</span>}
+                  </div>
+                  <button className="submit-login btn" onClick={loginUser}>Login</button>
+                  {/* {onClick={loginUser}} */}
+              </div>
+              <div className="footer">
+                  <p>Don't have an account? Sign up <Link className="auth-link" to='/registration'>here.</Link></p>
+              </div>
+          </div>
+      </div>
+  )
 }

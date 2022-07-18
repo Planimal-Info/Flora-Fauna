@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as constants from "../constants.js"
 
 class ApiClient {
    constructor(remoteHostUrl){
@@ -56,3 +57,5 @@ class ApiClient {
       return await this.request({ endpoint: "auth/me", method: "GET" });
    }
 }
+
+return new ApiClient(constants.API_BASE_URL)

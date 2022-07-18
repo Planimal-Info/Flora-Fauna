@@ -8,7 +8,6 @@ class ApiClient {
       this.tokenName = "ff_token"
    }
 
-
    //sets the token
    setToken(token){
       this.token = token;

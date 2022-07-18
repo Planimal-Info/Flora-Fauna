@@ -8,14 +8,25 @@ import Navbar from '../Navbar/Navbar'
 import NotFound from '../NotFound/NotFound'
 import RegistrationPage from '../RegistrationPage/RegistrationPage'
 import './App.css'
+import { AuthContextProvider } from "../../contexts/auth.jsx";     
 
-export default function App() {
+
+
+export default function AppContainer() {
+   return (
+      <AuthContextProvider>
+         <App/>
+      </AuthContextProvider>
+   )
+}
+
+function App() {
 
   const [user, setUser] = useState({})
   const [error, setError] = useState(null)
   const [isFetching, setIsFetching] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+   
   return (
     <div className="App">
       <BrowserRouter>

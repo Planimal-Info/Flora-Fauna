@@ -18,6 +18,7 @@ class ApiClient {
    removeToken(){
       this.token = null;
       localStorage.removeItem(this.tokenName);
+      return;
    }
 
    //Issues axios requests
@@ -57,4 +58,4 @@ class ApiClient {
    }
 }
 
-return new ApiClient(constants.API_BASE_URL)
+export default new ApiClient(constants.API_BASE_URL);

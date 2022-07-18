@@ -3,7 +3,7 @@ import ApiClient from "../services/ApiClient.js";
 
 const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
    const [user, setUser] = useState({});
    const [isLoading, setIsLoading]  = useState(false);
    const [initialized, setInitial] = useState(false);
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
    
    //sends request to get user and stores response.
    setIsLoading(true);
-   setInital(false);
+   setInitial(false);
    try{
       const req = ApiClient.fetchUserFromToken();
       setUser(req.data);
@@ -34,22 +34,22 @@ export const AuthProvider = ({ children }) => {
 
 
    //function to login user
-   async loginUser(data){
+   const loginUser = (data) => {
       
    }
 
    //function to register user
-   async registerUser(data){
+   const registerUser = (data) => {
 
    }
 
    //function to log out user, removes token from storage
-   async logoutUser(){
+   const logoutUser = () => {
       ApiClient.removeToken();
       return;
    }
    
-   const authValue = {user, setUser, loading, IsLoading, initialized, setInitial, error, loginUser, registerUser, logoutUser };
+   const authValue = {user, setUser, isLoading, setIsLoading, initialized, setInitial, error, loginUser, registerUser, logoutUser };
    
    return(
       <AuthContext.Provider value={authValue}>
@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }) => {
    )
 }
 
+//Allows children components to use the context
 export const useAuthContext = () => useContext(useAuthContext);
 
 

@@ -25,7 +25,7 @@ export function NavLinks({isLoading}) {
                       <li><Link to='/'>search</Link></li>
                       <li><Link to='/'>resources</Link></li>
                       <li><Link to='/'>contact us</Link></li>
-                      {/* <li><span>Text</span></li> */}
+                      {/* <li><span>user's username or email</span></li> */}
                     </ul>
                     <div className="login-register">
                       <div className="login-btn"><Link to='/login'>Login</Link></div>

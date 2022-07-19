@@ -7,7 +7,9 @@ import LoginPage from '../LoginPage/LoginPage'
 import Navbar from '../Navbar/Navbar'
 import NotFound from '../NotFound/NotFound'
 import RegistrationPage from '../RegistrationPage/RegistrationPage'
+import AdminOverview from "../AdminOverview/AdminOverview.jsx"
 import './App.css'
+
 import { AuthContextProvider } from "../../contexts/auth.jsx";     
 
 
@@ -35,6 +37,7 @@ function App() {
           <Route path="/" element={<LandingPage />}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/admin" element={<AdminOverview />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/denied" element={<AccessForbidden />} />
         </Routes>

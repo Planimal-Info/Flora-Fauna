@@ -20,6 +20,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  /* Global Brand Color Variables */
+  --d-green: #1D2F13;
+  --green: #355401;
+  --yellow: #FBBA00;
+  --brown: #8F7602;
 }
 
 html {
@@ -28,11 +34,11 @@ html {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: white;
   text-decoration: none;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--yellow);
 }
 
 h1 {

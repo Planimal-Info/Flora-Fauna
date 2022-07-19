@@ -12,17 +12,19 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
 
-app.get("/", async (req,res,next) => {
-    console.log(res);
-    try {
-        res.status(200).json({
-            "ping":"pong"
-        })
-    }
-    catch(err){
-        next(err);
-    }
-})
+app.use("/auth", router)
+
+//app.get("/", async (req,res,next) => {
+//    console.log(res);
+//    try {
+//        res.status(200).json({
+//            "ping":"pong"
+//        })
+//    }
+//    catch(err){
+//        next(err);
+//    }
+//})
 
 app.use((req,res,next) => {
     return next(new NotFoundError());

@@ -1,8 +1,10 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 import "./UserProfile.css"
+import { useAuthContext } from "../../contexts/auth.jsx";
 
 export default function UserProfile() {
+  const { user } = useAuthContext();
   return (
     <div className="user-profile">
         <div className="content">
@@ -19,7 +21,7 @@ export default function UserProfile() {
                     <div className="profile-details">
                         <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
                         <div className="profile-info">
-                            <h2>Username/Email</h2>
+                            <h2>{user.user.username} / {user.user.email}</h2>
                             <p className="biography">Insert biography blurb</p>
                         </div>
                         <div className="profile-upload">

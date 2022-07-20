@@ -27,7 +27,7 @@ export default function UserFeed(props) {
 
 
 
-  if (user) {
+  if (!user) {
     return (
       <div className="user-feed-overview">
         <h2>UserFeed</h2>

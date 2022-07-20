@@ -79,3 +79,7 @@
     background: var(--yellow);
     color: #fff;
 }
+
+.hidden{
+    display: none;
+}

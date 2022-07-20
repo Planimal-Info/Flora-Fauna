@@ -1,21 +1,23 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 import Logo from "../Logo/Logo"
+import { useAuthContext } from "../../contexts/auth.jsx"
 import "./Navbar.css"
 
 export default function Navbar({isLoading}) {
+  const { user, logoutUser } = useAuthContext();
   return (
     <div className="navbar">
         <div className="content">
            <Logo />
-           <NavLinks isLoading={isLoading} />
+           <NavLinks isLoading={isLoading} user={user} logoutUser={logoutUser} />
         </div>
     </div>
   )
 }
 
-export function NavLinks({isLoading}) {
-
+export function NavLinks({ isLoading, user, logoutUser }) {
+  console.log(user)
   return (
     <div className="nav-links">
                 {!isLoading ? (
@@ -28,8 +30,9 @@ export function NavLinks({isLoading}) {
                       {/* <li><span>Text</span></li> */}
                     </ul>
                     <div className="login-register">
-                      <div className="login-btn"><Link to='/login'>Login</Link></div>
-                      <div className="btn"><Link to='/register'>Sign Up</Link></div>
+                      <div className={user ? "hidden" : "login-btn"}><Link to='/login'>Login</Link></div>
+                      <div className={user ? "hidden" : "btn"}><Link to='/register'>Sign Up</Link></div>
+                      <Link to="/" onClick={logoutUser}><button className={user ? "logout-button btn" : "hidden"}>Log Out</button></Link>
                     </div>
                     </>
                 ) : ( 
@@ -37,7 +40,7 @@ export function NavLinks({isLoading}) {
                       <li><Link to='/'>feed</Link></li>
                       <li><Link to='/'>contact us</Link></li>
                       <li><Link to='/'>resources</Link></li>
-                      <li><Link to="/"><button className="logout-button btn">Log Out</button></Link></li>
+                      <li><Link to="/"><button className={user ? "logout-button btn" : "hidden"} onClick={logoutUser}>Log Out</button></Link></li>
                   </ul>
                 )
                 }

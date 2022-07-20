@@ -46,11 +46,11 @@ class ApiClient {
 
    //Sends data to be register and returns the response.
    async register(data){
-      return await this.request({ endpoint: "auth/login", method: "POST", data: data});
+      return await this.request({ endpoint: "auth/register", method: "POST", data: data});
    }
    //Sends data to log user and returns the response.
-   async login(){
-         return await this.request({ endpoint: "auth/register", method: "POST", data: data});
+   async login(data){
+         return await this.request({ endpoint: "auth/login", method: "POST", data: data});
    }
    //Returns user from the token. 
    async fetchUserFromToken(){
@@ -58,4 +58,4 @@ class ApiClient {
    }
 }
 
-export default new ApiClient(constants.API_BASE_URL);
+export default new ApiClient("http://localhost:3001");

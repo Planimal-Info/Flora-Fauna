@@ -20,7 +20,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
   console.log(user)
   return (
     <div className="nav-links">
-                {!isLoading ? (
+                {!user ? (
                   <>
                     <ul className="links">
                       <li><Link to='/'>about</Link></li>
@@ -38,9 +38,10 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                     </>
                 ) : ( 
                   <ul className="links">
-                      <li><Link to='/'>feed</Link></li>
-                      <li><Link to='/'>contact us</Link></li>
-                      <li><Link to='/'>resources</Link></li>
+                      <li><Link to='/userfeed'>Feed</Link></li>
+                      <li><Link to='/'>Search</Link></li>
+                      <li><Link to='/userprofile'>Profile</Link></li>
+                      <li><Link to="/admin" className={user?.is_admin ? "" : "hidden"}>Admin</Link></li>
                       <li><Link to="/"><button className={user ? "logout-button btn" : "hidden"} onClick={logoutUser}>Log Out</button></Link></li>
                   </ul>
                 )

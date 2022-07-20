@@ -136,9 +136,9 @@ export function RegistrationForm({ registerUser, user }) {
               <span className="error">{errors.passwordConfirm}</span>
             )}
           </div>
-          <button className="submit-registration btn" onClick={signupUser}>
+          <Link to="/" className="submit-registration btn"><button className="submit-registration btn" onClick={signupUser}>
             Create Account
-          </button>
+          </button></Link>
         </div>
         <div className="footer">
           <p>

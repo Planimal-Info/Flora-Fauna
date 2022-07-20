@@ -20,7 +20,6 @@ export const AuthContextProvider = ({ children }) => {
     setInitial(false);
     try {
       const req = await ApiClient.fetchUserFromToken();
-      console.log(req);
       setUser(req.data);
       setError(null);
     } catch (err) {

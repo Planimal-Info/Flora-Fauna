@@ -3,7 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { NotFoundError } = require("./utils/errors");
 const router = require("./routes/auth.js")
-//const security = require("./middleware/security")
+const security = require("./middleware/security.js")
 
 
 const app = express();
@@ -11,6 +11,7 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
+app.use(security.getUser);
 
 app.use("/auth", router)
 

@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken")
 const { SECRET_KEY } = require("../config")
 const { UnauthorizedError } = require("../utils/errors")
 
-const jwt = ({ data }) => {
-    if(data?.authorization) {
-        const [scheme, token] = data.authorization.split(" ");
+const jwtExtract = ({ headers }) => {
+    if(headers?.authorization) {
+        const [scheme, token] = headers.authorization.split(" ");
         if(scheme.trim() === "Bearer") {
             return token
         }
@@ -16,14 +16,14 @@ const jwt = ({ data }) => {
 
 const getUser = (req,res,next) => {
     try {
-        const token = jwtFrom(req)
+        const token = jwtExtract(req)
         if(token) {
             res.locals.user = jwt.verify(token, SECRET_KEY)
         }
-        return next()
+        return next();
     }
     catch(err){
-        return next()
+        return next();
     }
 }
 
@@ -34,16 +34,16 @@ const reqAuthUser = (req,res,next) => {
         if(!user.email){
             throw new UnauthorizedError()
         }
-        return next()
+        return next();
     }
     catch(err){
-        return next(err)
+        return next(err);
     }
 }
 
 
 module.exports = {
-    jwt, 
+    jwtExtract, 
     getUser,
     reqAuthUser
 }

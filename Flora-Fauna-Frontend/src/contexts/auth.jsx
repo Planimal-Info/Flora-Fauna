@@ -41,6 +41,7 @@ export const AuthContextProvider = ({ children }) => {
           email: data.email,
           password: data.password,
         });
+        console.log(getData);
         ApiClient.setToken(getData.data.token);
         setUser(getData.data.user);
       } catch (err) {

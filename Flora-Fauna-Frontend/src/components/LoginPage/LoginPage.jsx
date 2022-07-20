@@ -83,7 +83,7 @@ export function LoginForm({ user, setUser, loginUser}) {
                               />
                               {errors.password && <span className="error">{errors.password}</span>}
                   </div>
-                  <Link to="/"><ibutton className="submit-login btn" onClick={loginUserOnSubmit}>Login</ibutton></Link>
+                  <Link to="/" className="submit-login btn" onClick={loginUserOnSubmit}><ibutton onClick={loginUserOnSubmit}>Login</ibutton></Link>
               </div>
               <div className="footer">
                   <p>Don't have an account? Sign up <Link className="auth-link" to='/registration'>here.</Link></p>

@@ -33,6 +33,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                       <div className={user ? "hidden" : "login-btn"}><Link to='/login'>Login</Link></div>
                       <div className={user ? "hidden" : "btn"}><Link to='/register'>Sign Up</Link></div>
                       <Link to="/" onClick={logoutUser}><button className={user ? "logout-button btn" : "hidden"}>Log Out</button></Link>
+                      <Link to="/admin"><button className={user.is_admin ? "btn" : "hidden"}>Admin</button></Link>
                     </div>
                     </>
                 ) : ( 

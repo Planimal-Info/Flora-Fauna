@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken")
 const { SECRET_KEY } = require("../config")
 const { UnauthorizedError } = require("../utils/errors")
 
+//Extract headers from the req and is used to filter and grab token
 const jwtExtract = ({ headers }) => {
     if(headers?.authorization) {
         const [scheme, token] = headers.authorization.split(" ");
@@ -13,7 +14,7 @@ const jwtExtract = ({ headers }) => {
     return undefined
 }
 
-
+//Grabs the request from the middleware chain and parses to get token and places it in res.locals.
 const getUser = (req,res,next) => {
     try {
         const token = jwtExtract(req)
@@ -27,7 +28,7 @@ const getUser = (req,res,next) => {
     }
 }
 
-
+//Check to see if there is a authenticated user.
 const reqAuthUser = (req,res,next) => {
     try {
         const { user } = res.locals

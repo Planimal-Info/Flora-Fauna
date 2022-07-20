@@ -4,6 +4,7 @@ const User = require("../models/user")
 const { createUserJwt } = require("../utils/tokens")
 const security = require("../middleware/security")
 
+//Login route, used to store data and send a response back with a token
 router.post("/login", async(req,res,next) => {
     try{
         const user = await User.login(req.body)
@@ -14,6 +15,7 @@ router.post("/login", async(req,res,next) => {
     }
 })
 
+//Register route, used to store data in users table and send a response back with a token
 router.post("/register", async(req,res,next) => {
     try {
         const user = await User.register(req.body)
@@ -26,6 +28,7 @@ router.post("/register", async(req,res,next) => {
     }
 })
 
+//Sends back the user from the token that was sent in the headers, uses the security middleware.
 router.get("/me", security.reqAuthUser,async(req,res,next) => {
     try {
         const { email } = res.locals.user;

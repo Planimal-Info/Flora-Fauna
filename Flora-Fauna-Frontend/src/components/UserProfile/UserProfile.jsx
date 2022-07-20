@@ -4,7 +4,9 @@ import "./UserProfile.css"
 import { useAuthContext } from "../../contexts/auth.jsx";
 
 export default function UserProfile() {
+  //Extract user from context and used to populate data.
   const { user } = useAuthContext();
+  
   return (
     <div className="user-profile">
         <div className="content">

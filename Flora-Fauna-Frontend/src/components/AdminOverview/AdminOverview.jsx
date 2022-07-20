@@ -2,8 +2,7 @@ import "./AdminOverview.css";
 import { useAuthContext } from "../../contexts/auth";
 
 export default function AdminOverview(props) {
-  const { user } = useAuthContext();
-
+  // const { user } = useAuthContext();
   return (
     <div className="admin-overview">
       <h2>Admin Panel</h2>

@@ -8,7 +8,7 @@ export default function UserFeed(props) {
   const [showCategories, setShowCategories] = useState(false);
   const [showTimeFrames, setShowTimeFrames] = useState(false);
 
-
+  //hides and shows the time filters
   function handleTime() {
     if(showCategories === true){
       setShowCategories(false);
@@ -16,7 +16,7 @@ export default function UserFeed(props) {
     let time = showTimeFrames;
     setShowTimeFrames(!time);
   }
-
+  //hides and shows the categories filters 
   function handleCategories() {
     if(showTimeFrames === true){
       setShowTimeFrames(false);
@@ -26,20 +26,19 @@ export default function UserFeed(props) {
   }
 
 
-
-  if (user) {
+  //If there is no user, AKA a viewer. Show only the hero
+  if (!user) {
     return (
       <div className="user-feed-overview">
         <h2>UserFeed</h2>
-        <div className="user-feed-wrapper">
-          <Hero />
-        </div>
+        <Hero />
       </div>
     )
   }
-
+// the user feed for a user whos logged in
   return (
     <div className="user-feed-overview">
+      <Hero />
       <h2>User Feed</h2>
       <div className="user-feed-wrapper">
         <div className="user-feed-navbar">

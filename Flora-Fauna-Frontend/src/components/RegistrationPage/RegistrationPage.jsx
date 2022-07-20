@@ -1,54 +1,53 @@
-import * as React from "react"
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import validation from "../../validate"
-import "./RegistrationPage.css"
+import * as React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import validation from "../../validate";
+import { useAuthContext } from "../../contexts/auth.jsx";
+import "./RegistrationPage.css";
 
 export default function RegistrationPage() {
+  const { user, registerUser } = useAuthContext();
   return (
     <div className="registration-page">
-           <RegistrationForm />
+      <RegistrationForm user={user} registerUser={registerUser} />
     </div>
-  )
+  );
 }
 
 /* REGISTRATION FORM */
-export function RegistrationForm() {
-  
-  let navigate = useNavigate()
-  const [isProcessing, setIsProcessing] = useState(false)
+export function RegistrationForm({ registerUser, user }) {
+  let navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    email:  "",
+    email: "",
     username: "",
     firstName: "",
     lastName: "",
     password: "",
-    passwordConfirm: ""
+    passwordConfirm: "",
   });
 
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
-    })
-    
-  }
+    });
+  };
 
-  ///////// SIGN UP FUNCTION (incomplete: waiting for api client)
   const signupUser = () => {
-    setIsProcessing(true)
-    setErrors(validation(values))
+    setIsProcessing(true);
+    setErrors(validation(values));
 
     if (values.passwordConfirm !== values.password) {
-      setErrors(validation(values.passwordConfirm))
-      setIsProcessing(false)
-      return
+      setErrors(validation(values.passwordConfirm));
+      setIsProcessing(false);
+      return;
     } else {
-      setErrors((e) => ({...e, passwordConfirm: null}))
+      setErrors((e) => ({ ...e, passwordConfirm: null }));
     }
-  }
-  ////////////////////////
+    registerUser(values);
+  };
 
   return (
     <div className="registration-form">
@@ -57,80 +56,98 @@ export function RegistrationForm() {
         <div className="form">
           <div className="input-field">
             <label htmlFor="email">Email</label>
-            <input 
-              className="form-input" 
-              type="email" 
-              name="email" 
-              placeholder="Enter a valid email" 
+            <input
+              className="form-input"
+              type="email"
+              name="email"
+              placeholder="Enter a valid email"
               value={values.email}
-              onChange={handleChange} />
-              {errors.email && <span className="error">{errors.email}</span>}
+              onChange={handleChange}
+            />
+            {errors.email && <span className="error">{errors.email}</span>}
           </div>
           <div className="input-field">
             <label htmlFor="username">Username</label>
-            <input 
-              className="form-input" 
-              type="text" 
-              name="username" 
-              placeholder="your username" 
+            <input
+              className="form-input"
+              type="text"
+              name="username"
+              placeholder="your username"
               value={values.username}
-              onChange={handleChange} />
-              {errors.username && <span className="error">{errors.username}</span>}
+              onChange={handleChange}
+            />
+            {errors.username && <span className="error">{errors.username}
+            </span>}
           </div>
           <div className="split-input-field">
             <div className="input-field">
               <label htmlFor="first-name">First Name</label>
-              <input 
-                className="form-input" 
-                type="text" 
-                name="firstName" 
-                placeholder="First Name" 
+              <input
+                className="form-input"
+                type="text"
+                name="firstName"
+                placeholder="First Name"
                 value={values.firstName}
-                onChange={handleChange} />
-                {errors.firstName && <span className="error">{errors.firstName}</span>}
+                onChange={handleChange}
+              />
+              {errors.firstName && (
+                <span className="error">{errors.firstName}</span>
+              )}
             </div>
             <div className="input-field">
               <label htmlFor="last-name">Last Name</label>
-              <input 
-                className="form-input" 
-                type="text" 
-                name="lastName" 
-                placeholder="Last Name" 
+              <input
+                className="form-input"
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
                 value={values.lastName}
-                onChange={handleChange} />
-                {errors.lastName && <span className="error">{errors.lastName}</span>}
+                onChange={handleChange}
+              />
+              {errors.lastName && (
+                <span className="error">{errors.lastName}</span>
+              )}
             </div>
           </div>
           <div className="input-field">
             <label htmlFor="password">Password</label>
-            <input 
-              className="form-input" 
-              type="password" 
-              name="password" 
-              placeholder="Enter a secure password" 
+            <input
+              className="form-input"
+              type="password"
+              name="password"
+              placeholder="Enter a secure password"
               value={values.password}
-              onChange={handleChange} />
-              {errors.password && <span className="error">{errors.password}</span>}
+              onChange={handleChange}
+            />
+            {errors.password && <span className="error">{errors.password}
+            </span>}
           </div>
           <div className="input-field">
             <label htmlFor="passwordConfirm">Confirm Password</label>
-            <input 
-              className="form-input" 
-              type="password" 
-              name="passwordConfirm" 
-              placeholder="Confirm your password" 
+            <input
+              className="form-input"
+              type="password"
+              name="passwordConfirm"
+              placeholder="Confirm your password"
               value={values.passwordConfirm}
-              onChange={handleChange} />
-              {errors.passwordConfirm && <span className="error">{errors.passwordConfirm}</span>}
+              onChange={handleChange}
+            />
+            {errors.passwordConfirm && (
+              <span className="error">{errors.passwordConfirm}</span>
+            )}
           </div>
-          <button className="submit-registration btn" onClick={signupUser}>Create Account</button>
-          {/* {onClick={signupUser}} */}
+          <Link to="/" className="submit-registration btn" onClick={signupUser}><button className="submit-registration btn" onClick={signupUser}>
+            Create Account
+          </button></Link>
         </div>
         <div className="footer">
-          <p>Already have an account? Login <Link className="auth-link" to='/login'>here.</Link></p>
+          <p>
+            Already have an account? Login{" "}
+            <Link className="auth-link" to="/login">here.</Link>
+          </p>
         </div>
-      
-        </div>
+      </div>
     </div>
-  )
+  );
 }
+

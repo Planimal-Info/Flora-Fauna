@@ -1,0 +1,62 @@
+.user-feed-overview{
+  text-align: center;
+  margin: 20px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.user-feed-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.user-feed-navbar{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: space-around; 
+}
+
+.user-feed-filter{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  text-align:center;
+  width: 100vw;
+}
+.user-feed-filter h2{
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.user-feed-navbar h2:hover{
+  opacity: .5; 
+}
+
+.timeframe-wrapper, .categories-wrapper{
+  display:flex;
+  justify-content: space-around;
+}
+.user-feed-timeframe, .user-feed-categories{
+  display: flex; 
+  justify-content: space-around;
+  flex-direction: row;
+}
+.user-feed-timeframe h3, .user-feed-categories h3{
+  cursor: pointer;
+  transition: opacity .15s
+}
+.user-feed-timeframe h3:hover, .user-feed-categories h3:hover{
+  opacity: .5;
+}
+.user-feed-timeframe{
+  width: 500px;
+  margin-top: 20px;
+  transition: display .15s;
+}
+.user-feed-categories{
+  width: 1000px;
+  margin-top: 20px;
+}
+.hidden{
+  display: none;
+}

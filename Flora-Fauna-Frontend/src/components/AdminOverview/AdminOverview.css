@@ -1,0 +1,21 @@
+.admin-overview{
+   text-align: center;
+   margin-top: 20px;
+}
+
+.admin-navbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  margin: 30px;
+}
+
+.admin-navbar-link{
+  margin: 0px 25px;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.admin-navbar-link:hover{
+  opacity: .5;
+}

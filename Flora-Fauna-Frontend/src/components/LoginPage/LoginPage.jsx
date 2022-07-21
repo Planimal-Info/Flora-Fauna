@@ -3,17 +3,20 @@ import { Link } from "react-router-dom"
 import { useRef, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import validation from '../../validate'
+import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css"
 
-export default function LoginPage({ user, setUser }) {
+export default function LoginPage() {
+  const {loginUser, user, setUser} = useAuthContext();
+  console.log(user);
   return (
     <div className="login-page">
-        <LoginForm user={user} setUser={setUser} />
+        <LoginForm user={user} setUser={setUser} loginUser={loginUser}/>
     </div>
   )
 }
 
-export function LoginForm({ user, setUser }) {
+export function LoginForm({ user, setUser, loginUser}) {
 
   let navigate = useNavigate()
 
@@ -30,8 +33,13 @@ export function LoginForm({ user, setUser }) {
         [e.target.name]: e.target.value,
       })
     }
+    
+    const handleLoginOnSubmit = () => {
+      console.log(values);
+      loginUser(values); 
+    }
 
-    const loginUser = () => {
+    const loginUserOnSubmit = () => {
     setIsProcessing(true)
     setErrors(validation(values))
 
@@ -42,6 +50,7 @@ export function LoginForm({ user, setUser }) {
     // } else {
     //   setErrors((e) => ({...e, passwordConfirm: null}))
     // }
+      handleLoginOnSubmit();
   }
 
   return(
@@ -74,8 +83,7 @@ export function LoginForm({ user, setUser }) {
                               />
                               {errors.password && <span className="error">{errors.password}</span>}
                   </div>
-                  <button className="submit-login btn" onClick={loginUser}>Login</button>
-                  {/* {onClick={loginUser}} */}
+                  <Link to="/" className="submit-login btn" onClick={loginUserOnSubmit}><ibutton onClick={loginUserOnSubmit}>Login</ibutton></Link>
               </div>
               <div className="footer">
                   <p>Don't have an account? Sign up <Link className="auth-link" to='/registration'>here.</Link></p>

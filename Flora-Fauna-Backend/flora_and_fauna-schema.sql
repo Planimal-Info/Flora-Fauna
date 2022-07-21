@@ -27,10 +27,11 @@ user_id         INT REFERENCES users(id),
 user_post_id    INT REFERENCES user_posts(id)
 );
 
-CREATE TABLE plants_and_animals (
+CREATE TABLE planimals (
 id                  SERIAL PRIMARY KEY,
 common_name         TEXT NOT NULL,
 scientific_name     TEXT NOT NULL,
+taxonomic_group     TEXT NOT NULL,
 last_seen           DATE NOT NULL,
 conservation_rate   TEXT NOT NULL
 );

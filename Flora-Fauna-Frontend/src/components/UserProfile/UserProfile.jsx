@@ -7,6 +7,8 @@ import AccessForbidden from "../AccessForbidden/AccessForbidden";
 export default function UserProfile() {
   //Extract user from context and used to populate data.
   const { user, initialized } =  useAuthContext();
+  //added conditional to combat null errors when rendering in this component
+  //All conditionals in the html are to combat null errors
   if(initialized && user != null){
   return (
     <div className="user-profile">

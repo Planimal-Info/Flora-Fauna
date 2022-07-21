@@ -37,7 +37,8 @@ export function LoginForm({ user, setUser, loginUser }) {
     console.log(values);
     loginUser(values);
   };
-
+  //Commented out validation because it causes errors with the auth/me route,
+  //Needs to be fixed.
   const loginUserOnSubmit = () => {
     setIsProcessing(true);
     setErrors(validation(values));

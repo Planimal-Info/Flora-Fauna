@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }) => {
     setInitial(true);
   };
 
-  //function to log out user, removes token from storage
+  //function to log out user, removes token from storage and refreshes the page.
   const logoutUser = () => {
     ApiClient.removeToken();
     window.location.reload(); 

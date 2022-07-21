@@ -21,6 +21,7 @@
    outline: none;
    border-radius: 15px;
    transition: box-shadow .30s;
+   background: white;
 }
 
 .landing-page-input:hover, .landing-page-input:focus{

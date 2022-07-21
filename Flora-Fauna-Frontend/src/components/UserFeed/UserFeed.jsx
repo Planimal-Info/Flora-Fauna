@@ -38,7 +38,6 @@ export default function UserFeed(props) {
 // the user feed for a user whos logged in
   return (
     <div className="user-feed-overview">
-      <Hero />
       <h2>User Feed</h2>
       <div className="user-feed-wrapper">
         <div className="user-feed-navbar">

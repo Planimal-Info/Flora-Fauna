@@ -1,6 +1,6 @@
 .hero{
   margin-top: 20px;
-  width: 1200px;
+  width: 900px;
   height: auto;
   align-self: center;
   background-color: rgba(51,51,51,.6);
@@ -10,4 +10,9 @@
   width: 500px;
   height: auto;
   margin-top: 10px;
+}
+
+.hero-desc{
+  line-height: 2;
+  margin-top: 20px;
 }

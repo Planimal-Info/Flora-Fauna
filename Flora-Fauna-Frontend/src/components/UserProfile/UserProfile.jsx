@@ -23,7 +23,7 @@ export default function UserProfile() {
                     <div className="profile-details">
                         <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
                         <div className="profile-info">
-                            <h2>{user.user.username} / {user.user.email}</h2>
+                            <h2>{user?.username} / {user?.email}</h2>
                             <p className="biography">Insert biography blurb</p>
                         </div>
                         <div className="profile-upload">

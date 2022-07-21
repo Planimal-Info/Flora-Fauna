@@ -23,7 +23,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 {!isLoading ? (
                   <>
                     <ul className="links">
-                      <li><Link to='/'>about</Link></li>
+                      <li><Link to='/about'>about</Link></li>
                       <li><Link to='/'>search</Link></li>
                       <li><Link to='/'>resources</Link></li>
                       <li><Link to='/'>contact us</Link></li>

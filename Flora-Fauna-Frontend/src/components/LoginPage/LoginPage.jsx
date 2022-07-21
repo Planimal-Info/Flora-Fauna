@@ -7,17 +7,25 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser } = useAuthContext();
-  console.log(user);
+  const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
+
+  //Checks if a user is logged in and navigates to home if true
+  const navigate = useNavigate();
   return (
     <div className="login-page">
-      <LoginForm user={user} setUser={setUser} loginUser={loginUser} />
+      <LoginForm
+        user={user}
+        setUser={setUser}
+        loginUser={loginUser}
+        authErrors={reqError}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
 
-export function LoginForm({ user, setUser, loginUser }) {
-  let navigate = useNavigate();
+export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
+  const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
@@ -26,6 +34,7 @@ export function LoginForm({ user, setUser, loginUser }) {
     password: "",
   });
 
+  //Changes values state
   const handleChange = (e) => {
     setValues({
       ...values,
@@ -33,13 +42,17 @@ export function LoginForm({ user, setUser, loginUser }) {
     });
   };
 
+  if(user){
+    navigate("/")
+  }
+
+  //Function to call login function
   const handleLoginOnSubmit = () => {
-    console.log(values);
     loginUser(values);
   };
   //Commented out validation because it causes errors with the auth/me route,
   //Needs to be fixed.
-  const loginUserOnSubmit = () => {
+  const loginUserOnSubmit = async () => {
     setIsProcessing(true);
     setErrors(validation(values));
 
@@ -52,6 +65,7 @@ export function LoginForm({ user, setUser, loginUser }) {
     // }
     handleLoginOnSubmit();
   };
+
   return (
     <div className="login-form">
       <div className="card">
@@ -85,9 +99,7 @@ export function LoginForm({ user, setUser, loginUser }) {
             {errors.password && <span className="error">{errors.password}
             </span>}
           </div>
-          <Link to="/" className="submit-login btn" onClick={loginUserOnSubmit}>
-            <ibutton onClick={loginUserOnSubmit}>Login</ibutton>
-          </Link>
+            <ibutton onClick={loginUserOnSubmit} className="submit-login btn">Login</ibutton>
         </div>
         <div className="footer">
           <p>

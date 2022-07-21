@@ -34,19 +34,25 @@ export function RegistrationForm({ registerUser, user }) {
       [e.target.name]: e.target.value,
     });
   };
-
+      
+  if(user){
+    navigate("/")
+  }
+  const handleRegister = () => {
+    registerUser(values);
+  }
   const signupUser = () => {
     setIsProcessing(true);
     setErrors(validation(values));
-
-    if (values.passwordConfirm !== values.password) {
-      setErrors(validation(values.passwordConfirm));
-      setIsProcessing(false);
-      return;
-    } else {
-      setErrors((e) => ({ ...e, passwordConfirm: null }));
-    }
-    registerUser(values);
+    //
+    // if (values.passwordConfirm !== values.password) {
+    //   setErrors(validation(values.passwordConfirm));
+    //   setIsProcessing(false);
+    //   return;
+    // } else {
+    //   setErrors((e) => ({ ...e, passwordConfirm: null }));
+    // }
+    handleRegister();
   };
 
   return (
@@ -136,9 +142,9 @@ export function RegistrationForm({ registerUser, user }) {
               <span className="error">{errors.passwordConfirm}</span>
             )}
           </div>
-          <Link to="/" className="submit-registration btn" onClick={signupUser}><button className="submit-registration btn" onClick={signupUser}>
+          <button className="submit-registration btn" onClick={signupUser}>
             Create Account
-          </button></Link>
+          </button>
         </div>
         <div className="footer">
           <p>

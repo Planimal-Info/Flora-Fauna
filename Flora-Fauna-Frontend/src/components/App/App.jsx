@@ -10,6 +10,7 @@ import RegistrationPage from '../RegistrationPage/RegistrationPage'
 import AdminOverview from "../AdminOverview/AdminOverview.jsx"
 import UserFeed from "../UserFeed/UserFeed.jsx"
 import UserProfile from "../UserProfile/UserProfile.jsx"
+import SearchResults from "../SearchResults/SearchResults.jsx"
 import './App.css'
 
 import { AuthContextProvider } from "../../contexts/auth.jsx";
@@ -42,6 +43,7 @@ function App() {
           <Route path="/admin" element={<AdminOverview />} />
           <Route path="/userfeed" element={<UserFeed />} />
           <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/denied" element={<AccessForbidden />} />
         </Routes>

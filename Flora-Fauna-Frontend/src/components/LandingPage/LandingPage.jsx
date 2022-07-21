@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "./LandingPage.css"
 
 export default function LandingPage() {
@@ -13,6 +13,8 @@ export default function LandingPage() {
    function handleOnSubmit(){
       //Send search request
    }
+ 
+
  console.log(searchInput)
    return (
     <div className="landing-page">

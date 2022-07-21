@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { NotFoundError } = require("./utils/errors");
 const router = require("./routes/auth.js")
+const planimalRouter = require("./routes/planimal.js")
 const security = require("./middleware/security.js")
 
 
@@ -14,18 +15,19 @@ app.use(morgan('tiny'))
 app.use(security.getUser);
 
 app.use("/auth", router)
+app.use("/planimal", planimalRouter)
 
-//app.get("/", async (req,res,next) => {
-//    console.log(res);
-//    try {
-//        res.status(200).json({
-//            "ping":"pong"
-//        })
-//    }
-//    catch(err){
-//        next(err);
-//    }
-//})
+app.get("/", async (req,res,next) => {
+    console.log(res);
+    try {
+        res.status(200).json({
+            "ping":"pong"
+        })
+    }
+    catch(err){
+        next(err);
+    }
+})
 
 app.use((req,res,next) => {
     return next(new NotFoundError());

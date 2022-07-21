@@ -13,6 +13,8 @@ export default function SearchResults() {
   function handleOnSubmit() {
     //Send search request
   }
+
+  //Displays all the results from the search.
   return (
     <div className="search-results">
       <div className="search-wrapper">

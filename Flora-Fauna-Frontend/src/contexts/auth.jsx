@@ -64,7 +64,6 @@ export const AuthContextProvider = ({ children }) => {
         setUser(getData.data?.user);
         setError(getData.error);
       }
-    };
     req();
     setIsLoading(false);
     setInitial(true);

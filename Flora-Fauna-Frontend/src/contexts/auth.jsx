@@ -66,11 +66,10 @@ export const AuthContextProvider = ({ children }) => {
         lastName: data.lastName,
         email: data.email,
       });
+      console.log(getData)
       ApiClient.setToken(getData?.data?.token)
       setUser(getData?.data?.user)
       setError(getData?.error)
-
-
       }
       catch(err){
         console.log(err);

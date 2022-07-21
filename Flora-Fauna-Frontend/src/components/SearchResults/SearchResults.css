@@ -1,0 +1,26 @@
+.search-results{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+  align-self: center;
+  align-items: center;
+}
+
+.search-result-content{
+  margin-top: 20px;    
+}
+
+.search-result-submit{
+  width: 90px;
+  margin-top: 20px;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: box-shadow .15s;
+}
+.search-result-submit:hover{
+  box-shadow: 10px 5px 5px rgba(0,0,0,.4);
+}
+

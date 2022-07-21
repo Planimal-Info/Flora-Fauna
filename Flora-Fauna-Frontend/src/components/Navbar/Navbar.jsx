@@ -39,7 +39,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 ) : ( 
                   <ul className="links">
                       <li><Link to="/">Home</Link></li>
-                      <li><Link to="/">Planimals</Link></li>
+                      <li><Link to="/search">Planimals</Link></li>
                       <li><Link to='/userfeed'>Your Feed</Link></li>
                       <li><a href='/userprofile'>Profile</a></li>
                       <li><Link to="/admin" className={user?.is_admin ? "" : "hidden"}>Admin</Link></li>

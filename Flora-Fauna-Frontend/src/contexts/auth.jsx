@@ -35,29 +35,24 @@ export const AuthContextProvider = ({ children }) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-      try {
-        const getData = await ApiClient.login({
-          email: data.email,
-          password: data.password,
-        });
-        ApiClient.setToken(getData.data.token);
-        setUser(getData.data.user);
-      } catch (err) {
-        console.log(err);
-        setError(err);
-      }
+      const getData = await ApiClient.login({
+        email: data.email,
+        password: data.password,
+      });
+      ApiClient.setToken(getData?.data?.token);
+      setUser(getData.data?.user);
+      setError(getData.error);
     };
     req();
     setIsLoading(false);
     setInitial(true);
+    return initialized;
   };
-
   //function to register user
   const registerUser = (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-      try {
         const getData = await ApiClient.register({
           username: data.username,
           password: data.password,
@@ -66,9 +61,8 @@ export const AuthContextProvider = ({ children }) => {
           email: data.email,
         });
         ApiClient.setToken(getData.data.token);
-        setUser(getData.data.user);
-      } catch (err) {
-        setError(err);
+        setUser(getData.data?.user);
+        setError(getData.error);
       }
     };
     req();

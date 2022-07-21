@@ -7,17 +7,16 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser } = useAuthContext();
-  console.log(user);
+  const { loginUser, user, setUser, error } = useAuthContext();
   return (
     <div className="login-page">
-      <LoginForm user={user} setUser={setUser} loginUser={loginUser} />
+      <LoginForm user={user} setUser={setUser} loginUser={loginUser} authErrors={error} />
     </div>
   );
 }
 
-export function LoginForm({ user, setUser, loginUser }) {
-  let navigate = useNavigate();
+export function LoginForm({ user, setUser, loginUser, authErrors }) {
+  const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
@@ -34,7 +33,6 @@ export function LoginForm({ user, setUser, loginUser }) {
   };
 
   const handleLoginOnSubmit = () => {
-    console.log(values);
     loginUser(values);
   };
   //Commented out validation because it causes errors with the auth/me route,
@@ -51,6 +49,10 @@ export function LoginForm({ user, setUser, loginUser }) {
     //   setErrors((e) => ({ ...e, passwordConfirm: null }));
     // }
     handleLoginOnSubmit();
+    console.log(authErrors)
+    if(authErrors != null){
+      navigate("/")
+    }
   };
   return (
     <div className="login-form">
@@ -85,9 +87,7 @@ export function LoginForm({ user, setUser, loginUser }) {
             {errors.password && <span className="error">{errors.password}
             </span>}
           </div>
-          <Link to="/" className="submit-login btn" onClick={loginUserOnSubmit}>
-            <ibutton onClick={loginUserOnSubmit}>Login</ibutton>
-          </Link>
+            <ibutton onClick={loginUserOnSubmit} className="submit-login btn">Login</ibutton>
         </div>
         <div className="footer">
           <p>

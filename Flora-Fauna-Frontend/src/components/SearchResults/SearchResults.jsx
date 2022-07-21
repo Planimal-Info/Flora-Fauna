@@ -1,5 +1,6 @@
 import "./SearchResults.css";
 import { useState } from "react"
+import AnimalCards from "../AnimalCards/AnimalCards.jsx"
 
 export default function SearchResults() {
   const [searchInput, setSearchInput] = useState("");

@@ -1,13 +1,19 @@
 .user-feed-overview{
   text-align: center;
-  margin: 20px; 
   display: flex;
   flex-direction: column;
+  padding: 30px;
+  background-color: rgba(51,51,51, .6);
 }
+
+.user-feed-overview h2{
+  margin-top: 30px;
+} 
 
 .user-feed-wrapper{
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
 }
 
 .user-feed-navbar{
@@ -19,7 +25,7 @@
 
 .user-feed-filter{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-direction: row;
   text-align:center;
   width: 100vw;
@@ -35,6 +41,7 @@
 .timeframe-wrapper, .categories-wrapper{
   display:flex;
   justify-content: space-around;
+  margin-top: 20px;
 }
 .user-feed-timeframe, .user-feed-categories{
   display: flex; 

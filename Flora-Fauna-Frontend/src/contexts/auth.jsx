@@ -40,7 +40,6 @@ export const AuthContextProvider = ({ children }) => {
           email: data.email,
           password: data.password,
         });
-        console.log(getData);
         ApiClient.setToken(getData.data.token);
         setUser(getData.data.user);
       } catch (err) {
@@ -77,11 +76,9 @@ export const AuthContextProvider = ({ children }) => {
     setInitial(true);
   };
 
-  //function to log out user, removes token from storage
+  //function to log out user, removes token from storage and refreshes the page.
   const logoutUser = () => {
     ApiClient.removeToken();
-    window.location.reload(); 
-    return false;
   };
 
   const authValue = {

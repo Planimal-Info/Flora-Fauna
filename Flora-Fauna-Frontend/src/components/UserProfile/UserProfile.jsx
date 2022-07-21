@@ -6,7 +6,8 @@ import AccessForbidden from "../AccessForbidden/AccessForbidden";
 
 export default function UserProfile() {
   //Extract user from context and used to populate data.
-  const { user } =  useAuthContext();
+  const { user, initialized } =  useAuthContext();
+  if(initialized && user != null){
   return (
     <div className="user-profile">
       <div className="content">
@@ -23,7 +24,7 @@ export default function UserProfile() {
             <div className="profile-details">
               <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
               <div className="profile-info">
-                {user ? <h2>{} / {}</h2> : <h2></h2>}
+                {user?.user ? <h2>{user.user.username} / {user.user.email}</h2> : <h2></h2>}
                 <p className="biography">Insert biography blurb</p>
               </div>
               <div className="profile-upload">
@@ -42,6 +43,14 @@ export default function UserProfile() {
       </div>
     </div>
   );
+  }
+  else{
+    return(
+      <div>
+      <AccessForbidden />
+      </div>
+    )
+  }
 }
 
 export function UserSettings() {

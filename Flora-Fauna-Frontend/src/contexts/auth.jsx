@@ -81,7 +81,7 @@ export const AuthContextProvider = ({ children }) => {
   const logoutUser = () => {
     ApiClient.removeToken();
     window.location.reload(); 
-    return false;
+    return false; 
   };
 
   const authValue = {

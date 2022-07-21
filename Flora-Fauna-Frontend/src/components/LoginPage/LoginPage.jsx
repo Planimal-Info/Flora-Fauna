@@ -7,15 +7,24 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser, error } = useAuthContext();
+  const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
+
+  //Checks if a user is logged in and navigates to home if true
+  const navigate = useNavigate();
   return (
     <div className="login-page">
-      <LoginForm user={user} setUser={setUser} loginUser={loginUser} authErrors={error} />
+      <LoginForm
+        user={user}
+        setUser={setUser}
+        loginUser={loginUser}
+        authErrors={reqError}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
 
-export function LoginForm({ user, setUser, loginUser, authErrors }) {
+export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
   const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -25,6 +34,7 @@ export function LoginForm({ user, setUser, loginUser, authErrors }) {
     password: "",
   });
 
+  //Changes values state
   const handleChange = (e) => {
     setValues({
       ...values,
@@ -32,12 +42,17 @@ export function LoginForm({ user, setUser, loginUser, authErrors }) {
     });
   };
 
+  if(user){
+    navigate("/")
+  }
+
+  //Function to call login function
   const handleLoginOnSubmit = () => {
     loginUser(values);
   };
   //Commented out validation because it causes errors with the auth/me route,
   //Needs to be fixed.
-  const loginUserOnSubmit = () => {
+  const loginUserOnSubmit = async () => {
     setIsProcessing(true);
     setErrors(validation(values));
 
@@ -49,11 +64,8 @@ export function LoginForm({ user, setUser, loginUser, authErrors }) {
     //   setErrors((e) => ({ ...e, passwordConfirm: null }));
     // }
     handleLoginOnSubmit();
-    console.log(authErrors)
-    if(authErrors != null){
-      navigate("/")
-    }
   };
+
   return (
     <div className="login-form">
       <div className="card">

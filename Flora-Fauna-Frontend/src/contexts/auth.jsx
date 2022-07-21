@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient.js";
 
 const AuthContext = createContext(null);
@@ -8,6 +9,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState({});
+  const [reqError, setReqError] = useState(false);
 
   //Check if a token (ff_token) is in storage,
   //if so, fetch user from that token.
@@ -28,42 +30,52 @@ export const AuthContextProvider = ({ children }) => {
 
     setIsLoading(false);
     setInitial(true);
-  }, []);
-
+    }, []);
   //function to login user
-  const loginUser = (data) => {
+  const loginUser = async (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-      const getData = await ApiClient.login({
-        email: data.email,
-        password: data.password,
-      });
-      ApiClient.setToken(getData?.data?.token);
-      setUser(getData.data?.user);
-      setError(getData.error);
+      try {
+        const getData = await ApiClient.login({
+          email: data.email,
+          password: data.password,
+        });
+        console.log(getData)
+        ApiClient.setToken(getData?.data?.token)
+        setUser(getData?.data?.user)
+        setError(getData?.error)
+      } catch (err) {
+        console.log(err);
+      }
     };
     req();
-    setIsLoading(false);
-    setInitial(true);
-    return initialized;
+    setIsLoading(false)
+    setInitial(false)
   };
   //function to register user
   const registerUser = (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-        const getData = await ApiClient.register({
-          username: data.username,
-          password: data.password,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-        });
-        ApiClient.setToken(getData.data.token);
-        setUser(getData.data?.user);
-        setError(getData.error);
+      try{
+      const getData = await ApiClient.register({
+        username: data.username,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+      });
+      ApiClient.setToken(getData?.data?.token)
+      setUser(getData?.data?.user)
+      setError(getData?.error)
+
+
       }
+      catch(err){
+        console.log(err);
+      }
+    };
     req();
     setIsLoading(false);
     setInitial(true);
@@ -85,6 +97,7 @@ export const AuthContextProvider = ({ children }) => {
     loginUser,
     registerUser,
     logoutUser,
+    reqError,
   };
 
   return (

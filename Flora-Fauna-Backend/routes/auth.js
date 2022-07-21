@@ -9,7 +9,8 @@ router.post("/login", async(req,res,next) => {
     try{
         const user = await User.login(req.body)
         const token = createUserJwt(user)
-        return res.status(200).json({ user, token })
+        const publicUser = {id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, is_admin:user.is_admin}
+        return res.status(200).json({ publicUser, token })
     } catch(err){
         next(err)
     }
@@ -21,7 +22,8 @@ router.post("/register", async(req,res,next) => {
         const user = await User.register(req.body)
         console.log(user);
         const token = createUserJwt(user)
-        return res.status(200).json({ user, token })
+        const publicUser = {id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, is_admin:user.is_admin}
+        return res.status(200).json({ publicUser, token })
     }  
     catch(err){
        next(err)

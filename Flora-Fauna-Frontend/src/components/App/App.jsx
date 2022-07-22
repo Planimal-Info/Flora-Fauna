@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import reactLogo from '../../assets/react.svg'
+import AboutPage from '../AboutPage/AboutPage'
 import AccessForbidden from '../AccessForbidden/AccessForbidden'
 import Hero from '../Hero/Hero'
 import LandingPage from '../LandingPage/LandingPage'
@@ -12,6 +13,7 @@ import AdminOverview from "../AdminOverview/AdminOverview.jsx"
 import UserFeed from "../UserFeed/UserFeed.jsx"
 import UserProfile from "../UserProfile/UserProfile.jsx"
 import SearchResults from "../SearchResults/SearchResults.jsx"
+import { useAuthContext } from "../../contexts/auth"
 import './App.css'
 
 import { AuthContextProvider } from "../../contexts/auth.jsx";
@@ -27,18 +29,15 @@ export default function AppContainer() {
 }
 
 function App() {
-
-  const [user, setUser] = useState({})
-  const [error, setError] = useState(null)
-  const [isFetching, setIsFetching] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
+  const { user, isLoading } = useAuthContext();
+  
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar isLoading={isLoading} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/hero" element={<Hero />} />

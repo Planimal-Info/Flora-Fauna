@@ -11,6 +11,9 @@ export default function LoginPage() {
 
   //Checks if a user is logged in and navigates to home if true
   const navigate = useNavigate();
+  if(user) {
+    navigate("/");
+  }
   return (
     <div className="login-page">
       <LoginForm
@@ -25,7 +28,6 @@ export default function LoginPage() {
 }
 
 export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
-  const navigate = useNavigate();
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
@@ -42,9 +44,6 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
     });
   };
 
-  if(user){
-    navigate("/")
-  }
 
   //Function to call login function
   const handleLoginOnSubmit = () => {
@@ -52,7 +51,7 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
   };
   //Commented out validation because it causes errors with the auth/me route,
   //Needs to be fixed.
-  const loginUserOnSubmit = async () => {
+  const loginUserOnSubmit = () => {
     setIsProcessing(true);
     setErrors(validation(values));
 

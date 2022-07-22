@@ -5,6 +5,7 @@ import "./Hero.css"
 
 export default function Hero() {
   
+  //Uses the current planimal set in the context to render in this info.
   const { currentPlanimal } = useSearchContext();
 
   return (

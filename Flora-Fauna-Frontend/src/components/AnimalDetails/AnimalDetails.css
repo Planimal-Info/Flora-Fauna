@@ -2,3 +2,25 @@
   margin-top: 20px; 
   width: 100vw;
 }
+.details-title{
+  margin-left: 40px;
+}
+
+.details-return{
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: box-shadow 15s;
+}
+
+.details-return:hover{
+  box-shadow: 10px 5px 5px rgba(0,0,0,.4);
+}
+
+
+.return-wrapper{
+  display: flex;
+  justify-content: space-around;
+  width: 93vw;
+}

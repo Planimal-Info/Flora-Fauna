@@ -5,7 +5,7 @@ import AnimalCards from "../AnimalCards/AnimalCards.jsx";
 
 export default function SearchResults() {
   const [searchInputValue, setSearchInput] = useState("");
-  const { searchInput, isLoading, searchResults } = useSearchContext();
+  const { searchInput, isLoading, searchResults, initialized } = useSearchContext();
 
   //Changes the useState to reflect input inside search bar
   function handleOnChange(e) {
@@ -18,8 +18,8 @@ export default function SearchResults() {
     searchInput(searchInputValue);
   };
   
-  console.log(searchResults)
   //Displays all the results from the search.
+  //Will display a no results message if nothing is returned from the request
   return (
     <div className="search-results">
       <div className="search-wrapper">
@@ -42,7 +42,7 @@ export default function SearchResults() {
         {searchResults?.data?.results?.map((e, inx) => (
           <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx}/>
       ))}
-      <h2 className={searchResults?.data?.results?.length <= 0 ? "no-results-title" : "hidden"}>No Results, Try Something More Specific</h2>
+      <h2 className={searchResults?.data?.results?.length <= 0 && initialized === true ? "no-results-title" : "hidden"}>No Results, Try Something More Specific</h2>
       </div>
     </div>
   );

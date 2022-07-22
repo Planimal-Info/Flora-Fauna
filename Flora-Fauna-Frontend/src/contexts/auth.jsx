@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }) => {
 
     setIsLoading(false);
     setInitial(true);
-    }, []);
+  }, []);
   //function to login user
   const loginUser = async (data) => {
     setIsLoading(true);
@@ -41,20 +41,19 @@ export const AuthContextProvider = ({ children }) => {
           email: data.email,
           password: data.password,
         });
-        console.log(getData)
-        ApiClient.setToken(getData?.data?.token)
-        setUser(getData?.data?.user)
-        setError(getData?.error)
+        ApiClient.setToken(getData?.data?.token);
+        setUser(getData?.data?.user);
+        setError(getData?.error);
       } catch (err) {
         console.log(err);
       }
     };
-    req();
-    setIsLoading(false)
-    setInitial(false)
+    await req();
+    setIsLoading(false);
+    setInitial(true);
   };
   //function to register user
-  const registerUser = (data) => {
+    const registerUser = async (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
@@ -66,18 +65,25 @@ export const AuthContextProvider = ({ children }) => {
         lastName: data.lastName,
         email: data.email,
       });
-      console.log(getData)
       ApiClient.setToken(getData?.data?.token)
       setUser(getData?.data?.user)
       setError(getData?.error)
+
+      //returned this to have data to evaluate and use to conditionally render registration component
+      if(getData.error != null){
+        return false;
+      }
+      return true;
       }
       catch(err){
         console.log(err);
       }
-    };
-    req();
+    }
+    
+    const output = await req();
     setIsLoading(false);
     setInitial(true);
+    return output;
   };
 
   //function to log out user, removes token from storage and refreshes the page.

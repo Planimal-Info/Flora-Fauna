@@ -13,6 +13,7 @@ import AdminOverview from "../AdminOverview/AdminOverview.jsx"
 import UserFeed from "../UserFeed/UserFeed.jsx"
 import UserProfile from "../UserProfile/UserProfile.jsx"
 import SearchResults from "../SearchResults/SearchResults.jsx"
+import { useAuthContext } from "../../contexts/auth"
 import './App.css'
 
 import { AuthContextProvider } from "../../contexts/auth.jsx";
@@ -28,12 +29,8 @@ export default function AppContainer() {
 }
 
 function App() {
-
-  const [user, setUser] = useState({})
-  const [error, setError] = useState(null)
-  const [isFetching, setIsFetching] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
+  const { user, isLoading } = useAuthContext();
+  
   return (
     <div className="App">
       <BrowserRouter>

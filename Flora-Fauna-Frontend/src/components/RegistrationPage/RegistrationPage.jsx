@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import validation from "../../validate";
 import { useAuthContext } from "../../contexts/auth.jsx";
@@ -7,6 +7,7 @@ import "./RegistrationPage.css";
 
 export default function RegistrationPage() {
   const { user, registerUser } = useAuthContext();
+
   return (
     <div className="registration-page">
       <RegistrationForm user={user} registerUser={registerUser} />
@@ -16,7 +17,6 @@ export default function RegistrationPage() {
 
 /* REGISTRATION FORM */
 export function RegistrationForm({ registerUser, user }) {
-  let navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
@@ -27,6 +27,9 @@ export function RegistrationForm({ registerUser, user }) {
     password: "",
     passwordConfirm: "",
   });
+  
+  //variable to use the navigation effect from react-router-dom
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setValues({
@@ -34,27 +37,32 @@ export function RegistrationForm({ registerUser, user }) {
       [e.target.name]: e.target.value,
     });
   };
-      
-  if(user){
-    navigate("/")
-  }
-  const handleRegister = () => {
-    registerUser(values);
-  }
-  const signupUser = () => {
-    setIsProcessing(true);
-    setErrors(validation(values));
-    //
-    // if (values.passwordConfirm !== values.password) {
-    //   setErrors(validation(values.passwordConfirm));
-    //   setIsProcessing(false);
-    //   return;
-    // } else {
-    //   setErrors((e) => ({ ...e, passwordConfirm: null }));
-    // }
-    handleRegister();
+  
+  //Function to navigate to home page. used if user is logged in but component hasnt updated.
+  const navigateTo = () => {
+    navigate("/");
   };
 
+  const signupUser = async () => {
+    //Validation of input
+    setIsProcessing(true);
+    setErrors(validation(values));
+    if (values.passwordConfirm !== values.password) {
+      setErrors(validation(values.passwordConfirm));
+      setIsProcessing(false);
+      return;
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }));
+    }
+    //waits for the promise value and navigates to home page based off that.
+    const output = await registerUser(values);
+
+    //Navigates to home page if user registration is successfull using promise.
+    if (output === true) {
+      navigateTo();
+      window.location.reload();
+    }
+  };
   return (
     <div className="registration-form">
       <div className="card">
@@ -142,9 +150,9 @@ export function RegistrationForm({ registerUser, user }) {
               <span className="error">{errors.passwordConfirm}</span>
             )}
           </div>
-          <button className="submit-registration btn" onClick={signupUser}>
+          <ibutton className="submit-registration btn" onClick={signupUser}>
             Create Account
-          </button>
+          </ibutton>
         </div>
         <div className="footer">
           <p>
@@ -156,4 +164,3 @@ export function RegistrationForm({ registerUser, user }) {
     </div>
   );
 }
-

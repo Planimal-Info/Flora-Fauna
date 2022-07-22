@@ -13,17 +13,19 @@ import AdminOverview from "../AdminOverview/AdminOverview.jsx"
 import UserFeed from "../UserFeed/UserFeed.jsx"
 import UserProfile from "../UserProfile/UserProfile.jsx"
 import SearchResults from "../SearchResults/SearchResults.jsx"
-import { useAuthContext } from "../../contexts/auth"
 import './App.css'
 
-import { AuthContextProvider } from "../../contexts/auth.jsx";
+import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
+import { SearchContextProvider } from "../../contexts/search.jsx";
 
 
 
 export default function AppContainer() {
   return (
     <AuthContextProvider>
-      <App />
+      <SearchContextProvider>
+        <App /> 
+    </SearchContextProvider>
     </AuthContextProvider>
   )
 }

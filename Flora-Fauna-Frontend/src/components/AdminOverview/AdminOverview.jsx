@@ -36,13 +36,19 @@ export default function AdminOverview(props) {
 
           <div className="column right">
             <div className="admin-header">
-              
+              <div className="admin-profile-image">{/* PROFILE IMAGE URL */}</div>
+              <div className="admin-title">
+                <h2>Admin Username</h2>
+                <p>Admin</p>
+              </div>
             </div>
-            <div className="flagged-posts">
-              {togglePosts && <AdminFlaggedPosts />}
-            </div>
-            <div className="flagged-users">
-              {toggleUsers && <AdminFlaggedUsers />}
+            <div className="admin-body">
+              <div className="flagged-posts">
+                {togglePosts && <AdminFlaggedPosts />}
+              </div>
+              <div className="flagged-users">
+                {toggleUsers && <AdminFlaggedUsers />}
+              </div>
             </div>
           </div>
         </div>
@@ -59,7 +65,7 @@ export function AdminFlaggedPosts() {
 
 
   return (
-    <div>Flagged Posts</div>
+    <div><h2>Flagged Posts</h2></div>
   )
 }
 

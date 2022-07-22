@@ -26,18 +26,16 @@
 .admin-overview .content .column.right {
   display: flex;
   flex: 0 0 1300px;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user-profile .content .admin-panel {
-  display: flex;
   flex-direction: column;
 }
 
-.user-profile .content .admin-panel h1 {
-  margin-bottom: 30px;
+.admin-overview .content .admin-profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: skyblue;
+  border: 3px solid white;
+  margin-right: 30px;
 }
 
 .admin-panel li {
@@ -54,6 +52,14 @@
   background: var(--brown);
   border-radius: 8px;
   width: inherit;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid gray;
 }
 
 /* TEMP STYLES */

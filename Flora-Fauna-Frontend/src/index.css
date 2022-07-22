@@ -12,6 +12,8 @@
     url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
 }
 
+
+
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +27,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* background-color: #e2e2e2; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -40,9 +42,14 @@
   --brown: #8F7602;
 }
 
+body {
+  height: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }
+
 
 a {
   font-weight: 500;

@@ -1,9 +1,11 @@
 import "./SearchResults.css";
-import { useState } from "react"
-import AnimalCards from "../AnimalCards/AnimalCards.jsx"
+import { useState } from "react";
+import { useSearchContext } from "../../contexts/search";
+import AnimalCards from "../AnimalCards/AnimalCards.jsx";
 
 export default function SearchResults() {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInputValue, setSearchInput] = useState("");
+  const { searchInput, isLoading, searchResults, initialized } = useSearchContext();
 
   //Changes the useState to reflect input inside search bar
   function handleOnChange(e) {
@@ -11,11 +13,13 @@ export default function SearchResults() {
   }
 
   //Sends input value to be requested
-  function handleOnSubmit() {
+  const handleOnSubmit = () => {
     //Send search request
-  }
-
+    searchInput(searchInputValue);
+  };
+  
   //Displays all the results from the search.
+  //Will display a no results message if nothing is returned from the request
   return (
     <div className="search-results">
       <div className="search-wrapper">
@@ -24,14 +28,22 @@ export default function SearchResults() {
       <div className="search-result-content">
         <input
           className="landing-page-input"
-          value={searchInput}
+          value={searchInputValue}
           type="text"
           placeholder="Search"
           onChange={(e) => handleOnChange(e)}
         >
         </input>
       </div>
-      <button className="search-result-submit" onClick={handleOnSubmit}>Submit</button>
+      <button className="search-result-submit" onClick={handleOnSubmit}>
+        Submit
+      </button>
+      <div className="animal-card-area">
+        {searchResults?.data?.results?.map((e, inx) => (
+          <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx}/>
+      ))}
+      <h2 className={searchResults?.data?.results?.length <= 0 && initialized === true ? "no-results-title" : "hidden"}>No Results, Try Something More Specific</h2>
+      </div>
     </div>
   );
 }

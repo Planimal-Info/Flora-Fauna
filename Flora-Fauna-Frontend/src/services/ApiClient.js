@@ -24,7 +24,7 @@ class ApiClient {
    //Issues axios requests
     async request({endpoint, method = "GET", data = {}}){
         const url = `${this.remoteHostUrl}/${endpoint}`
-
+      console.log(data)
         const headers = {
             "Content-Type": "application/json"
         }
@@ -56,6 +56,13 @@ class ApiClient {
    async fetchUserFromToken(){
       return await this.request({ endpoint: "auth/me", method: "GET" });
    }
+
+
+  //----------------------------//
+  //Search input requests.
+  async searchResults(data){
+    return await this.request({ endpoint: "planimal/search", method: "POST", data: data })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

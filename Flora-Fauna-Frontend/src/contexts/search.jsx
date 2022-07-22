@@ -8,6 +8,9 @@ export const SearchContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState(false);
+  
+  //State for sending data for animal info. happens when viewer/user clicks more info button.
+  const [currentPlanimal, setCurrentPlanimal] = useState({});
 
   //Searches the database and returns the results.
   const searchInput = async (data) => {
@@ -25,7 +28,7 @@ export const SearchContextProvider = ({ children }) => {
   }
 
 
-  const searchValue = {searchResults, isLoading, initialized, error, searchInput}; 
+  const searchValue = {searchResults, isLoading, initialized, error, searchInput, currentPlanimal, setCurrentPlanimal}; 
 
   return(
     <SearchContext.Provider value={searchValue}>

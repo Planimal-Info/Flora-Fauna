@@ -23,7 +23,7 @@ class Planimal {
         const API_TOKEN=`exrEXXrEuN2u9UchWxUidMwQ5`
         const GENERIC_FILTER=`$select=distinct common_name,scientific_name,taxonomic_group,state_conservation_rank&$where=category not in('Natural Community')`
         const PARSED_TERMS = Planimal.modifyTerms(searchInput)
-        console.log(PARSED_TERMS) 
+
         let url = `https://data.ny.gov/resource/tk82-7km5.json?$$app_token=${API_TOKEN}&${GENERIC_FILTER} AND common_name like "${PARSED_TERMS}"`
         const response = await fetch(url)
         const myJson = await response.json()

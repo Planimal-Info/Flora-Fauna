@@ -27,7 +27,8 @@ export function RegistrationForm({ registerUser, user }) {
     password: "",
     passwordConfirm: "",
   });
-
+  
+  //variable to use the navigation effect from react-router-dom
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -36,12 +37,14 @@ export function RegistrationForm({ registerUser, user }) {
       [e.target.name]: e.target.value,
     });
   };
-
+  
+  //Function to navigate to home page. used if user is logged in but component hasnt updated.
   const navigateTo = () => {
     navigate("/");
   };
 
   const signupUser = async () => {
+    //Validation of input
     setIsProcessing(true);
     setErrors(validation(values));
     if (values.passwordConfirm !== values.password) {

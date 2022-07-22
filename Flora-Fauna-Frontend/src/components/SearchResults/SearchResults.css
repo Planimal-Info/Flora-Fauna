@@ -24,3 +24,18 @@
   box-shadow: 10px 5px 5px rgba(0,0,0,.4);
 }
 
+.animal-card-area{
+  width: 100vw;
+  display:flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.no-results-title{
+  margin-top: 40px;
+}
+
+.hidden{
+  display: none;
+}
+

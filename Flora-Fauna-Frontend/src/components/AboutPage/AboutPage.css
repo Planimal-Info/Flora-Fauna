@@ -1,0 +1,16 @@
+.about-page {
+    margin: 20px 30px;
+    padding: 30px 30px;
+}
+
+.about-info {
+    width: 800px;
+}
+
+.about-title {
+    margin-bottom: 15px;
+}
+
+.about-desc {
+    line-height: 1.7;
+}

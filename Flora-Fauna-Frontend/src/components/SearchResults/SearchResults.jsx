@@ -40,7 +40,7 @@ export default function SearchResults() {
       </button>
       <div className="animal-card-area">
         {searchResults?.data?.results?.map((e, inx) => (
-          <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx}/>
+          <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx} currentPlanimal={e}/>
       ))}
       <h2 className={searchResults?.data?.results?.length <= 0 && initialized === true ? "no-results-title" : "hidden"}>No Results, Try Something More Specific</h2>
       </div>

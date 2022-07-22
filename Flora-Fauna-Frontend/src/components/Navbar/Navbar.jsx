@@ -23,11 +23,11 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 {!user ? (
                   <>
                     <ul className="links">
-                      <li><Link to='/'>about</Link></li>
+                      <li><Link to='/about'>about</Link></li>
                       <li><Link to='/'>search</Link></li>
                       <li><Link to='/'>resources</Link></li>
                       <li><Link to='/'>contact us</Link></li>
-                      {/* <li><span>Text</span></li> */}
+                      {/* <li><span>user's username or email</span></li> */}
                     </ul>
                     <div className="login-register">
                       <div className={user ? "hidden" : "login-btn"}><Link to='/login'>Login</Link></div>

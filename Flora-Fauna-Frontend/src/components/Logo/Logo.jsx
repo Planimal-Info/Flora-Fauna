@@ -8,7 +8,7 @@ export default function Logo() {
     <div className="logo">
         <div className="content">
           <Link to="/">
-            <img src={reactLogo} alt="logo" />
+            <div className="material-symbols-outlined leaf">eco</div>
           </Link>
         </div>
     </div>

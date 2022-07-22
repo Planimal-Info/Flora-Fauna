@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import reactLogo from '../../assets/react.svg'
+import AboutPage from '../AboutPage/AboutPage'
 import AccessForbidden from '../AccessForbidden/AccessForbidden'
+import Hero from '../Hero/Hero'
 import LandingPage from '../LandingPage/LandingPage'
 import LoginPage from '../LoginPage/LoginPage'
 import Navbar from '../Navbar/Navbar'
@@ -38,8 +40,10 @@ function App() {
         <Navbar isLoading={isLoading} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegistrationPage />} />
+          <Route path="/hero" element={<Hero />} />
           <Route path="/admin" element={<AdminOverview />} />
           <Route path="/userfeed" element={<UserFeed />} />
           <Route path="/userprofile" element={<UserProfile />} />

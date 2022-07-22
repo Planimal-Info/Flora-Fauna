@@ -29,10 +29,9 @@
 
 .landing-page-search-logo{
    height: 20px;
-   width:  20px;
-   position: absolute;                  
+   width:  20px;                 
    cursor:pointer;
-   margin-left: 500px;
+   margin: 0 20px;
 }
 
 

@@ -7,6 +7,7 @@ export default function AnimalCards(props){
   const navigate = useNavigate(); 
   const { currentPlanimal, setCurrentPlanimal, getPictures } = useSearchContext(); 
 
+  //Sets current selected Planimal and gets pictures for that animal
   const handleOnSubmit = async () => {
     setCurrentPlanimal(props.currentPlanimal)
     await getPictures(props.currentPlanimal.common_name)

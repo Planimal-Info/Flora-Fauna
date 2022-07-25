@@ -15,7 +15,6 @@ export default function LandingPage() {
    //Sends input value to be requested, then navigates to search page, which will display the results
    function handleOnSubmit(){
       //Send search request
-      console.log("hello")
       searchInput(searchInputValue)
       navigate("/search");
       

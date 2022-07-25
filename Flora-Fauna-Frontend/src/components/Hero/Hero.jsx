@@ -33,6 +33,7 @@ export default function Hero() {
           alt={currentPlanimal.common_name}
         />
         <h6 className="credits">Taken By: {searchPictures[0]?.photographer}</h6>
+        <a href="https://www.pexels.com">Photos provided by Pexels</a>
       </div>
     </div>
   );

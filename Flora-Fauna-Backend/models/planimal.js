@@ -1,5 +1,6 @@
 const { BadRequestError, UnauthorizedError } = require("../utils/errors")
 const db = require("../db")
+const { API_KEY } = require('../config.js')
 
 class Planimal {
 
@@ -20,13 +21,21 @@ class Planimal {
     //fetches data from api and returns a json file
     //TODO - add numeric check withen search term to prevent errors
     static async getResults(searchInput) {
-        const API_TOKEN=`exrEXXrEuN2u9UchWxUidMwQ5`
         const GENERIC_FILTER=`$select=distinct common_name,scientific_name,taxonomic_group,state_conservation_rank&$where=category not in('Natural Community')`
         const PARSED_TERMS = Planimal.modifyTerms(searchInput)
 
-        let url = `https://data.ny.gov/resource/tk82-7km5.json?$$app_token=${API_TOKEN}&${GENERIC_FILTER} AND common_name like "${PARSED_TERMS}"`
+        let url = `https://data.ny.gov/resource/tk82-7km5.json?$$app_token=${API_KEY}&${GENERIC_FILTER} AND common_name like "${PARSED_TERMS}"`
         const response = await fetch(url)
         const myJson = await response.json()
+
+        return myJson
+    }
+
+    //Fetches the photos from pexel API and displays that.
+    static async getPhotoResults(searchInput){
+        const url = `https://api.pexels.com/v1/search?query=${searchInput.query}`
+        const response = await fetch(url);
+        const myJson = await response.json();
 
         return myJson
     }

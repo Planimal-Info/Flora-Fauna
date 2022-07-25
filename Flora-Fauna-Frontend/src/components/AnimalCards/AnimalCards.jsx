@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom"
 
 export default function AnimalCards(props){
   const navigate = useNavigate(); 
-  const { currentPlanimal, setCurrentPlanimal } = useSearchContext(); 
+  const { currentPlanimal, setCurrentPlanimal, getPictures } = useSearchContext(); 
 
-  const handleOnSubmit = () => {
+  //Sets current selected Planimal and gets pictures for that animal
+  const handleOnSubmit = async () => {
     setCurrentPlanimal(props.currentPlanimal)
+    await getPictures(props.currentPlanimal.common_name)
+
     navigate("/animaldetails")
   }
   //Displays information about the animal on a card.

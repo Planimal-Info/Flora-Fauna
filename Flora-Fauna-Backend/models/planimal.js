@@ -31,6 +31,15 @@ class Planimal {
         return myJson
     }
 
+    //Fetches the photos from pexel API and displays that.
+    static async getPhotoResults(searchInput){
+        const url = `https://api.pexels.com/v1/search?query=${searchInput.query}`
+        const response = await fetch(url);
+        const myJson = await response.json();
+
+        return myJson
+    }
+
 }
 
 module.exports = Planimal

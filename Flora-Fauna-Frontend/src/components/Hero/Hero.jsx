@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useEffect } from "react";
 import { Link } from "react-router-dom"
 import { useSearchContext } from "../../contexts/search.jsx"
 import "./Hero.css"
@@ -6,7 +7,12 @@ import "./Hero.css"
 export default function Hero() {
   
   //Uses the current planimal set in the context to render in this info.
-  const { currentPlanimal } = useSearchContext();
+  const { currentPlanimal, searchPictures, getPictures  } = useSearchContext();
+  
+  useEffect(async() => {
+    await getPictures(currentPlanimal.common_name) 
+  },[])
+
 
   return (
     <div className="hero">
@@ -24,7 +30,8 @@ export default function Hero() {
         </div>
         <div className="overlay"></div>
         <div className="hero-image">
-           <img src="https://images.unsplash.com/photo-1489543584529-7c50791855c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80" alt="bird" />
+           <img src={searchPictures[0]?.src?.original} alt={currentPlanimal.common_name} />
+            <h6 className="credits">Taken By: {searchPictures[0]?.photographer}</h6>
         </div>
     </div>
   )

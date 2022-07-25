@@ -5,6 +5,7 @@ const SearchContext = createContext(null);
 
 export const SearchContextProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState({});
+  const [searchPictures, setSearchPictures] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState(false);
@@ -27,8 +28,23 @@ export const SearchContextProvider = ({ children }) => {
     setInitial(true);
   }
 
+  const getPictures = async (data) => {
+    setIsLoading(true);
+    setInitial(false);
+    try{
+      const req = await ApiClient.searchPictures({query:data});
+      console.log(req.data?.results?.photos)
+      setSearchPictures(req.data.results.photos);
+    }
+    catch(err){
+      console.log(err);
+    }
+    setIsLoading(false);
+    setInitial(true);
+  }
 
-  const searchValue = {searchResults, isLoading, initialized, error, searchInput, currentPlanimal, setCurrentPlanimal}; 
+
+  const searchValue = {searchResults, isLoading, initialized, error, searchInput, currentPlanimal, setCurrentPlanimal, getPictures, searchPictures }; 
 
   return(
     <SearchContext.Provider value={searchValue}>

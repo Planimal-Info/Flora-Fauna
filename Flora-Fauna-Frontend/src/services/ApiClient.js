@@ -63,6 +63,10 @@ class ApiClient {
   async searchResults(data){
     return await this.request({ endpoint: "planimal/search", method: "POST", data: data })
   }
+  //Get pictures from search results
+  async searchPictures(data){
+    return await this.request({ endpoint: "planimal/search/getPhotos", method: "POST", data: data })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

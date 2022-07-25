@@ -24,7 +24,6 @@ class ApiClient {
    //Issues axios requests
     async request({endpoint, method = "GET", data = {}}){
         const url = `${this.remoteHostUrl}/${endpoint}`
-      console.log(data)
         const headers = {
             "Content-Type": "application/json"
         }

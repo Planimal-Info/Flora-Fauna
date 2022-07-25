@@ -21,7 +21,7 @@ export const SearchContextProvider = ({ children }) => {
       const req = await ApiClient.searchResults({ data: data });
       setSearchResults(req);
     } catch (err) {
-      console.log(err);
+      setError(err)
     }
     setIsLoading(false);
     setInitial(true);
@@ -35,7 +35,7 @@ export const SearchContextProvider = ({ children }) => {
         console.log(req.data?.results?.photos);
         setSearchPictures(req.data.results.photos);
       } catch (err) {
-        console.log(err);
+        setError(err)
       }
       setIsLoading(false);
       setInitial(true);

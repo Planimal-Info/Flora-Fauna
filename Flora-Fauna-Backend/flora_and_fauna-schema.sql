@@ -6,6 +6,8 @@ first_name  TEXT NOT NULL,
 last_name   TEXT NOT NULL,
 email       TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN EMAIL) > 1),
 password    TEXT NOT NULL,
+flagged     BOOLEAN DEFAULT FALSE,
+strikes     INTEGER DEFAULT 0,
 created_at  TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

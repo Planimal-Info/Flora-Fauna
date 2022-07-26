@@ -34,7 +34,6 @@ router.get("/me", security.reqAuthUser,async(req,res,next) => {
     try {
         const { email } = res.locals.user;
         const user = await User.fetchUser(email);
-        console.log(user);
         const publicUser = {id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, is_admin:user.is_admin}
         return res.status(200).json({ user: user })
     }

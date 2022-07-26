@@ -3,7 +3,8 @@ require("colors");
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
 const SECRET_KEY = process.env.SECRET_KEY || "secretDev"
-const API_KEY =`exrEXXrEuN2u9UchWxUidMwQ5` 
+const API_KEY = process.env.API_KEY
+const PEXEL_API_KEY = process.env.PEXEL_API_KEY
 
 function getDataBaseUri(){
     const dbUser = process.env.DATABASE_USER || "postgres";
@@ -30,5 +31,6 @@ module.exports = {
     getDataBaseUri,
     BCRYPT_WORK_FACTOR,
     SECRET_KEY,
-    API_KEY
+    API_KEY,
+    PEXEL_API_KEY
 }

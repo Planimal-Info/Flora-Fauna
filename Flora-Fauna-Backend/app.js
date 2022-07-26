@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const { NotFoundError } = require("./utils/errors");
 const router = require("./routes/auth.js")
 const planimalRouter = require("./routes/planimal.js")
+const postRouter = require("./routes/posts.js")
 const security = require("./middleware/security.js")
 
 
@@ -16,9 +17,9 @@ app.use(security.getUser);
 
 app.use("/auth", router)
 app.use("/planimal", planimalRouter)
+app.use("/post", postRouter)
 
 app.get("/", async (req,res,next) => {
-    console.log(res);
     try {
         res.status(200).json({
             "ping":"pong"

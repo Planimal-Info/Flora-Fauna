@@ -61,7 +61,6 @@ class User {
                 throw new BadRequestError(`Missing ${element} in request body`)
             }
         })
-        
         const alreadyRegistered = await User.fetchUser(userData.email)
         if(alreadyRegistered) {
             throw new BadRequestError('Email has already been registered')
@@ -74,9 +73,8 @@ class User {
         const cleanEmail = userData.email.toLowerCase()
         const hashedPassword = await bcrypt.hash(userData.password, BCRYPT_WORK_FACTOR)
         const created_at = "2022-01-01"
-        const is_admin = false
+        const is_admin = credentials.is_admin ? credentials.is_admin : false
     
-
         const result = await db.query(
             
         `INSERT INTO users(

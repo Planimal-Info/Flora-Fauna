@@ -67,6 +67,18 @@ class Posts {
     );
     return results.rows[0];
   }
+
+  //Returns the post that matches the post_id
+  static async getPost(post_id){
+    const results = await db.query(
+      `
+      SELECT * FROM user_posts
+      WHERE id = $1
+      `,
+      [post_id]
+    )
+    return results.rows[0];
+  }
 }
 
 module.exports = Posts;

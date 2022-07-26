@@ -18,6 +18,7 @@ import './App.css'
 
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
 import { SearchContextProvider } from "../../contexts/search.jsx";
+import UploadPage from '../UploadPage/UploadPage'
 
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/admin" element={<AdminOverview />} />
           <Route path="/userfeed" element={<UserFeed />} />
           <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/upload" element={<UploadPage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/animaldetails" element={<AnimalDetails />} />
           <Route path="*" element={<NotFound />} />

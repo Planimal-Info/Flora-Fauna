@@ -1,8 +1,122 @@
 .upload-page{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  margin: 40px 0;
 }
 
-.upload-page-wrapper{
+.upload-page-form{
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  max-width: 700px;
 }
+
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 270px;
+  border: 3px dashed #e4e4e4;
+  border-radius: 10px;
+  background: #424242;
+  cursor: pointer;
+}
+
+.add-file {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+ .upload-page input {
+   height: 50px;
+   padding: 3px 10px;
+ }
+
+ .upload-page label {
+   display: flex;
+   width: 100%;
+   font-size: 20px;
+   margin-bottom: 8px;
+   font-weight: 500;
+ }
+
+ .upload-page textarea {
+  padding: 15px;
+  font-family: Poppins;
+  font-size: 16px;
+  resize: vertical;
+ }
+
+ .upload-page .upload-header {
+   margin-bottom: 40px;
+   font-size: 30px;
+   font-weight: 500;
+   text-align: center;
+ }
+
+.url-upload, .user-post-title, .user-caption {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+}
+
+ .url-input {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-overflow: ellipsis;
+ }
+
+ .upload.btn {
+  border-radius: 3px;
+ }
+
+ .post-submit.btn {
+  font-family: Poppins;
+  font-size: 15px;
+  margin-top: 20px;
+ }
+
+ .preview-image {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+ }
+
+ .uploaded-preview-image {
+  position: relative;
+  width: 600px;
+  display: flex;
+ }
+
+ .remove-image {
+  position: absolute;
+  margin: 10px;
+  background: none;
+  border: none;
+  color: red;
+  right: 610px;
+  cursor: pointer;
+ }
+
+ #image-url {
+  position: relative;
+  height: 50px;
+  width: 700px;
+  padding: 3px 10px;
+ }
+
+ #image-submit {
+  position: absolute;
+  height: 45px;
+  font-size: 17px;
+  font-family: Poppins;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  margin-right: 7px;
+  letter-spacing: 1.1px;
+ }

@@ -18,6 +18,7 @@ user_id             INT REFERENCES users(id),
 likes               INTEGER DEFAULT 0,
 created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
 updated_at          TIMESTAMP NOT NULL DEFAULT NOW(),
+flagged             BOOLEAN DEFAULT FALSE,
 user_post_title     TEXT NOT NULL
 );
 

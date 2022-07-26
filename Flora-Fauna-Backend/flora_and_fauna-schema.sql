@@ -6,6 +6,8 @@ first_name  TEXT NOT NULL,
 last_name   TEXT NOT NULL,
 email       TEXT NOT NULL UNIQUE CHECK (POSITION('@' IN EMAIL) > 1),
 password    TEXT NOT NULL,
+flagged     BOOLEAN DEFAULT FALSE,
+strikes     INTEGER DEFAULT 0,
 created_at  TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -18,6 +20,7 @@ user_id             INT REFERENCES users(id),
 likes               INTEGER DEFAULT 0,
 created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
 updated_at          TIMESTAMP NOT NULL DEFAULT NOW(),
+flagged             BOOLEAN DEFAULT FALSE,
 user_post_title     TEXT NOT NULL
 );
 

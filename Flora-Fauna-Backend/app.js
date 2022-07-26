@@ -1,21 +1,24 @@
 const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-const { NotFoundError } = require("./utils/errors");
+const cors = require("cors")
+const morgan = require("morgan")
+const { NotFoundError } = require("./utils/errors")
 const router = require("./routes/auth.js")
 const planimalRouter = require("./routes/planimal.js")
+const adminRouter = require("./routes/admin.js")
 const security = require("./middleware/security.js")
 
+const app = express()
 
-const app = express();
-
+//Middleware
 app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(security.getUser);
+app.use(security.getUser)
 
+//Routes
 app.use("/auth", router)
 app.use("/planimal", planimalRouter)
+app.use("/admin", adminRouter)
 
 app.get("/", async (req,res,next) => {
     console.log(res);
@@ -29,6 +32,7 @@ app.get("/", async (req,res,next) => {
     }
 })
 
+//Error Handling
 app.use((req,res,next) => {
     return next(new NotFoundError());
 })

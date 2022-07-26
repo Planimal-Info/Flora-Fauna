@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const security = requrie("../middleware/security.js");
+const security = require("../middleware/security.js");
 const Admin = require("../models/admin.js");
 const User = require("../models/user.js");
 
@@ -49,3 +49,5 @@ router.post("/deleteUser", async(req,res,next) => {
     next(err)
   }
 })
+
+module.exports = router

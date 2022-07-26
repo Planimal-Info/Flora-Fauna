@@ -66,6 +66,27 @@ class ApiClient {
   async searchPictures(data){
     return await this.request({ endpoint: "planimal/search/getPhotos", method: "POST", data: data })
   }
+
+  //---------------------------//
+  //Admin Endpoints
+  
+  //Returns all flagged posts
+  async getFlaggedPosts(){
+    return await this.request({ endpoint: "admin/posts", method: "GET" })
+  }
+  //Returns all flagged users
+  async getFlaggedUsers(){
+    return await this.request({ endpoint: "admin/users", method: "GET" })
+  }
+  
+  //Deletes post from site
+  async deletePosts(post_id){
+    return await this.request({ endpoint: "admin/deletePost", method: "POST", data: post_id })
+  }
+  //Deletes user from site
+  async deleteUser(user_id){
+    return await this.request({ endpoint: "admin/deleteUser", method: "POST", data: user_id })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

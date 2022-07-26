@@ -41,8 +41,7 @@ class ApiClient {
         }
     }
 
-   //Add methods for various endpoints
-
+   //Authentication Endpoints
    //Sends data to be register and returns the response.
    async register(data){
       return await this.request({ endpoint: "auth/register", method: "POST", data: data});
@@ -56,8 +55,8 @@ class ApiClient {
       return await this.request({ endpoint: "auth/me", method: "GET" });
    }
 
-
   //----------------------------//
+  //Search Endpoints
   //Search input requests.
   async searchResults(data){
     return await this.request({ endpoint: "planimal/search", method: "POST", data: data })
@@ -87,6 +86,12 @@ class ApiClient {
   async deleteUser(user_id){
     return await this.request({ endpoint: "admin/deleteUser", method: "POST", data: user_id })
   }
+  //-----------------------//
+  //Post Endpoints
+  async createPost(data){
+    return await this.request({endpoint: "post/create",  method:"POST", data:data })
+  }
+  
 }
 
 export default new ApiClient("http://localhost:3001");

@@ -20,7 +20,6 @@ app.use("/planimal", planimalRouter)
 app.use("/post", postRouter)
 
 app.get("/", async (req,res,next) => {
-    console.log(res);
     try {
         res.status(200).json({
             "ping":"pong"

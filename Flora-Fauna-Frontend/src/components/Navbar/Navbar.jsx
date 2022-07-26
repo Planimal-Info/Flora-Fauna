@@ -20,6 +20,8 @@ export default function Navbar({isLoading}) {
 export function NavLinks({ isLoading, user, logoutUser }) {
   return (
     <div className="nav-links">
+                {/*Will display Non User NavLinks if user is logged in*/}
+                {/*Else it'll display user NavLinks*/}
                 {!user ? (
                   <>
                     <ul className="links">
@@ -27,22 +29,20 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                       <li><Link to='/'>search</Link></li>
                       <li><Link to='/'>resources</Link></li>
                       <li><Link to='/'>contact us</Link></li>
-                      {/* <li><span>user's username or email</span></li> */}
                     </ul>
                     <div className="login-register">
                       <div className={user ? "hidden" : "login-btn"}><Link to='/login'>Login</Link></div>
                       <div className={user ? "hidden" : "btn"}><Link to='/register'>Sign Up</Link></div>
-                      <Link to="/admin"><button className={user?.is_admin ? "btn" : "hidden"}>Admin</button></Link>
                       <a href="/" onClick={logoutUser}><button className={user ? "logout-button btn" : "hidden"}>Log Out</button></a>
                     </div>
                     </>
-                ) : ( 
+                ) : (
                   <ul className="links">
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/search">Planimals</Link></li>
                       <li><Link to='/userfeed'>Your Feed</Link></li>
                       <li><a href='/userprofile'>Profile</a></li>
-                      <li><Link to="/admin" className={user?.is_admin ? "" : "hidden"}>Admin</Link></li>
+                      <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
                       <li><a href="/"><button className={user ? "logout-button btn" : "hidden"} onClick={logoutUser}>Log Out</button></a></li>
                   </ul>
                 )

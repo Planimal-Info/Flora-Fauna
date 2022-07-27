@@ -86,7 +86,7 @@ export default function UploadPage() {
               src={URL.createObjectURL(selectedImage)}
             />
             <button className="remove-image" onClick={removeSelectedImage}>
-              <span class="material-symbols-outlined cancel">cancel</span>
+              <span className="material-symbols-outlined cancel">cancel</span>
             </button>
           </div>
         )}

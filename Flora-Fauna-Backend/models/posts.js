@@ -67,6 +67,7 @@ class Posts {
    
     //Deletes file from uploads file, as to not become bloated
     fs.unlink(`${image.path}`, () => {
+      //Need to improve before going into production || Alternative: Put success info into txt
       console.log("success")
     })
 

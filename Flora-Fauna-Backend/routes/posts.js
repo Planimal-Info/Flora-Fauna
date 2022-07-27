@@ -4,7 +4,6 @@ const Posts = require("../models/posts.js");
 const User = require("../models/user.js");
 const security = require("../middleware/security");
 const multer = require("multer")
-const path = require("path")
 const upload = multer({ dest: 'uploads/' })
 
 //Route to create post and insert into database
@@ -19,6 +18,7 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
   }
 });
 
+//Route that takes in the image file, uses multer middlware to parse and adds to uploads file.
 router.post("/upload", upload.single(`file`), security.reqAuthUser, async (req, res, next) => {
   try {
     const { email } = res.locals.user;
@@ -43,6 +43,7 @@ router.get("/listPosts", security.reqAuthUser, async (req, res, next) => {
   }
 });
 
+//Route that returns all posts made.
 router.get("/all", async(req,res,next) => {
   try{
     const allPosts = await Posts.getAllPosts();

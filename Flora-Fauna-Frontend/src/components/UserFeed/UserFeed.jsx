@@ -2,6 +2,7 @@ import "./UserFeed.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { useState } from "react";
 import Hero from "../Hero/Hero.jsx";
+import SearchFilter from "../SearchFilter/SearchFilter"
 
 export default function UserFeed(props) {
   const { user } = useAuthContext();
@@ -40,7 +41,7 @@ export default function UserFeed(props) {
     <div className="user-feed-overview">
       <h2>User Feed</h2>
       <div className="user-feed-wrapper">
-        <div className="user-feed-navbar">
+        {/* <div className="user-feed-navbar">
           <div className="user-feed-filter">
             <h2 onClick={handleTime}>Time</h2>
             <h2 onClick={handleCategories}>Categories</h2>
@@ -52,15 +53,16 @@ export default function UserFeed(props) {
             <h3>Month</h3>
           </div>
         </div>
-      <div className="categories-wrapper">
-          <div className={showCategories ? "user-feed-categories" : "hidden"}>
-            <h3>Plants</h3>
-            <h3>Mammals</h3>
-            <h3>Insects</h3>
-            <h3>Reptiles</h3>
-          </div>
-      </div>
+        <div className="categories-wrapper">
+            <div className={showCategories ? "user-feed-categories" : "hidden"}>
+              <h3>Plants</h3>
+              <h3>Mammals</h3>
+              <h3>Insects</h3>
+              <h3>Reptiles</h3>
+            </div>
         </div>
+        </div> */}
+        <SearchFilter />
         <div className="user-feed-body">
 
         </div>

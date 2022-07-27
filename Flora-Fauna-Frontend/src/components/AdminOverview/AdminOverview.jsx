@@ -1,6 +1,7 @@
 import "./AdminOverview.css";
 import { useAuthContext } from "../../contexts/auth";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AdminOverview(props) {
   // const { user } = useAuthContext();
@@ -65,7 +66,23 @@ export function AdminFlaggedPosts() {
 
 
   return (
-    <div><h2>Flagged Posts</h2></div>
+    <div className="flagged-posts">
+      <h2 className="flagged-title">Flagged Posts</h2>
+
+      {/* FLAGGED ITEM | POSTS */}
+      <div className="flagged-item">
+        <span class="material-symbols-outlined flagged-post-icon">error</span>
+        <div className="post-content">
+          <h3>Post_Title</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum bibendum dictum. 
+            Nullam dolor sapien, maximus in euismod eu, tempor sagittis nisl. 
+            Aenean vitae nisi id nisl ultricies viverra.
+          </p>
+          <Link to="/">Go to Post</Link>
+        </div>
+      </div>
+    
+    </div>
   )
 }
 
@@ -74,6 +91,14 @@ export function AdminFlaggedUsers() {
 
 
   return (
-    <div>Flagged Users</div>
+    <div className="flagged-users">
+      <h2 className="flagged-title">Flagged Users</h2>
+
+      {/* FLAGGED ITEM | USERS */}
+      <div className="flagged-item">
+        <span class="material-symbols-outlined flagged-user-icon">gpp_maybe</span>
+        <div className="user-content"></div>
+      </div>
+    </div>
   )
 }

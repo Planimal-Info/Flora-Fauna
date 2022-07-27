@@ -41,8 +41,15 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/search">Planimals</Link></li>
                       <li><Link to='/userfeed'>Your Feed</Link></li>
-                      <li><a href='/userprofile'>Profile</a></li>
                       <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
+                      <li className="user-options">
+                        <Link to="/upload"><span className="material-symbols-outlined upload-button">add_circle</span></Link>
+                        <Link to="/userprofile">
+                        <div className="profile-img">
+                          {/* USER PROFILE IMAGE */}
+                          <img src="/" alt="" />
+                        </div></Link>
+                      </li>
                       <li><a href="/"><button className={user ? "logout-button btn" : "hidden"} onClick={logoutUser}>Log Out</button></a></li>
                   </ul>
                 )

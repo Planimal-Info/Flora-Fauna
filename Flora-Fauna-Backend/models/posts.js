@@ -1,15 +1,15 @@
 const db = require("../db.js");
 const { BadRequestError } = require("../utils/errors");
+const { unlink } = require("node:fs/promises");
+const fs = require("fs");
 
 class Posts {
   //Adds a post to the database
   static async createPosts(data, user_id) {
     const requiredFields = [
       "photo",
-      "user_post_desc",
-      "taxonomy",
-      "likes",
-      "user_posts_title",
+      "caption",
+      "title",
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
@@ -19,39 +19,60 @@ class Posts {
 
     const results = await db.query(
       `INSERT INTO user_posts(
-          photo,
           user_post_desc,
-          taxonomy,
           user_id,
-          likes, 
           user_post_title
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id, photo, user_post_desc, taxonomy, user_id, likes, likes, user_post_title
+        VALUES ($1, $2, $3)
+        RETURNING id, user_post_desc, user_id, likes, user_post_title
         `,
       [
-        data.photo,
-        data.user_post_desc,
-        data.taxonomy,
+        data.values.caption,
         user_id,
-        data.likes,
-        data.user_post_title,
+        data.values.title,
       ],
     );
-
-    const post = results.rows[0];
-    return post;
+    return results.rows[0];
   }
   //Gets all the posts for a user
   static async getPostsForUser(user_id) {
     const results = await db.query(
       `
-      SELECT * FROM user_posts
-      WHERE user_id = $1
+      SELECT * FROM user_posts WHERE user_id = $1
       `,
       [user_id],
     );
-    return results.rows[0];
+    return results.rows;
+  }
+
+  //Attach image to corresponding post in db
+  static async attachImage(image, user) {
+    //Get all posts from a user and use that to get the latest entry
+    const getPosts = await this.getPostsForUser(user.id);
+    const postId = getPosts[getPosts.length - 1];
+
+    //Reads binary data from file and stores it.
+    const data = fs.readFileSync(image.path);
+
+    //Inputs binary data in latest posts, to match up post and image.
+    const results = await db.query(
+      `
+      UPDATE user_posts 
+      SET photo = $1
+      WHERE id = $2
+      RETURNING *
+      `,
+      [data, postId.id],
+    );
+   
+    //Deletes file from uploads file, as to not become bloated
+    fs.unlink(`${image.path}`, () => {
+      console.log("success")
+    })
+
+    //Returns all posts made
+    const getPost2 = await this.getAllPosts();
+    return getPost2;
   }
 
   //Update likes for a user posts.
@@ -69,15 +90,25 @@ class Posts {
   }
 
   //Returns the post that matches the post_id
-  static async getPost(post_id){
+  static async getPost(post_id) {
     const results = await db.query(
       `
       SELECT * FROM user_posts
       WHERE id = $1
       `,
-      [post_id]
-    )
+      [post_id],
+    );
     return results.rows[0];
+  }
+
+  //List all posts
+  static async getAllPosts() {
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      `,
+    );
+    return result.rows;
   }
 }
 

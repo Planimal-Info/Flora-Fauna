@@ -12,11 +12,10 @@ created_at  TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE user_posts (
-id                  SERIAL PRIMARY KEY,
-photo               TEXT NOT NULL,
+id                  SERIAL PRIMARY KEY, 
+photo               BYTEA,
 user_post_desc      TEXT NOT NULL,
-taxonomy            TEXT NOT NULL,
-user_id             INT REFERENCES users(id),
+user_id             INT NOT NULL,
 likes               INTEGER DEFAULT 0,
 created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
 updated_at          TIMESTAMP NOT NULL DEFAULT NOW(),

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
+import SearchFilter from "../SearchFilter/SearchFilter"
 
 export default function UserFeed(props) {
   const { user } = useAuthContext();
@@ -62,7 +63,7 @@ export default function UserFeed(props) {
         Upload
       </button>
       <div className="user-feed-wrapper">
-        <div className="user-feed-navbar">
+        {/* <div className="user-feed-navbar">
           <div className="user-feed-filter">
             <h2 onClick={handleTime}>Time</h2>
             <h2 onClick={handleCategories}>Categories</h2>
@@ -74,15 +75,17 @@ export default function UserFeed(props) {
               <h3>Month</h3>
             </div>
           </div>
-          <div className="categories-wrapper">
+        </div>
+        <div className="categories-wrapper">
             <div className={showCategories ? "user-feed-categories" : "hidden"}>
               <h3>Plants</h3>
               <h3>Mammals</h3>
               <h3>Insects</h3>
               <h3>Reptiles</h3>
             </div>
-          </div>
         </div>
+        </div> */}
+        <SearchFilter />
         <div className="user-feed-body">
           {Object.keys(posts).length > 1
             ? posts?.map((e, idx) => (

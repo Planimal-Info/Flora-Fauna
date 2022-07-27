@@ -59,10 +59,7 @@ export default function UserFeed(props) {
   return (
     <div className="user-feed-overview">
       <h2>User Feed</h2>
-      <button className="user-upload-button" onClick={sendToUpload}>
-        Upload
-      </button>
-      <div className="user-feed-wrapper">
+     <div className="user-feed-wrapper">
         {/* <div className="user-feed-navbar">
           <div className="user-feed-filter">
             <h2 onClick={handleTime}>Time</h2>

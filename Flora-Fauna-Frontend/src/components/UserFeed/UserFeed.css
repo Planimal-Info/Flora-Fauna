@@ -67,3 +67,19 @@
 .hidden{
   display: none;
 }
+
+.user-feed-body{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.user-upload-button{
+  padding: 10px 15px;
+  width: 150px;
+  align-self: center;
+  margin-top: 20px;
+}
+
+

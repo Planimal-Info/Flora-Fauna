@@ -33,6 +33,7 @@ app.get("/", async (req,res,next) => {
     }
 })
 
+
 //Error Handling
 app.use((req,res,next) => {
     return next(new NotFoundError());

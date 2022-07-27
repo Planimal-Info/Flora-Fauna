@@ -9,16 +9,35 @@ export const PostContextProvider = ({ children }) => {
   const [initialized, setInitialized] = useState(false);
   const [error, setError] = useState({});
 
-  //Sends request to make a post
-  const createPost = (data) => {
-    //Complete once user post form is complete.
-  };
+  //Grabs the posts when the component renders
+  useEffect(async () => {
+    try {
+      const data = await ApiClient.getAllPosts();
+      setPosts(data?.data?.allPosts);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
+  //Sends request to make a post
+  const createPost = async (data) => {
+    setIsLoading(true);
+    setInitialized(false);
+    try {
+      const getData = await ApiClient.createPost(data);
+      setPosts(getData?.addImage);
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+    setInitialized(true);
+  };
   const postValue = {
     posts,
     isLoading,
     initialized,
     error,
+    createPost,
   };
 
   return (
@@ -28,4 +47,4 @@ export const PostContextProvider = ({ children }) => {
   );
 };
 
-export const usePostContext = () => useContext(searchContext);
+export const usePostContext = () => useContext(PostContext);

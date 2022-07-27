@@ -1,40 +1,41 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import reactLogo from '../../assets/react.svg'
-import AboutPage from '../AboutPage/AboutPage'
-import AccessForbidden from '../AccessForbidden/AccessForbidden'
-import Hero from '../Hero/Hero'
-import LandingPage from '../LandingPage/LandingPage'
-import LoginPage from '../LoginPage/LoginPage'
-import Navbar from '../Navbar/Navbar'
-import NotFound from '../NotFound/NotFound'
-import RegistrationPage from '../RegistrationPage/RegistrationPage'
-import AdminOverview from "../AdminOverview/AdminOverview.jsx"
-import UserFeed from "../UserFeed/UserFeed.jsx"
-import UserProfile from "../UserProfile/UserProfile.jsx"
-import SearchResults from "../SearchResults/SearchResults.jsx"
-import AnimalDetails from "../AnimalDetails/AnimalDetails.jsx"
-import './App.css'
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import reactLogo from "../../assets/react.svg";
+import AboutPage from "../AboutPage/AboutPage";
+import AccessForbidden from "../AccessForbidden/AccessForbidden";
+import Hero from "../Hero/Hero";
+import LandingPage from "../LandingPage/LandingPage";
+import LoginPage from "../LoginPage/LoginPage";
+import Navbar from "../Navbar/Navbar";
+import NotFound from "../NotFound/NotFound";
+import RegistrationPage from "../RegistrationPage/RegistrationPage";
+import AdminOverview from "../AdminOverview/AdminOverview.jsx";
+import UserFeed from "../UserFeed/UserFeed.jsx";
+import UserProfile from "../UserProfile/UserProfile.jsx";
+import SearchResults from "../SearchResults/SearchResults.jsx";
+import AnimalDetails from "../AnimalDetails/AnimalDetails.jsx";
+import "./App.css";
 
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
 import { SearchContextProvider } from "../../contexts/search.jsx";
-import UploadPage from '../UploadPage/UploadPage'
-
-
+import { PostContextProvider } from "../../contexts/posts";
+import UploadPage from "../UploadPage/UploadPage";
 
 export default function AppContainer() {
   return (
     <AuthContextProvider>
       <SearchContextProvider>
-        <App /> 
-    </SearchContextProvider>
+        <PostContextProvider>
+          <App />
+        </PostContextProvider>
+      </SearchContextProvider>
     </AuthContextProvider>
-  )
+  );
 }
 
 function App() {
   const { user, isLoading } = useAuthContext();
-  
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -56,5 +57,5 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-  )
+  );
 }

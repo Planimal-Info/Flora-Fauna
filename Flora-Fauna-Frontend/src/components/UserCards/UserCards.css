@@ -1,0 +1,21 @@
+.user-card{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin: 20px 0px;
+  background-color: rgba(51,51,51,.5)
+}
+.user-img{
+  border: none;
+  width: 400px;
+  height: 300px;
+}
+.user-card-title{
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.user-card-desc{
+  margin-bottom: 20px;
+}
+

@@ -72,6 +72,7 @@ export function AdminFlaggedPosts() {
       {/* FLAGGED ITEM | POSTS */}
       <div className="flagged-item">
         <span class="material-symbols-outlined flagged-post-icon">error</span>
+        <span class="material-symbols-outlined flagged-item-close">close</span>
         <div className="post-content">
           <h3>Post_Title</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum bibendum dictum. 
@@ -97,7 +98,15 @@ export function AdminFlaggedUsers() {
       {/* FLAGGED ITEM | USERS */}
       <div className="flagged-item">
         <span class="material-symbols-outlined flagged-user-icon">gpp_maybe</span>
-        <div className="user-content"></div>
+        <span class="material-symbols-outlined flagged-item-close">close</span>
+        <div className="user-content">
+          <div className="flagged-user-profile">{/* Flagged user's profile image */}</div>
+          <div className="flagged-user-info">
+            <h3>User_name</h3>
+            <div className="number-flags">Flag marks: 0</div>
+          </div>
+          <button className="btn delete-btn">Delete <span class="material-symbols-outlined delete-close">close</span></button>
+        </div>
       </div>
     </div>
   )

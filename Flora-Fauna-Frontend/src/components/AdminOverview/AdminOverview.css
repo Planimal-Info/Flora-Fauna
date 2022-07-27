@@ -83,6 +83,24 @@
   width: 80%;
   padding: 30px;
   border-radius: 15px;
+  position: relative;
+}
+
+.flagged-item-close {
+  position: absolute;
+  right: 2%;
+  top: 10%;
+  cursor: pointer;
+}
+
+.delete-btn {
+  padding: 8px 10px;
+  background: rgb(220, 57, 92);
+  position: absolute;
+}
+
+.delete-close {
+  font-size: 15px;
 }
 
 .post-content {
@@ -92,6 +110,7 @@
 .post-content p {
   width: 700px;
   margin-bottom: 20px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -100,6 +119,19 @@
   text-decoration: underline;
 }
 
+.user-content {
+  display: flex;
+  align-items: center;
+}
+
+.flagged-user-profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 1px solid white;
+  margin-right: 30px;
+}
 /* TEMP STYLES */
 .black {
   color: black;

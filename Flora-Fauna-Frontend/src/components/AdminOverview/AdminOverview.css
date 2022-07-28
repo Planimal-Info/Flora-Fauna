@@ -34,7 +34,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: skyblue;
+  background: var(--brown);
   border: 3px solid white;
   margin-right: 30px;
 }
@@ -72,8 +72,8 @@
   margin-right: 40px;
 }
 
-.flagged-post-icon {
-  color: rgb(220, 57, 92);
+.flagged-post-icon, .flagged-user-icon {
+  color: var(--yellow);
 }
 
 .flagged-item {
@@ -97,6 +97,9 @@
   padding: 8px 10px;
   background: rgb(220, 57, 92);
   position: absolute;
+  right: 1.2%;
+  bottom: 10%;
+  font-family: Poppins;
 }
 
 .delete-close {

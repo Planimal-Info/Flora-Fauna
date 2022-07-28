@@ -12,7 +12,7 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
     const { email } = res.locals.user;
     const user = await User.fetchUser(email);
     const makePost = await Posts.createPosts(req.body, user.id);
-    res.status(200).json({ "status":"Success" })
+    res.status(200).json({ post: makePost })
   } catch (error) {
     next(error);
   }
@@ -54,6 +54,17 @@ router.get("/all", async(req,res,next) => {
   }
 })
 
+//Gets Initial Posts
+router.get("/initial", async(req,res,next) => {
+  try{
+    const initialPosts = await Posts.getInitialPosts();
+    res.status(200).json({ initialPosts })
+  }
+  catch(err){
+    next(err);
+  }
+})
+
 router.post("/update", security.reqAuthUser, async (req, res, next) => {
   try {
     const updatedLikes = await Posts.updateLikes(req.body);
@@ -62,5 +73,15 @@ router.post("/update", security.reqAuthUser, async (req, res, next) => {
     next(error);
   }
 });
+
+//Responds with the first 10 posts, 
+router.get("/start", async(req,res,next) => {
+  try{
+    res.status(200)
+  }
+  catch(err){
+    next(err)
+  }
+})
 
 module.exports = router;

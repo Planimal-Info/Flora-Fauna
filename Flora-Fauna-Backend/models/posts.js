@@ -64,16 +64,15 @@ class Posts {
       `,
       [data, postId.id],
     );
-   
+
     //Deletes file from uploads file, as to not become bloated
     fs.unlink(`${image.path}`, () => {
       //Need to improve before going into production || Alternative: Put success info into txt
-      console.log("success")
-    })
+      console.log("success");
+    });
 
     //Returns all posts made
-    const getPost2 = await this.getAllPosts();
-    return getPost2;
+    return results.rows[0];
   }
 
   //Update likes for a user posts.
@@ -109,6 +108,17 @@ class Posts {
       SELECT * FROM user_posts
       `,
     );
+    return result.rows;
+  }
+ 
+  //Gets the first 8 posts from the database.
+  static async getInitialPosts(){
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      WHERE id < 8
+      `
+    )
     return result.rows;
   }
 }

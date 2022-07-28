@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient.js";
 
@@ -10,6 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState({});
   const [reqError, setReqError] = useState(false);
+  const [refresh, setRefresh] = useState(false); 
 
   //Check if a token (ff_token) is in storage,
   //if so, fetch user from that token.
@@ -27,10 +28,10 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       setError(error);
     }
-
     setIsLoading(false);
     setInitial(true);
-  }, []);
+  }, [refresh]);
+
   //function to login user
   const loginUser = async (data) => {
     setIsLoading(true);
@@ -49,6 +50,11 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
     await req();
+   
+    //Refreshes the data when a user logs in, used as a dependancy for the useEffect. Done this way to avoid indeterminate error
+    setRefresh(true);
+    setRefresh(false);
+
     setIsLoading(false);
     setInitial(true);
   };

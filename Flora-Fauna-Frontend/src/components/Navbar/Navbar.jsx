@@ -40,7 +40,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                   <ul className="links">
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/search">Planimals</Link></li>
-                      <li><Link to='/userfeed'>Your Feed</Link></li>
+                      <li><Link to='/userfeed'>User Feed</Link></li>
                       <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
                       <li className="user-options">
                         <Link to="/upload"><span className="material-symbols-outlined upload-button">add_circle</span></Link>

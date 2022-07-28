@@ -43,6 +43,7 @@ export function RegistrationForm({ registerUser, user }) {
     navigate("/");
   };
 
+  //Makes request to sign up user and navigates to home page
   const signupUser = async () => {
     //Validation of input
     setIsProcessing(true);
@@ -60,7 +61,6 @@ export function RegistrationForm({ registerUser, user }) {
     //Navigates to home page if user registration is successfull using promise.
     if (output === true) {
       navigateTo();
-      window.location.reload();
     }
   };
   return (

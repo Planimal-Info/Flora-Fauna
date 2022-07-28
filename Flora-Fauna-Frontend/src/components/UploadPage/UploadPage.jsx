@@ -55,7 +55,7 @@ export default function UploadPage() {
   const handleOnSubmit = () => {
     const inputObj = { image: selectedImage, values: uploadValues };
     createPost(inputObj);
-    navigate('/userfeed')
+    navigate('/userfeed');
   };
   //e.target.value = null
   ////////////////////

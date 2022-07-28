@@ -9,7 +9,7 @@ import SearchFilter from "../SearchFilter/SearchFilter"
 
 export default function UserFeed(props) {
   const { user } = useAuthContext();
-  const { posts, isLoading } = usePostContext();
+  const { posts, isLoading, latestPost, getMorePosts } = usePostContext();
   const [showCategories, setShowCategories] = useState(false);
   const [showTimeFrames, setShowTimeFrames] = useState(false);
 
@@ -46,6 +46,10 @@ export default function UserFeed(props) {
     navigate("/upload");
   };
 
+  const loadMore = async () => {
+    const length = posts.length;
+    getMorePosts(length);
+  }
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
     return (
@@ -60,31 +64,9 @@ export default function UserFeed(props) {
     <div className="user-feed-overview">
       <h2>User Feed</h2>
      <div className="user-feed-wrapper">
-        {/* <div className="user-feed-navbar">
-          <div className="user-feed-filter">
-            <h2 onClick={handleTime}>Time</h2>
-            <h2 onClick={handleCategories}>Categories</h2>
-          </div>
-          <div className="timeframe-wrapper">
-            <div className={showTimeFrames ? "user-feed-timeframe" : "hidden"}>
-              <h3>Day</h3>
-              <h3>Week</h3>
-              <h3>Month</h3>
-            </div>
-          </div>
-        </div>
-        <div className="categories-wrapper">
-            <div className={showCategories ? "user-feed-categories" : "hidden"}>
-              <h3>Plants</h3>
-              <h3>Mammals</h3>
-              <h3>Insects</h3>
-              <h3>Reptiles</h3>
-            </div>
-        </div>
-        </div> */}
-        <SearchFilter />
+       <SearchFilter />
         <div className="user-feed-body">
-          {Object.keys(posts).length > 1
+          {Object.keys(posts).length > 0
             ? posts?.map((e, idx) => (
               <UserCards
                 source={toBase64(e?.photo?.data)}
@@ -95,6 +77,7 @@ export default function UserFeed(props) {
             : ""}
         </div>
       </div>
+    <button className="load-more-feed" onClick={loadMore}>Load More</button>
     </div>
   );
 }

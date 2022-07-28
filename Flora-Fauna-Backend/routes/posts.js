@@ -65,6 +65,7 @@ router.get("/initial", async(req,res,next) => {
   }
 })
 
+//Update likes by 1
 router.post("/update", security.reqAuthUser, async (req, res, next) => {
   try {
     const updatedLikes = await Posts.updateLikes(req.body);
@@ -74,10 +75,11 @@ router.post("/update", security.reqAuthUser, async (req, res, next) => {
   }
 });
 
-//Responds with the first 10 posts, 
-router.get("/start", async(req,res,next) => {
+//Returns with 3 more posts if request is sent
+router.post("/more", security.reqAuthUser, async(req,res,next) => {
   try{
-    res.status(200)
+    const getMore = await Posts.getMorePosts(req.body);
+    res.status(200).json({ getMore })
   }
   catch(err){
     next(err)

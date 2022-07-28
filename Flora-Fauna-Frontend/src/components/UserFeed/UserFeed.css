@@ -82,4 +82,16 @@
   margin-top: 20px;
 }
 
+.load-more-feed{
+  width: 100px;
+  padding: 8px 0px;
+  align-self: center;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: box-shadow .30s, opacity .30s;
+}
+.load-more-feed:hover{
+  box-shadow: 11px 4px 4px rgba(0,0,0,.4);
+
+}
 

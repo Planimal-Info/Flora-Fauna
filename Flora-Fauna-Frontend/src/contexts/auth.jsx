@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient.js";
 
@@ -10,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState({});
   const [reqError, setReqError] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   //Check if a token (ff_token) is in storage,
   //if so, fetch user from that token.
@@ -27,10 +34,10 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       setError(error);
     }
-
     setIsLoading(false);
     setInitial(true);
-  }, []);
+  }, [refresh]);
+
   //function to login user
   const loginUser = async (data) => {
     setIsLoading(true);
@@ -45,45 +52,52 @@ export const AuthContextProvider = ({ children }) => {
         setUser(getData?.data?.user);
         setError(getData?.error);
       } catch (err) {
-        console.log(err);
+        setError(err);
       }
     };
     await req();
+
+    //Refreshes the data when a user logs in, used as a dependancy for the useEffect. Done this way to avoid indeterminate error
+    setRefresh(true);
+    setRefresh(false);
+
     setIsLoading(false);
     setInitial(true);
   };
   //function to register user
-    const registerUser = async (data) => {
+  const registerUser = async (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-      try{
-      const getData = await ApiClient.register({
-        username: data.username,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-      });
-      ApiClient.setToken(getData?.data?.token)
-      setUser(getData?.data?.user)
-      setError(getData?.error)
+      try {
+        const getData = await ApiClient.register({
+          username: data.username,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+        });
+        ApiClient.setToken(getData?.data?.token);
+        setUser(getData?.data?.user);
+        setError(getData?.error);
+        //returned this to have data to evaluate and use to conditionally render registration component
+        if (getData.error != null) {
+          return false;
+        }
+        return true;
+      } catch (err) {
+        setError(err);
+      }
+    };
+    await req();
+   
+    //Refreshes the component.
+    setRefresh(true);
+    setRefresh(false);
 
-      //returned this to have data to evaluate and use to conditionally render registration component
-      if(getData.error != null){
-        return false;
-      }
-      return true;
-      }
-      catch(err){
-        console.log(err);
-      }
-    }
-    
-    const output = await req();
+
     setIsLoading(false);
     setInitial(true);
-    return output;
   };
 
   //function to log out user, removes token from storage and refreshes the page.
@@ -103,6 +117,7 @@ export const AuthContextProvider = ({ children }) => {
     registerUser,
     logoutUser,
     reqError,
+    setRefresh,
   };
 
   return (

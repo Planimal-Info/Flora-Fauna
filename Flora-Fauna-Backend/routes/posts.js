@@ -12,7 +12,7 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
     const { email } = res.locals.user;
     const user = await User.fetchUser(email);
     const makePost = await Posts.createPosts(req.body, user.id);
-    res.status(200).json({ "status":"Success" })
+    res.status(200).json({ post: makePost })
   } catch (error) {
     next(error);
   }
@@ -54,6 +54,18 @@ router.get("/all", async(req,res,next) => {
   }
 })
 
+//Gets Initial Posts
+router.get("/initial", async(req,res,next) => {
+  try{
+    const initialPosts = await Posts.getInitialPosts();
+    res.status(200).json({ initialPosts })
+  }
+  catch(err){
+    next(err);
+  }
+})
+
+//Update likes by 1
 router.post("/update", security.reqAuthUser, async (req, res, next) => {
   try {
     const updatedLikes = await Posts.updateLikes(req.body);
@@ -62,5 +74,28 @@ router.post("/update", security.reqAuthUser, async (req, res, next) => {
     next(error);
   }
 });
+
+//Returns with 3 more posts if request is sent
+router.post("/more", security.reqAuthUser, async(req,res,next) => {
+  try{
+    const getMore = await Posts.getMorePosts(req.body);
+    res.status(200).json({ getMore })
+  }
+  catch(err){
+    next(err)
+  }
+})
+
+//Returns the most liked pictures in ascending order
+router.get("/mostLikes", async(req,res,next) => {
+  try{
+    const sortedPosts = await Posts.getMostLiked();
+    res.status(200).json({ sortedPosts })
+  }
+  catch(err){
+    next(err);
+  }
+})
+
 
 module.exports = router;

@@ -151,6 +151,15 @@ class ApiClient {
   async getAllPosts(){
     return await this.request({ endpoint:"post/all", method: "GET" })
   }
+  
+  //Sends request to get initial posts to load in.
+  async getInitialPosts(){
+    return await this.request({ endpoint:"post/initial", method: "GET" })
+  }
+  //Sends request to get more posts
+  async getMorePosts(post_id){
+    return await this.request({ endpoint:"post/more", method: "POST", data: {id: post_id} })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

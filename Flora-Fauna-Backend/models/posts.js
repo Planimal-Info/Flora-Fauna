@@ -2,6 +2,7 @@ const db = require("../db.js");
 const { BadRequestError } = require("../utils/errors");
 const { unlink } = require("node:fs/promises");
 const fs = require("fs");
+const sharp = require("sharp");
 
 class Posts {
   //Adds a post to the database
@@ -50,9 +51,11 @@ class Posts {
     //Get all posts from a user and use that to get the latest entry
     const getPosts = await this.getPostsForUser(user.id);
     const postId = getPosts[getPosts.length - 1];
-
     //Reads binary data from file and stores it.
     const data = fs.readFileSync(image.path);
+
+    //Resize image before adding to database
+    const resizedImage = await sharp(data).resize(500,600).toBuffer();
 
     //Inputs binary data in latest posts, to match up post and image.
     const results = await db.query(
@@ -62,18 +65,17 @@ class Posts {
       WHERE id = $2
       RETURNING *
       `,
-      [data, postId.id],
+      [resizedImage, postId.id],
     );
-   
+
     //Deletes file from uploads file, as to not become bloated
     fs.unlink(`${image.path}`, () => {
       //Need to improve before going into production || Alternative: Put success info into txt
-      console.log("success")
-    })
+      console.log("success");
+    });
 
     //Returns all posts made
-    const getPost2 = await this.getAllPosts();
-    return getPost2;
+    return results.rows[0];
   }
 
   //Update likes for a user posts.
@@ -109,6 +111,46 @@ class Posts {
       SELECT * FROM user_posts
       `,
     );
+    return result.rows;
+  }
+ 
+  //Gets the first 5 posts from the database.
+  //Gets sent on page login/refresh
+  static async getInitialPosts(){
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      WHERE id < 6
+      `
+    )
+    return result.rows;
+  }
+
+  //Gets more posts when called, does so in increments of 2
+  static async getMorePosts(post_id){
+    const moreId = post_id.id + 3;
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      WHERE id > $1 AND id < $2
+      `,
+      [post_id.id, moreId]
+    )
+    return result.rows;
+  }
+
+
+  //Gets the most likes orders in descending order
+  static async getMostLiked(){
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      `
+    )
+    //Sorts the posts and reverses them to get them in ascending to descending order
+    result.sort();
+    result.reverse();
+
     return result.rows;
   }
 }

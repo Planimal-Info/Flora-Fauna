@@ -20,22 +20,26 @@ class Planimal {
 
   //Fetches the photos from wikipedia API and displays that.
   static async getPhotoResults(searchInput) {
+    const lowerCaseInput = searchInput.query.toLowerCase();
     const FirstCallUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchInput.query}&limit=5&namespace=0&format=json&redirects=resolve`;
     const SecondCallUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles=`;
+    const thirdCall = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${lowerCaseInput}`;
 
     const data = await fetch(FirstCallUrl);
     const jsonData = await data.json();
-
     const wikiLink = jsonData.pop();
+    const paragraphData = await fetch(thirdCall);
+    const paragraph = await paragraphData.json();
     // array empty or does not exist
-    if (wikiLink.length == 0) {
+    if (wikiLink.length <= 0) {
       return "";
     }
     else {
       let wikiLinkSub = wikiLink[0].substring(wikiLink[0].lastIndexOf("/")+1);
       const secondCallData = await fetch(SecondCallUrl+wikiLinkSub);
       const secondJsonData = await secondCallData.json();
-      return secondJsonData.query.pages[0].original.source;
+      const obj = {url: wikiLink, photo: secondJsonData.query.pages[0].original.source, description: paragraph.query.pages}
+      return obj;
     }
   }
 

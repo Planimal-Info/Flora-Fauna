@@ -52,6 +52,7 @@ export const AuthContextProvider = ({ children }) => {
         setUser(getData?.data?.user);
         setError(getData?.error);
       } catch (err) {
+        setError(err);
         console.log(err);
       }
     };
@@ -86,11 +87,13 @@ export const AuthContextProvider = ({ children }) => {
         }
         return true;
       } catch (err) {
+        setError(err);
         console.log(err);
       }
     };
     await req();
-    
+   
+    //Refreshes the component.
     setRefresh(true);
     setRefresh(false);
 

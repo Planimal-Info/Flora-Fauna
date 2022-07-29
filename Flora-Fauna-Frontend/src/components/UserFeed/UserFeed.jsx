@@ -1,8 +1,10 @@
+import React from "react";
 import "./UserFeed.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { usePostContext } from "../../contexts/posts.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Modal, Input, Row, Checkbox, Button, Text, Image } from "@nextui-org/react";
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
 import SearchFilter from "../SearchFilter/SearchFilter"
@@ -55,46 +57,96 @@ export default function UserFeed(props) {
       </div>
     );
   }
+
+  const [visible, setVisible] = useState(false);
+   const [modalContent, setModalContent] = useState([]);
+  //  const [popupToggle, setPopupToggle] = useState(false);
+  const modalHandler = () => setVisible(true);
+  const closeHandler = () => {
+    setVisible(false);
+    console.log("closed");
+  };
+  const changeContent = (e) => {
+    setVisible(true)
+    setModalContent([e]);
+    // setPopupToggle(!popupToggle);
+  }
+  
   // the user feed for a user whos logged in
   return (
     <div className="user-feed-overview">
       <h2>User Feed</h2>
      <div className="user-feed-wrapper">
-        {/* <div className="user-feed-navbar">
-          <div className="user-feed-filter">
-            <h2 onClick={handleTime}>Time</h2>
-            <h2 onClick={handleCategories}>Categories</h2>
-          </div>
-          <div className="timeframe-wrapper">
-            <div className={showTimeFrames ? "user-feed-timeframe" : "hidden"}>
-              <h3>Day</h3>
-              <h3>Week</h3>
-              <h3>Month</h3>
-            </div>
-          </div>
-        </div>
-        <div className="categories-wrapper">
-            <div className={showCategories ? "user-feed-categories" : "hidden"}>
-              <h3>Plants</h3>
-              <h3>Mammals</h3>
-              <h3>Insects</h3>
-              <h3>Reptiles</h3>
-            </div>
-        </div>
-        </div> */}
         <SearchFilter />
         <div className="user-feed-body">
           {Object.keys(posts).length > 1
             ? posts?.map((e, idx) => (
               <UserCards
+                key={idx}
                 source={toBase64(e?.photo?.data)}
                 title={e.user_post_title}
                 desc={e.user_post_desc}
+                modalHandler={modalHandler}
+                changeContent={changeContent}
               />
             ))
             : ""}
         </div>
+        {/* {visible && ()} */}
+        <div className="modal-popup">
+            {Object.keys(posts).length > 1
+            ? posts?.map((x, idx) => (
+              <ModalPopup
+                key={idx}
+                source={toBase64(x?.photo?.data)}
+                title={x.user_post_title}
+                desc={x.user_post_desc}
+                modalHandler={modalHandler}
+                visible={visible}
+                closeHandler={closeHandler}
+              />
+            ))
+            : null}
+        </div>
       </div>
     </div>
   );
+}
+
+export function ModalPopup(props){
+
+  const { visible, closeHandler } = props;
+
+  return(
+    <Modal
+      closeButton
+      blur
+      aria-labelledby="modal-title"
+      open={visible}
+      onClose={closeHandler}
+    >
+  
+    <Modal.Body>
+      <Image
+      width={500}
+      src={props.source}
+      objectFit="cover"
+      />
+        <Text id="modal-title" b size={20}>
+          {props.title}
+        </Text>
+        <Text id="modal-desc" size={15}>
+          {props.desc}
+        </Text>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button auto flat color="error" onClick={closeHandler}>
+        Close
+      </Button>
+      <Button auto onClick={closeHandler}>
+        Sign in
+      </Button>
+    </Modal.Footer>
+  </Modal>
+  )
 }

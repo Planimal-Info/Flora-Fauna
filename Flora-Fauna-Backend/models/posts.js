@@ -138,6 +138,21 @@ class Posts {
     )
     return result.rows;
   }
+
+
+  //Gets the most likes orders in descending order
+  statuc async getMostLiked(){
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      `
+    )
+    //Sorts the posts and reverses them to get them in ascending to descending order
+    result.sort();
+    result.reverse();
+
+    return result.rows;
+  }
 }
 
 module.exports = Posts;

@@ -20,3 +20,9 @@
   margin-bottom: 20px;
 }
 
+.likes-container {
+  display: flex;
+}
+.likes-counter {
+  margin: 0 8px;
+}

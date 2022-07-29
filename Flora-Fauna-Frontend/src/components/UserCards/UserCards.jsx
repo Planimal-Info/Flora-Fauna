@@ -16,17 +16,27 @@ export default function UserCards(props){
     console.log("closed");
   };
 
-  // const changeContent = (e) => {
-  //   setVisible(true)
-  //   setModalContent([e]);
-
-  // }
+  const [liked, setIsLiked] = useState(false)
+  const toggleLikes = () => {
+    setIsLiked(!liked)
+  }
 
   return(
     <div className="user-card">
     <img src={props.source} className="user-img" onClick={modalHandler}/>
     <h2 className="user-card-title">{props.title}</h2>
     <h4 className="user-card-desc">{props.desc}</h4>
+
+    <div className="likes-container">
+      <div className="likes">
+          {liked ? (
+              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+          ) : (
+              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+          )}
+          </div>
+      <div className="likes-counter">0</div>
+    </div>
 
     {visible && 
     

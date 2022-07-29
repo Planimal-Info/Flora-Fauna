@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Modal, Input, Row, Checkbox, Button, Text, Image } from "@nextui-org/react";
+import './ModalPopup.css'
 
 export default function ModalPopup(props){
 
   const { visible, closeHandler } = props;
+  const [liked, setIsLiked] = useState(false)
+  const toggleLikes = () => {
+    setIsLiked(!liked)
+  }
 
   return(
     <Modal
@@ -28,12 +33,14 @@ export default function ModalPopup(props){
         </Text>
     </Modal.Body>
     <Modal.Footer>
-      <Button auto flat color="error" onClick={closeHandler}>
-        Close
-      </Button>
-      <Button auto onClick={closeHandler}>
-        Sign in
-      </Button>
+        <div className="likes">
+        {liked ? (
+            <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+        ) : (
+            <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+        )}
+        </div>
+        <div className="likes-counter">0</div>
     </Modal.Footer>
   </Modal>
   )

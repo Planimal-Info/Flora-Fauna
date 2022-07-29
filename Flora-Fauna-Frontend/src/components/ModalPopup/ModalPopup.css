@@ -1,0 +1,37 @@
+.nextui-c-grJsex-ikUaMfZ-css {
+    max-width: 500px;
+}
+
+.liked, .unliked {
+    color: var(--green);
+}
+
+.nextui-c-gYbKeQ-ibZmKkd-css {
+    justify-content: flex-start;
+}
+
+.likes {
+    display: flex;
+    cursor: pointer;
+}
+
+.likes-counter {
+    font-size: 15px;
+    display: flex;
+}
+
+.likes .material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+.likes .material-symbols-outlined.liked {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}

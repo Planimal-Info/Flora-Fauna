@@ -9,6 +9,8 @@ export const PostContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [error, setError] = useState({});
+  const [refresh, setRefresh] = useState(false);
+  const doRefresh = !refresh;
 
   //Grabs the posts when the component renders
   useEffect(async () => {
@@ -18,7 +20,7 @@ export const PostContextProvider = ({ children }) => {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [refresh]);
 
   //Sends request to make a post
   const createPost = async (data) => {
@@ -26,7 +28,12 @@ export const PostContextProvider = ({ children }) => {
     setInitialized(false);
     try {
       const getData = await ApiClient.createPost(data);
-      setLatestPost(getData?.addImage);
+      const arr = [];
+      arr.push(getData.addImage);
+      posts.forEach((e) => {
+        arr.push(e);
+      });
+      setPosts(arr);
     } catch (err) {
       console.error(err);
     }
@@ -38,15 +45,14 @@ export const PostContextProvider = ({ children }) => {
   const getMorePosts = async (post_id) => {
     try {
       const data = await ApiClient.getMorePosts(post_id);
-      console.log(data);
       if (data.data.getMore.length > 0) {
         const arr = [];
-        posts.forEach(e => {
+        posts.forEach((e) => {
           arr.push(e);
-        })
-        data.data.getMore.forEach(e => {
+        });
+        data.data.getMore.forEach((e) => {
           arr.push(e);
-        })
+        });
         setPosts(arr);
       }
     } catch (err) {

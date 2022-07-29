@@ -7,7 +7,15 @@ import "./RegistrationPage.css";
 
 export default function RegistrationPage() {
   const { user, registerUser } = useAuthContext();
+  const navigate = useNavigate();
 
+  //Function to navigate to home page. used if user is logged in but component hasnt updated.
+  const navigateTo = () => {
+    navigate("/");
+  };
+  if(user){
+    navigateTo();
+  }
   return (
     <div className="registration-page">
       <RegistrationForm user={user} registerUser={registerUser} />
@@ -27,7 +35,7 @@ export function RegistrationForm({ registerUser, user }) {
     password: "",
     passwordConfirm: "",
   });
-  
+
   //variable to use the navigation effect from react-router-dom
   const navigate = useNavigate();
 
@@ -37,12 +45,6 @@ export function RegistrationForm({ registerUser, user }) {
       [e.target.name]: e.target.value,
     });
   };
-  
-  //Function to navigate to home page. used if user is logged in but component hasnt updated.
-  const navigateTo = () => {
-    navigate("/");
-  };
-
   //Makes request to sign up user and navigates to home page
   const signupUser = async () => {
     //Validation of input
@@ -55,13 +57,7 @@ export function RegistrationForm({ registerUser, user }) {
     } else {
       setErrors((e) => ({ ...e, passwordConfirm: null }));
     }
-    //waits for the promise value and navigates to home page based off that.
-    const output = await registerUser(values);
-
-    //Navigates to home page if user registration is successfull using promise.
-    if (output === true) {
-      navigateTo();
-    }
+    registerUser(values);
   };
   return (
     <div className="registration-form">

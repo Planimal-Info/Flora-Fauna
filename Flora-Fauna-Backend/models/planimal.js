@@ -20,8 +20,7 @@ class Planimal {
 
   //Fetches the photos from wikipedia API and displays that.
   static async getPhotoResults(searchInput) {
-
-    const FirstCallUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchInput.data}&limit=5&namespace=0&format=json&redirects=resolve`;
+    const FirstCallUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchInput.query}&limit=5&namespace=0&format=json&redirects=resolve`;
     const SecondCallUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles=`;
 
     const data = await fetch(FirstCallUrl);
@@ -33,11 +32,9 @@ class Planimal {
       return "";
     }
     else {
-      
       let wikiLinkSub = wikiLink[0].substring(wikiLink[0].lastIndexOf("/")+1);
       const secondCallData = await fetch(SecondCallUrl+wikiLinkSub);
       const secondJsonData = await secondCallData.json();
-
       return secondJsonData.query.pages[0].original.source;
     }
   }

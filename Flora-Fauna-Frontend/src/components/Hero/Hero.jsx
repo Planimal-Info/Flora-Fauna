@@ -7,7 +7,6 @@ import "./Hero.css";
 export default function Hero() {
   //Uses the current planimal set in the context to render in this info.
   const { currentPlanimal, searchPictures, getPictures } = useSearchContext();
-
   return (
     <div className="hero">
       <div className="bio-info">
@@ -29,11 +28,9 @@ export default function Hero() {
       <div className="overlay"></div>
       <div className="hero-image">
         <img
-          src={searchPictures[0]?.src?.original}
+          src={searchPictures}
           alt={currentPlanimal.common_name}
         />
-        <h6 className="credits">Taken By: {searchPictures[0]?.photographer}</h6>
-        <a href="https://www.pexels.com">Photos provided by Pexels</a>
       </div>
     </div>
   );

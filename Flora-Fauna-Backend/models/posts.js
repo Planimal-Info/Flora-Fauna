@@ -141,7 +141,7 @@ class Posts {
 
 
   //Gets the most likes orders in descending order
-  statuc async getMostLiked(){
+  static async getMostLiked(){
     const result = await db.query(
       `
       SELECT * FROM user_posts

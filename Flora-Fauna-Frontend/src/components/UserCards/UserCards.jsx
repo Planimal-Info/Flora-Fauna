@@ -13,7 +13,6 @@ export default function UserCards(props){
   
   const closeHandler = () => {
     setVisible(false);
-    console.log("closed");
   };
 
   const [liked, setIsLiked] = useState(false)

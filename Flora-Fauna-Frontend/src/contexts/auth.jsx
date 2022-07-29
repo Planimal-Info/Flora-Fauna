@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient.js";
 
@@ -10,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState({});
   const [reqError, setReqError] = useState(false);
-  const [refresh, setRefresh] = useState(false); 
+  const [refresh, setRefresh] = useState(false);
 
   //Check if a token (ff_token) is in storage,
   //if so, fetch user from that token.
@@ -50,7 +56,7 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
     await req();
-   
+
     //Refreshes the data when a user logs in, used as a dependancy for the useEffect. Done this way to avoid indeterminate error
     setRefresh(true);
     setRefresh(false);
@@ -59,37 +65,38 @@ export const AuthContextProvider = ({ children }) => {
     setInitial(true);
   };
   //function to register user
-    const registerUser = async (data) => {
+  const registerUser = async (data) => {
     setIsLoading(true);
     setInitial(false);
     const req = async () => {
-      try{
-      const getData = await ApiClient.register({
-        username: data.username,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-      });
-      ApiClient.setToken(getData?.data?.token)
-      setUser(getData?.data?.user)
-      setError(getData?.error)
-
-      //returned this to have data to evaluate and use to conditionally render registration component
-      if(getData.error != null){
-        return false;
-      }
-      return true;
-      }
-      catch(err){
+      try {
+        const getData = await ApiClient.register({
+          username: data.username,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+        });
+        ApiClient.setToken(getData?.data?.token);
+        setUser(getData?.data?.user);
+        setError(getData?.error);
+        //returned this to have data to evaluate and use to conditionally render registration component
+        if (getData.error != null) {
+          return false;
+        }
+        return true;
+      } catch (err) {
         console.log(err);
       }
-    }
+    };
+    await req();
     
-    const output = await req();
+    setRefresh(true);
+    setRefresh(false);
+
+
     setIsLoading(false);
     setInitial(true);
-    return output;
   };
 
   //function to log out user, removes token from storage and refreshes the page.
@@ -109,6 +116,7 @@ export const AuthContextProvider = ({ children }) => {
     registerUser,
     logoutUser,
     reqError,
+    setRefresh,
   };
 
   return (

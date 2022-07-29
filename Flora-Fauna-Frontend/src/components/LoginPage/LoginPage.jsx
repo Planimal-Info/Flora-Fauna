@@ -7,11 +7,12 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
+  const { loginUser, user, setUser, reqError, isLoading, initialized } =
+    useAuthContext();
 
   //Checks if a user is logged in and navigates to home if true
   const navigate = useNavigate();
-  if(user) {
+  if (user) {
     navigate("/");
   }
   return (
@@ -28,7 +29,6 @@ export default function LoginPage() {
 }
 
 export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
-
   const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
@@ -43,7 +43,6 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
       [e.target.name]: e.target.value,
     });
   };
-
 
   //Function to call login function
   const handleLoginOnSubmit = () => {
@@ -98,7 +97,9 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
             {errors.password && <span className="error">{errors.password}
             </span>}
           </div>
-            <ibutton onClick={loginUserOnSubmit} className="submit-login btn">Login</ibutton>
+          <ibutton onClick={loginUserOnSubmit} className="submit-login btn">
+            Login
+          </ibutton>
         </div>
         <div className="footer">
           <p>

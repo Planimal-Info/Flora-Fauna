@@ -2,7 +2,7 @@ import React from "react";
 import "./UserFeed.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { usePostContext } from "../../contexts/posts.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Input, Row, Checkbox, Button, Text, Image } from "@nextui-org/react";
 import Hero from "../Hero/Hero.jsx";
@@ -22,9 +22,17 @@ export const toBase64 = function(arr) {
 
 export default function UserFeed(props) {
   const { user } = useAuthContext();
-  const { posts, isLoading } = usePostContext();
+  const { posts, isLoading, latestPost, getMorePosts } = usePostContext();
   const [showCategories, setShowCategories] = useState(false);
   const [showTimeFrames, setShowTimeFrames] = useState(false);
+  const [morePosts, setMorePosts] = useState([]);
+ 
+  //Weird way of making sure the "No More Posts" sign dosent show up when first mounting/re-mounting
+  //May refractor if a better way is found
+  useEffect(() => {
+    const arr = [1];
+    setMorePosts(arr);
+  },[]) 
 
   //hides and shows the time filters
   function handleTime() {
@@ -48,6 +56,12 @@ export default function UserFeed(props) {
   const sendToUpload = () => {
     navigate("/upload");
   };
+  
+  //Loads more images when prompted
+  const loadMore = async () => {
+    const length = posts.length;
+    setMorePosts(await getMorePosts(length));
+  }
 
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
@@ -67,7 +81,7 @@ export default function UserFeed(props) {
      <div className="user-feed-wrapper">
         <SearchFilter />
         <div className="user-feed-body">
-          {Object.keys(posts).length > 1
+          {Object.keys(posts).length > 0
             ? posts?.map((e, idx) => (
               <UserCards
                 key={idx}
@@ -80,6 +94,8 @@ export default function UserFeed(props) {
             : ""}
         </div>
       </div>
+    <h2 className={morePosts?.length <= 0 ? "" : "hidden"}>No More Posts</h2>
+    <button className={posts.length <= 0 ? "hidden" : "load-more-feed"} onClick={loadMore}>Load More</button>
     </div>
   );
 }

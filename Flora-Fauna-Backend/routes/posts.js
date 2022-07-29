@@ -86,4 +86,16 @@ router.post("/more", security.reqAuthUser, async(req,res,next) => {
   }
 })
 
+//Returns the most liked pictures in ascending order
+router.get("/mostLikes", async(req,res,next) => {
+  try{
+    const sortedPosts = await Posts.getMostLiked();
+    res.status(200).json({ sortedPosts })
+  }
+  catch(err){
+    next(err);
+  }
+})
+
+
 module.exports = router;

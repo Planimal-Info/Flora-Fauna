@@ -1,11 +1,24 @@
+import React from "react";
 import "./UserFeed.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { usePostContext } from "../../contexts/posts.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Modal, Input, Row, Checkbox, Button, Text, Image } from "@nextui-org/react";
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
 import SearchFilter from "../SearchFilter/SearchFilter"
+
+//Changes array buffer in posts response to base64 to display
+export const toBase64 = function(arr) {
+    //Changes ArrayBuffer to base 64
+    const baseSource = btoa(
+      arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
+    );
+    //Takes base64 string and concats to get right source for image
+    const source = `data:image/jpeg;base64,${baseSource}`;
+    return source;
+  }
 
 export default function UserFeed(props) {
   const { user } = useAuthContext();
@@ -38,16 +51,6 @@ export default function UserFeed(props) {
     setShowCategories(!categories);
   }
 
-  //Changes array buffer in posts response to base64 to display
-  function toBase64(arr) {
-    //Changes ArrayBuffer to base 64
-    const baseSource = btoa(
-      arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
-    );
-    //Takes base64 string and concats to get right source for image
-    const source = `data:image/jpeg;base64,${baseSource}`;
-    return source;
-  }
   //Navigates to upload page
   const navigate = useNavigate();
   const sendToUpload = () => {
@@ -69,19 +72,23 @@ export default function UserFeed(props) {
       </div>
     );
   }
+
+  
   // the user feed for a user whos logged in
   return (
     <div className="user-feed-overview">
       <h2>User Feed</h2>
      <div className="user-feed-wrapper">
-       <SearchFilter />
+        <SearchFilter />
         <div className="user-feed-body">
           {Object.keys(posts).length > 0
             ? posts?.map((e, idx) => (
               <UserCards
+                key={idx}
                 source={toBase64(e?.photo?.data)}
                 title={e.user_post_title}
                 desc={e.user_post_desc}
+                post={e}
               />
             ))
             : ""}

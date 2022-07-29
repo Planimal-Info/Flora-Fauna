@@ -53,7 +53,6 @@ export const AuthContextProvider = ({ children }) => {
         setError(getData?.error);
       } catch (err) {
         setError(err);
-        console.log(err);
       }
     };
     await req();
@@ -88,7 +87,6 @@ export const AuthContextProvider = ({ children }) => {
         return true;
       } catch (err) {
         setError(err);
-        console.log(err);
       }
     };
     await req();

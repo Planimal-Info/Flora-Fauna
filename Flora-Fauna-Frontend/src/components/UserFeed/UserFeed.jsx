@@ -18,7 +18,6 @@ export default function UserFeed(props) {
   //May refractor if a better way is found
   useEffect(() => {
     const arr = [1];
-    console.log(arr.length);
     setMorePosts(arr);
   },[]) 
 

@@ -158,7 +158,6 @@ class ApiClient {
   }
   //Sends request to get more posts
   async getMorePosts(post_id){
-    console.log(post_id)
     return await this.request({ endpoint:"post/more", method: "POST", data: {id: post_id} })
   }
 }

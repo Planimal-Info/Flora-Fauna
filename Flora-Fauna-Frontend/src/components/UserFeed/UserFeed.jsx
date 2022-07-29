@@ -1,7 +1,7 @@
 import "./UserFeed.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { usePostContext } from "../../contexts/posts.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
@@ -12,6 +12,15 @@ export default function UserFeed(props) {
   const { posts, isLoading, latestPost, getMorePosts } = usePostContext();
   const [showCategories, setShowCategories] = useState(false);
   const [showTimeFrames, setShowTimeFrames] = useState(false);
+  const [morePosts, setMorePosts] = useState([]);
+ 
+  //Weird way of making sure the "No More Posts" sign dosent show up when first mounting/re-mounting
+  //May refractor if a better way is found
+  useEffect(() => {
+    const arr = [1];
+    console.log(arr.length);
+    setMorePosts(arr);
+  },[]) 
 
   //hides and shows the time filters
   function handleTime() {
@@ -45,11 +54,13 @@ export default function UserFeed(props) {
   const sendToUpload = () => {
     navigate("/upload");
   };
-
+  
+  //Loads more images when prompted
   const loadMore = async () => {
     const length = posts.length;
-    getMorePosts(length);
+    setMorePosts(await getMorePosts(length));
   }
+
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
     return (
@@ -77,7 +88,8 @@ export default function UserFeed(props) {
             : ""}
         </div>
       </div>
-    <button className="load-more-feed" onClick={loadMore}>Load More</button>
+    <h2 className={morePosts?.length <= 0 ? "" : "hidden"}>No More Posts</h2>
+    <button className={posts.length <= 0 ? "hidden" : "load-more-feed"} onClick={loadMore}>Load More</button>
     </div>
   );
 }

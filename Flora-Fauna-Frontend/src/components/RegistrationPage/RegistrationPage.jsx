@@ -7,15 +7,13 @@ import "./RegistrationPage.css";
 
 export default function RegistrationPage() {
   const { user, registerUser } = useAuthContext();
+  
+  //If theres a user, will navigate to home page.
   const navigate = useNavigate();
-
-  //Function to navigate to home page. used if user is logged in but component hasnt updated.
-  const navigateTo = () => {
+  if (user) {
     navigate("/");
-  };
-  if(user){
-    navigateTo();
   }
+
   return (
     <div className="registration-page">
       <RegistrationForm user={user} registerUser={registerUser} />
@@ -36,15 +34,13 @@ export function RegistrationForm({ registerUser, user }) {
     passwordConfirm: "",
   });
 
-  //variable to use the navigation effect from react-router-dom
-  const navigate = useNavigate();
-
   const handleChange = (e) => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
     });
   };
+
   //Makes request to sign up user and navigates to home page
   const signupUser = async () => {
     //Validation of input
@@ -59,6 +55,7 @@ export function RegistrationForm({ registerUser, user }) {
     }
     registerUser(values);
   };
+
   return (
     <div className="registration-form">
       <div className="card">

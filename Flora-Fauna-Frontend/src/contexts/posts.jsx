@@ -35,6 +35,7 @@ export const PostContextProvider = ({ children }) => {
       });
       setPosts(arr);
     } catch (err) {
+      setError(err);
       console.error(err);
     }
     setIsLoading(false);
@@ -55,6 +56,7 @@ export const PostContextProvider = ({ children }) => {
         });
         setPosts(arr);
       }
+      return data.data.getMore;
     } catch (err) {
       console.error(err);
     }

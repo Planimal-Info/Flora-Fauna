@@ -6,6 +6,8 @@ const SearchContext = createContext(null);
 export const SearchContextProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState({});
   const [searchPictures, setSearchPictures] = useState({});
+  const [url, setUrl] = useState({});
+  const [description, setDescription] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitial] = useState(false);
   const [error, setError] = useState(false);
@@ -32,14 +34,16 @@ export const SearchContextProvider = ({ children }) => {
       setInitial(false);
       try {
         const req = await ApiClient.searchPictures({ query: data });
-        setSearchPictures(req.data.results);
+        setSearchPictures(req?.data?.results?.photo);
+        setUrl(req?.data?.results?.url)
+        const key = Object.keys(req?.data?.results?.description)[0];
+        setDescription(req?.data?.results?.description[key])
       } catch (err) {
         setError(err)
       }
       setIsLoading(false);
       setInitial(true);
   };
-
   const searchValue = {
     searchResults,
     isLoading,
@@ -50,6 +54,9 @@ export const SearchContextProvider = ({ children }) => {
     setCurrentPlanimal,
     getPictures,
     searchPictures,
+    setUrl,
+    url,
+    description
   };
 
   return (

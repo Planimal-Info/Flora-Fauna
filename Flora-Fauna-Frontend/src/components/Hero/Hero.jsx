@@ -6,7 +6,7 @@ import "./Hero.css";
 
 export default function Hero() {
   //Uses the current planimal set in the context to render in this info.
-  const { currentPlanimal, searchPictures, getPictures } = useSearchContext();
+  const { currentPlanimal, searchPictures, getPictures, url, description } = useSearchContext();
   return (
     <div className="hero">
       <div className="bio-info">
@@ -14,16 +14,11 @@ export default function Hero() {
         <h2 className="hero-title">{currentPlanimal.common_name}</h2>
         <h3 className="hero-title">{currentPlanimal.scientific_name}</h3>
         <p className="hero-desc">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          auctor hendrerit mauris, nec sollicitudin ligula. Nullam porta leo in
-          ante egestas cursus. Integer urna orci, rhoncus vitae fringilla
-          cursus, egestas vel nunc. Vivamus mauris nunc, suscipit et imperdiet
-          sit amet, molestie id dui. Quisque suscipit arcu et justo ullamcorper,
-          eget posuere nibh fringilla.
+        {description.extract}
         </p>
-        <a href="https://en.wikipedia.org/wiki/Cat">
-          <h2 className="learn-more">Learn More</h2>
-        </a>
+        {/* <a href={url[0]}> */}
+        {/*   <h2 className="learn-more">Learn More</h2> */}
+        {/* </a> */}
       </div>
       <div className="overlay"></div>
       <div className="hero-image">

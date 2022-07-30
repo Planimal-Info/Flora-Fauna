@@ -24,7 +24,21 @@
 
 .likes-container {
   display: flex;
+  justify-content: space-between;
 }
 .likes-counter {
   margin: 0 8px;
+}
+.report{
+  padding: 5px;
+  color: black;
+  background-color: coral;
+  cursor: pointer;
+  border: none;
+  transition: background-color .30s, opacity .15s;
+}
+.report:hover{
+  background-color: red;
+  opacity: .9;
+
 }

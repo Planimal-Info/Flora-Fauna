@@ -5,13 +5,13 @@ class Admin {
   static async getFlaggedPosts() {
     const results = await db.query(
       `
-      SELECT * FROM user_posts
+      SELECT id, user_post_title, user_post_desc 
+      FROM user_posts
       WHERE flagged = true
-      RETURNING *
       `,
     );
 
-    return results.rows[0];
+    return results.rows;
   }
 
   //Deletes a single post, used by admin if they deem it fit to delete post
@@ -25,9 +25,6 @@ class Admin {
       `,
       [post_id],
     );
-
-    //Update strikes by 1 for user
-
     //Grabs strikes for user
     const strikes = await db.query(
       `
@@ -41,7 +38,7 @@ class Admin {
     const updateStrikes = await db.query(
       `
       UPDATE users
-      SET strikes = $1,
+      SET strikes = $1 
       WHERE id = $2
       RETURNING *
       `,
@@ -52,6 +49,22 @@ class Admin {
       userStrikes: updateStrikes.rows[0],
     };
     return results;
+  }
+ 
+  //Updates flagged for a post when true
+  static async reportPost(post_id){
+    console.log(post_id)
+    const results = db.query(
+      `
+      UPDATE user_posts
+      SET flagged = true
+      WHERE id = $1
+      RETURNING *
+      `,
+      [post_id]
+    )
+
+    return results.rows;
   }
 
   //Gets all the flagged users and returns them for the admin to see.

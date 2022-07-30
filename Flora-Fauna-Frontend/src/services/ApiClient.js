@@ -130,6 +130,10 @@ class ApiClient {
       data: user_id,
     });
   }
+  //Flags a post when called
+  async flagPost(post_id){
+    return await this.request({ endpoint: "admin/flagpost", method: "POST", data: {id: post_id}})
+  }
   //-----------------------//
   //Post Endpoints
   //Sends request to create post and sends another request to store image in that post

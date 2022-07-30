@@ -50,4 +50,16 @@ router.post("/deleteUser", async(req,res,next) => {
   }
 })
 
+//Flags a post when called
+router.post("/flagpost", async(req,res,next) => {
+  try {
+    const updatedPosts = await Admin.reportPost(req.body.id);
+    const allPosts = await Admin.getFlaggedPosts();
+    res.status(200).json({ allPosts })
+  }
+  catch(err){
+    next(err);
+  }
+})
+
 module.exports = router

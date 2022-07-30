@@ -19,6 +19,7 @@ import "./App.css";
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
 import { SearchContextProvider } from "../../contexts/search.jsx";
 import { PostContextProvider } from "../../contexts/posts";
+import { AdminContextProvider } from "../../contexts/admin.jsx";
 import UploadPage from "../UploadPage/UploadPage";
 
 export default function AppContainer() {
@@ -26,7 +27,9 @@ export default function AppContainer() {
     <AuthContextProvider>
       <SearchContextProvider>
         <PostContextProvider>
+        <AdminContextProvider>
           <App />
+        </AdminContextProvider>
         </PostContextProvider>
       </SearchContextProvider>
     </AuthContextProvider>

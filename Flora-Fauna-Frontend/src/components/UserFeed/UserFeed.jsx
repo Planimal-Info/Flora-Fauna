@@ -62,7 +62,7 @@ export default function UserFeed(props) {
     const length = posts.length;
     setMorePosts(await getMorePosts(length));
   }
-
+    console.log(posts);
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
     return (
@@ -89,6 +89,7 @@ export default function UserFeed(props) {
                 title={e.user_post_title}
                 desc={e.user_post_desc}
                 post={e}
+                id={e.id}
               />
             ))
             : ""}

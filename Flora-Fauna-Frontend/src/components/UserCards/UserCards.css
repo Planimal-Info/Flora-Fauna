@@ -41,17 +41,19 @@
 
 }
 
-.uc.flagged-icon {
+.flag-user {
   display: flex;
   position: absolute;
   right: 5%;
-  color: white;
+}
 
+.uc.flagged-icon {
+  color: white;
 }
 
 .uc.flagged-icon:hover {
   cursor: pointer;
-  color: var(--yellow);
+  color: var(--nextui-colors-error);
   transition: 0.4s;
 }
 .nextui-c-iVzbCs-icDvGzP-css {
@@ -68,3 +70,6 @@
   opacity: 0;
 }
 
+.flagged-tooltip {
+  margin-left: 50px;
+}

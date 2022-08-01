@@ -3,7 +3,7 @@ import { useState } from "react";
 import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
 import { useAdminContext } from "../../contexts/admin.jsx";
-import { Card, Col, Text } from "@nextui-org/react";
+import { Card, Col, Text, Tooltip, Grid, Link } from "@nextui-org/react";
 
 export default function UserCards(props) {
   const { source, title, desc, post, id } = props;
@@ -49,6 +49,8 @@ export default function UserCards(props) {
       height={340}
       alt="Card image background"
     />
+
+    {/* Likes */}
     <div className="likes-container">
       <div className="likes">
           {liked ? (
@@ -57,20 +59,28 @@ export default function UserCards(props) {
               <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
           )}
           </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon">flag</div>
+      <div className="likes-counter">0</div>
+
+      {/* Tooltip for when post is flagged */}
+    <div className="flag-user">
+      <Tooltip
+          className="flagged-tooltip"
+          content={"Post has been flagged"}
+          trigger="click"
+          color="error"
+          placement="topEnd"
+          leaveDelay={2000}
+          hideArrow
+        >
+          <Link>
+            <Text b color="primary">
+              <div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
+            </Text>
+          </Link>
+        </Tooltip>
+    </div>
     </div>
   </Card>
-
-    {/* <div className="likes-container">
-      <div className="likes">
-          {liked ? (
-              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
-          ) : (
-              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
-          )}
-          </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
-    </div> */}
       {visible &&
         (
           <div className="modal-popup">

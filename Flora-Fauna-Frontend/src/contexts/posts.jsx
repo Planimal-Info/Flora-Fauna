@@ -10,7 +10,7 @@ export const PostContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [error, setError] = useState({});
-
+  const [test, setTest] = useState(false);
   //Uses refresh from admin context to refresh both admin and post components
   const { refresh, setRefresh } = useAdminContext();
 

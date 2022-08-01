@@ -23,10 +23,6 @@ export const AdminContextProvider = ({ children }) => {
     try {
       const getData = await ApiClient.flagPost(data);
       setFlaggedPosts(getData.data.allPosts);
-
-      //Refreshes the component
-      setRefresh(true);
-      setRefresh(false);
     } catch (err) {
       setError(err);
     }

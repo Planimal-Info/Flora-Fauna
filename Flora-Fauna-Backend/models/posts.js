@@ -79,17 +79,44 @@ class Posts {
   }
 
   //Update likes for a user posts.
-  static async updateLikes(data) {
-    const updatedLikes = data.likes + 1;
-    const results = await db.query(
+  static async updateLikes(data, user) {
+    //Checks if the user has liked the post before
+    const check = await db.query(
       `
+      SELECT * FROM likes
+      WHERE user_post_id = $1 AND user_id = $2
+      `,
+      [data.id, user.id],
+    );
+    //If user hasnt liked the post before, update.
+    if (check.rows.length <= 0) {
+      const updatedLikes = data.likes + 1;
+      const results = await db.query(
+        `
       UPDATE user_posts
       SET likes = $1
       WHERE id = $2
+      RETURNING *
       `,
-      [updatedLikes, data.post_id],
-    );
+        [updatedLikes, data.id],
+      );
+      //Add the user to the liked table
+      const addUserToLiked = await db.query(
+        `
+        INSERT into likes(
+          user_id,
+          user_post_id
+        )
+        VALUES($1, $2)
+        RETURNING *
+        `,
+        [user.id, data.id],
+      );
+    //Return the data that the user has liked the picture now.
     return results.rows[0];
+    }
+    //Return the data that the user has already liked the picture
+    return check.rows[0];
   }
 
   //Returns the post that matches the post_id
@@ -121,8 +148,8 @@ class Posts {
       `
       SELECT * FROM user_posts
       LIMIT 5
-      `
-    )
+      `,
+    );
 
     return result.rows;
   }

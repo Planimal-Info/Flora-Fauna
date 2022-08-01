@@ -3,11 +3,13 @@ import { useState } from "react";
 import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
 import { useAdminContext } from "../../contexts/admin.jsx";
+import { usePostContext } from "../../contexts/posts";
 import { Card, Col, Text } from "@nextui-org/react";
 
 export default function UserCards(props) {
   const { source, title, desc, post, id } = props;
   const { reportPost } = useAdminContext(); 
+  const { updateLikes } = usePostContext();
   const [visible, setVisible] = useState(false);
   const [modalContent, setModalContent] = useState([]);
   const modalHandler = () => setVisible(true);
@@ -24,6 +26,11 @@ export default function UserCards(props) {
   //Reports the post and sends it to admin panel
   const report = async () => {
     await reportPost(id)
+  }
+ 
+  //Updates the likes for the post
+  const handleUpdateLikes = async () => {
+    await updateLikes(id, post.likes)
   }
   return (
     <div className="user-card">
@@ -53,12 +60,12 @@ export default function UserCards(props) {
     <div className="likes-container">
       <div className="likes">
           {liked ? (
-              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+              <span className="material-symbols-outlined liked" onClick={handleUpdateLikes}>thumb_up</span>
           ) : (
-              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+              <span className="material-symbols-outlined unliked" onClick={handleUpdateLikes}>thumb_up</span>
           )}
           </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
+      <div className="likes-counter">{post.likes}</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
     </div>
   </Card>
 
@@ -83,6 +90,7 @@ export default function UserCards(props) {
               visible={visible}
               closeHandler={closeHandler}
               id={id}
+              handleUpdateLikes={handleUpdateLikes}
             />
           </div>
         )}

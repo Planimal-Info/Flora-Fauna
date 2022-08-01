@@ -25,8 +25,8 @@ user_post_title     TEXT NOT NULL
 
 CREATE TABLE likes (
 id              SERIAL PRIMARY KEY,
-user_id         INT REFERENCES users(id),
-user_post_id    INT REFERENCES user_posts(id)
+user_id         INT NOT NULL,
+user_post_id    INT NOT NULL
 );
 
 CREATE TABLE planimals (

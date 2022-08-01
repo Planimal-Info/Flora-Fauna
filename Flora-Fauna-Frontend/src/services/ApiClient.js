@@ -172,6 +172,15 @@ class ApiClient {
       data: { id: post_id },
     });
   }
+
+  //Sends request to update likes for a post
+  async getLikes(data) {
+    return await this.request({
+        endpoint: "post/update",
+        method: "POST",
+        data: data,
+      })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

@@ -64,6 +64,18 @@ export const PostContextProvider = ({ children }) => {
     }
   };
 
+  const updateLikes = async (id, likes) => {
+    try {
+      const obj = {id, likes}
+      const sendUpdateLikes = await ApiClient.getLikes(obj);
+
+      //Refreshes Component
+      setRefresh(true);
+      setRefresh(false);
+    } catch (err) {
+      next(err);
+    }
+  };
   const postValue = {
     posts,
     isLoading,
@@ -72,7 +84,8 @@ export const PostContextProvider = ({ children }) => {
     createPost,
     latestPost,
     getMorePosts,
-    setRefresh
+    setRefresh,
+    updateLikes
   };
 
   return (

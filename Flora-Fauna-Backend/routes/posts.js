@@ -68,7 +68,9 @@ router.get("/initial", async(req,res,next) => {
 //Update likes by 1
 router.post("/update", security.reqAuthUser, async (req, res, next) => {
   try {
-    const updatedLikes = await Posts.updateLikes(req.body);
+    const { email } = res.locals.user;
+    const user = await User.fetchUser(email);
+    const updatedLikes = await Posts.updateLikes(req.body, user);
     res.status(200).json({ updatedLikes });
   } catch (error) {
     next(error);

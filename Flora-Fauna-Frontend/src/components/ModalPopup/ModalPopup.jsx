@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { Modal, Button, Text, Image } from "@nextui-org/react";
+import { useAdminContext } from "../../contexts/admin.jsx";
 import './ModalPopup.css'
 
 export default function ModalPopup(props){
-
-  const { visible, closeHandler } = props;
+  const { reportPost } = useAdminContext();
+  const { visible, closeHandler, id } = props;
   const [liked, setIsLiked] = useState(false)
   const toggleLikes = () => {
     setIsLiked(!liked)
+  }
+  
+  //Reports the post and sends it to admin panel
+  const report = async () => {
+    await reportPost(id)
   }
 
   return(
@@ -40,7 +46,7 @@ export default function ModalPopup(props){
             <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
         )}
         </div>
-        <div className="likes-counter">0</div><div class="material-symbols-outlined post-modal flagged-icon">flag</div>
+        <div className="likes-counter">0</div><div class="material-symbols-outlined post-modal flagged-icon" onClick={report}>flag</div>
     </Modal.Footer>
   </Modal>
   )

@@ -32,12 +32,24 @@ export const AdminContextProvider = ({ children }) => {
     }
   };
 
-  //Deletes the post when prompted
+  //Deletes the post when called
   const deletePost = async (post_id, user_id) => {
     try {
       const obj = { postId: post_id, userId: user_id };
       const req = await ApiClient.deletePost(obj);
 
+      //Refreshes the component
+      setRefresh(true);
+      setRefresh(false);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  //Deletes the user when called
+  const deleteUser = async (user_id) => {
+    try {
+      const req = await ApiClient.deleteUser(user_id);
       //Refreshes the component
       setRefresh(true);
       setRefresh(false);
@@ -53,6 +65,7 @@ export const AdminContextProvider = ({ children }) => {
     initialized,
     reportPost,
     deletePost,
+    deleteUser,
     refresh,
     setRefresh,
   };

@@ -8,7 +8,8 @@ export default function AdminOverview(props) {
   const [togglePosts, setTogglePosts] = useState(true);
   const [toggleUsers, setToggleUsers] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
-  const { flaggedPosts, flaggedUsers, deletePost } = useAdminContext();
+  const { flaggedPosts, flaggedUsers, deletePost, deleteUser } =
+    useAdminContext();
 
   const adminPostsHandler = () => {
     setTogglePosts(true);
@@ -28,7 +29,9 @@ export default function AdminOverview(props) {
   const handleDeletePost = async (post_id, user_id) => {
     await deletePost(post_id, user_id);
   };
-  const handleDeleteUser = () => {
+  //Makes the call to delete the user
+  const handleDeleteUser = async (user_id) => {
+    await deleteUser(user_id);
   };
   return (
     <div className="admin-overview">
@@ -77,14 +80,17 @@ export default function AdminOverview(props) {
                 Flagged Users
               </h2>
               {toggleUsers && (
-               Object.keys(flaggedUsers).length > 0 ? flaggedUsers?.map((e, idx) => {
-                  <AdminFlaggedUsers
-                    deleteItem={deleteItem}
-                    setDeleteItem={setDeleteItem}
-                    handleDeleteToggle={handleDeleteToggle}
-                    user={e}
-                  />;
-                }) : <h4>No Users Reported</h4>
+                Object.keys(flaggedUsers).length > 0
+                  ? flaggedUsers?.map((e, idx) => (
+                    <AdminFlaggedUsers
+                      deleteItem={deleteItem}
+                      setDeleteItem={setDeleteItem}
+                      handleDeleteToggle={handleDeleteToggle}
+                      user={e}
+                      deleteUser={handleDeleteUser}
+                    />
+                  ))
+                  : <h4>No Users Reported</h4>
               )}
             </div>
           </div>
@@ -136,12 +142,9 @@ export function AdminFlaggedPosts(props) {
 
 //use this to return all flagged users
 export function AdminFlaggedUsers(props) {
-  const { deleteItem, setDeleteItem, handleDeleteToggle } = props;
-
+  const { deleteItem, setDeleteItem, handleDeleteToggle, user } = props;
   return (
     <div className="flagged-users">
-      <h2 className="flagged-title">Flagged Users</h2>
-
       {/* FLAGGED ITEM | USERS */}
       <div className="flagged-item">
         <span className="material-symbols-outlined flagged-user-icon">
@@ -155,10 +158,14 @@ export function AdminFlaggedUsers(props) {
             {/* Flagged user's profile image */}
           </div>
           <div className="flagged-user-info">
-            <h3>User_name</h3>
-            <div className="number-flags">Flag marks: 0</div>
+            <h3>{user.first_name} {user.last_name}</h3>
+            <h3>{user.email}</h3>
+            <div className="number-flags">Flag marks: {user.strikes}</div>
           </div>
-          <button className="btn delete-btn" onClick={handleDeleteToggle}>
+          <button
+            className="btn delete-btn"
+            onClick={() => props.deleteUser(user.id)}
+          >
             Delete User &nbsp;{" "}
             <span className="material-symbols-outlined delete-close">
               close

@@ -127,7 +127,7 @@ class ApiClient {
     return await this.request({
       endpoint: "admin/deleteUser",
       method: "POST",
-      data: user_id,
+      data: {id: user_id},
     });
   }
   //Flags a post when called

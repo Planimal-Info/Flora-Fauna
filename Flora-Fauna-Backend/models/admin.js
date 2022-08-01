@@ -32,6 +32,19 @@ class Admin {
       `,
       [data.data.userId],
     );
+    let updatedUser = {};
+    if (strikes.rows[0].strikes >= 3) {
+      const updateFlagged = await db.query(
+        `
+        UPDATE users
+        SET flagged = true
+        WHERE id = $1
+        RETURNING *
+        `,
+        [data.data.userId],
+      );
+      updatedUser = updateFlagged;
+    }
     //Update Strikes by 1
     const newStrikes = strikes.rows[0].strikes + 1;
     const updateStrikes = await db.query(
@@ -43,9 +56,11 @@ class Admin {
       `,
       [newStrikes, data.data.userId],
     );
+
     const results = {
       deletedPost: deletePost.rows[0],
       userStrikes: updateStrikes.rows[0],
+      flagged: updatedUser,
     };
     return results;
   }
@@ -70,7 +85,7 @@ class Admin {
     const results = await db.query(
       `
       SELECT * FROM users
-      WHERE flagged = true
+      WHERE flagged = true OR strikes >= 3
       `,
     );
     return results.rows;

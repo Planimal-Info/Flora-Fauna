@@ -103,6 +103,21 @@ export default function UploadPage() {
               onChange={handleUploadChange}
             />
           </div>
+          <div className="user-post-category">
+            <label htmlFor="post-title">Category:</label>
+            {/* <input
+              type="text"
+              name="category"
+              onChange={handleUploadChange}
+            /> */}
+            <select name="category" id="post-category">
+              <option value="Select">- Select category -</option>
+              <option value="Insects">Insects</option>
+              <option value="Mammals">Mammals</option>
+              <option value="Plants">Plants</option>
+              <option value="Reptiles">Reptiles</option>
+            </select>
+          </div>
         </form>
         {/* INSERT CAPTION */}
         <div className="user-caption">

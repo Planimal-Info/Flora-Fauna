@@ -7,8 +7,7 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser, reqError, isLoading, initialized } =
-    useAuthContext();
+  const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
 
   //Checks if a user is logged in and navigates to home if true
   const navigate = useNavigate();

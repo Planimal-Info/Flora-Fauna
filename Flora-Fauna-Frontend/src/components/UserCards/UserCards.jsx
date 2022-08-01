@@ -3,6 +3,7 @@ import { useState } from "react";
 import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
 import { useAdminContext } from "../../contexts/admin.jsx";
+import { Card, Col, Text } from "@nextui-org/react";
 
 export default function UserCards(props) {
   const { source, title, desc, post, id } = props;
@@ -25,34 +26,51 @@ export default function UserCards(props) {
   }
   return (
     <div className="user-card">
-      <img src={props.source} className="user-img" onClick={modalHandler} />
-      <h2 className="user-card-title">{props.title}</h2>
-      <h4 className="user-card-desc">{props.desc}</h4>
+    {/* <img src={props.source} className="user-img" onClick={modalHandler}/>
+    <h2 className="user-card-title">{props.title}</h2>
+    <h4 className="user-card-desc">{props.desc}</h4> */}
+    <Card className="single-post">
+      <div className="overlay" onClick={modalHandler}></div>
+    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+      <Col>
+        <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+          {/* INSERT CATEGORY */}
+          Mammals
+        </Text>
+        <Text h4 color="white">
+          {props.title}
+        </Text>
+      </Col>
+    </Card.Header>
+    <Card.Image
+      src={props.source}
+      objectFit="cover"
+      width="100%"
+      height={340}
+      alt="Card image background"
+    />
+    <div className="likes-container">
+      <div className="likes">
+          {liked ? (
+              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+          ) : (
+              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+          )}
+          </div>
+      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon">flag</div>
+    </div>
+  </Card>
 
-      <div className="likes-container">
-        <div className="likes">
-          {liked
-            ? (
-              <span
-                className="material-symbols-outlined liked"
-                onClick={toggleLikes}
-              >
-                thumb_up
-              </span>
-            )
-            : (
-              <span
-                className="material-symbols-outlined unliked"
-                onClick={toggleLikes}
-              >
-                thumb_up
-              </span>
-            )}
-          <div className="likes-counter">0</div>
-        </div>
-        <button className="report" onClick={report}>Report</button>
-      </div>
-
+    {/* <div className="likes-container">
+      <div className="likes">
+          {liked ? (
+              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+          ) : (
+              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+          )}
+          </div>
+      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
+    </div> */}
       {visible &&
         (
           <div className="modal-popup">

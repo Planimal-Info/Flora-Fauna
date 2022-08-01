@@ -94,7 +94,7 @@ export default function UserFeed(props) {
         </div>
       </div>
     <h2 className={morePosts?.length <= 0 ? "" : "hidden"}>No More Posts</h2>
-    <button className={posts.length <= 0 ? "hidden" : "load-more-feed"} onClick={loadMore}>Load More</button>
+    <button className={posts.length <= 0 ? "hidden" : "load-more-feed btn"} onClick={loadMore}>Load More</button>
     </div>
   );
 }

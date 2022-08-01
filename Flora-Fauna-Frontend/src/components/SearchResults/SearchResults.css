@@ -8,20 +8,18 @@
 }
 
 .search-result-content{
-  margin-top: 20px;    
+  display: flex;
+  align-items: center;
+  margin: 40px;    
 }
 
 .search-result-submit{
-  width: 90px;
-  margin-top: 20px;
+  width: 55px;
+  height: 55px;
   border: none;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: box-shadow .15s;
-}
-.search-result-submit:hover{
-  box-shadow: 10px 5px 5px rgba(0,0,0,.4);
 }
 
 .animal-card-area{

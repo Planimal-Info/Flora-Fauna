@@ -44,10 +44,27 @@
 
 body {
   height: 100%;
+  overflow-y: scroll !important;
+  background: #33333399;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar {
+  background: none !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #949494;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }
 
 

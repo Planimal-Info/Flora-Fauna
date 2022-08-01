@@ -1,5 +1,6 @@
 import ApiClient from "../services/ApiClient";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAdminContext } from "./admin.jsx";
 
 const PostContext = createContext(null);
 
@@ -9,8 +10,9 @@ export const PostContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [error, setError] = useState({});
-  const [refresh, setRefresh] = useState(false);
-  const doRefresh = !refresh;
+
+  //Uses refresh from admin context to refresh both admin and post components
+  const { refresh, setRefresh } = useAdminContext();
 
   //Grabs the posts when the component renders
   useEffect(async () => {
@@ -70,6 +72,7 @@ export const PostContextProvider = ({ children }) => {
     createPost,
     latestPost,
     getMorePosts,
+    setRefresh
   };
 
   return (

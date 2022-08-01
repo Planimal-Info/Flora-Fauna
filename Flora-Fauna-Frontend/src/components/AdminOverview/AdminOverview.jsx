@@ -8,7 +8,7 @@ export default function AdminOverview(props) {
   const [togglePosts, setTogglePosts] = useState(true);
   const [toggleUsers, setToggleUsers] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
-  const {flaggedPosts, flaggedUsers} = useAdminContext();
+  const { flaggedPosts, flaggedUsers, deletePost } = useAdminContext();
 
   const adminPostsHandler = () => {
     setTogglePosts(true);
@@ -23,8 +23,14 @@ export default function AdminOverview(props) {
   const handleDeleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
-  
-    return (
+
+  //Makes the call to delete the post
+  const handleDeletePost = async (post_id, user_id) => {
+    await deletePost(post_id, user_id);
+  };
+  const handleDeleteUser = () => {
+  };
+  return (
     <div className="admin-overview">
       <div className="content">
         <div className="column left">
@@ -49,29 +55,36 @@ export default function AdminOverview(props) {
           </div>
           <div className="admin-body">
             <div className="flagged-posts">
-                <h2 className={togglePosts ? "flagged-title" : "hidden"}>Flagged Posts</h2>
+              <h2 className={togglePosts ? "flagged-title" : "hidden"}>
+                Flagged Posts
+              </h2>
               {togglePosts && (
-                flaggedPosts?.map((e,idx) => (
-                     <AdminFlaggedPosts
-                  deleteItem={deleteItem}
-                  setDeleteItem={setDeleteItem}
-                  handleDeleteToggle={handleDeleteToggle}
-                  post = {e}
-                />
-                )) 
+                Object.keys(flaggedPosts).length > 0
+                  ? flaggedPosts?.map((e, idx) => (
+                    <AdminFlaggedPosts
+                      deleteItem={deleteItem}
+                      setDeleteItem={setDeleteItem}
+                      handleDeleteToggle={handleDeleteToggle}
+                      post={e}
+                      deletePost={handleDeletePost}
+                    />
+                  ))
+                  : <h4>No Posts Reported</h4>
               )}
             </div>
             <div className="flagged-users">
-              <h2 className={toggleUsers ? "flagged-title" : "hidden"}>Flagged Users</h2>
+              <h2 className={toggleUsers ? "flagged-title" : "hidden"}>
+                Flagged Users
+              </h2>
               {toggleUsers && (
-              flaggedUsers?.map((e,idx) => {
-                 <AdminFlaggedUsers
-                  deleteItem={deleteItem}
-                  setDeleteItem={setDeleteItem}
-                  handleDeleteToggle={handleDeleteToggle}
-                  user={e}
-                />
-              }) 
+               Object.keys(flaggedUsers).length > 0 ? flaggedUsers?.map((e, idx) => {
+                  <AdminFlaggedUsers
+                    deleteItem={deleteItem}
+                    setDeleteItem={setDeleteItem}
+                    handleDeleteToggle={handleDeleteToggle}
+                    user={e}
+                  />;
+                }) : <h4>No Users Reported</h4>
               )}
             </div>
           </div>
@@ -86,11 +99,9 @@ export default function AdminOverview(props) {
 }
 
 //Implement when backend authentication is connected to frontend.
-
 //use this to return all the flagged posts.
 export function AdminFlaggedPosts(props) {
   const { deleteItem, setDeleteItem, handleDeleteToggle, post } = props;
-  console.log(props.post)
   return (
     <div className="flagged-posts">
       {/* FLAGGED ITEM | POSTS */}
@@ -104,11 +115,14 @@ export function AdminFlaggedPosts(props) {
         <div className="post-content">
           <h3>{post.user_post_title}</h3>
           <p>
-          {post.user_post_desc}
+            {post.user_post_desc}
           </p>
           <div className="number-flags">Flag marks: 0</div>
           <Link to="/">Go to Post</Link>
-          <button className="btn delete-btn" onClick={handleDeleteToggle}>
+          <button
+            className="btn delete-btn"
+            onClick={() => props.deletePost(post.id, post.user_id)}
+          >
             Delete Post &nbsp;{" "}
             <span className="material-symbols-outlined delete-close">
               close

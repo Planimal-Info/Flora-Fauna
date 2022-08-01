@@ -46,13 +46,13 @@ class ApiClient {
     let formData = new FormData();
     formData.set("file", data);
     const headers = {
-      "Content-Type":"multipart/form-data",
-    }
-    if(this.token){
-      headers["Authorization"] = `Bearer ${this.token}`
+      "Content-Type": "multipart/form-data",
+    };
+    if (this.token) {
+      headers["Authorization"] = `Bearer ${this.token}`;
     }
     try {
-      const request = await axios.post(url, formData, {headers:headers});
+      const request = await axios.post(url, formData, { headers: headers });
       if (request) {
         return request.data.addImage;
       }
@@ -115,11 +115,11 @@ class ApiClient {
   }
 
   //Deletes post from site
-  async deletePosts(post_id) {
+  async deletePost(data) {
     return await this.request({
       endpoint: "admin/deletePost",
       method: "POST",
-      data: post_id,
+      data: { data: data },
     });
   }
   //Deletes user from site
@@ -131,8 +131,12 @@ class ApiClient {
     });
   }
   //Flags a post when called
-  async flagPost(post_id){
-    return await this.request({ endpoint: "admin/flagpost", method: "POST", data: {id: post_id}})
+  async flagPost(post_id) {
+    return await this.request({
+      endpoint: "admin/flagpost",
+      method: "POST",
+      data: { id: post_id },
+    });
   }
   //-----------------------//
   //Post Endpoints
@@ -152,17 +156,21 @@ class ApiClient {
     return { post, addImage };
   }
   //Sends request to get all posts in database
-  async getAllPosts(){
-    return await this.request({ endpoint:"post/all", method: "GET" })
+  async getAllPosts() {
+    return await this.request({ endpoint: "post/all", method: "GET" });
   }
-  
+
   //Sends request to get initial posts to load in.
-  async getInitialPosts(){
-    return await this.request({ endpoint:"post/initial", method: "GET" })
+  async getInitialPosts() {
+    return await this.request({ endpoint: "post/initial", method: "GET" });
   }
   //Sends request to get more posts
-  async getMorePosts(post_id){
-    return await this.request({ endpoint:"post/more", method: "POST", data: {id: post_id} })
+  async getMorePosts(post_id) {
+    return await this.request({
+      endpoint: "post/more",
+      method: "POST",
+      data: { id: post_id },
+    });
   }
 }
 

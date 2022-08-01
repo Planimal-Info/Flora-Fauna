@@ -26,11 +26,11 @@ export default function AppContainer() {
   return (
     <AuthContextProvider>
       <SearchContextProvider>
-        <PostContextProvider>
         <AdminContextProvider>
-          <App />
+          <PostContextProvider>
+            <App />
+          </PostContextProvider>
         </AdminContextProvider>
-        </PostContextProvider>
       </SearchContextProvider>
     </AuthContextProvider>
   );

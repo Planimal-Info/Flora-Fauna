@@ -3,7 +3,7 @@
 }
 
 .liked, .unliked {
-    color: var(--green);
+    color: var(--yellow);
 }
 
 .nextui-c-gYbKeQ-ibZmKkd-css {
@@ -46,5 +46,5 @@
 
 .post-modal.flagged-icon:hover {
     cursor: pointer;
-    color: var(--green);
+    color: var(--yellow);
 }

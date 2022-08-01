@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  position: relative;
   margin: 20px 0px;
-  background-color: rgba(51,51,51,.5);
   width: 500px;
   text-align: left;
 }
@@ -22,22 +22,45 @@
   margin-bottom: 20px;
 }
 
-.likes-container {
+.user-card .likes-container {
   display: flex;
-  position: relative;
+  position: absolute;
+  bottom: 2.5%;
+  left: 3%;
+  width: 100%;
+  z-index: 50;
 }
-.likes-counter {
+.user-card .likes-counter {
   margin: 0 8px;
+  color: white;
 }
 
 .uc.flagged-icon {
   display: flex;
   position: absolute;
-  right: 15px;
+  right: 5%;
+  color: white;
 
 }
 
 .uc.flagged-icon:hover {
   cursor: pointer;
-  color: var(--green);
+  color: var(--yellow);
+  transition: 0.4s;
+}
+
+/* -------- Changes to NextUI --------*/
+
+.nextui-c-iVzbCs-icDvGzP-css {
+  height: 600px;
+}
+
+.single-post .overlay {
+  z-index: 1;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.single-post .overlay:hover {
+  opacity: 0;
 }

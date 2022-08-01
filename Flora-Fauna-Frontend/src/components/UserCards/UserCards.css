@@ -24,7 +24,20 @@
 
 .likes-container {
   display: flex;
+  position: relative;
 }
 .likes-counter {
   margin: 0 8px;
+}
+
+.uc.flagged-icon {
+  display: flex;
+  position: absolute;
+  right: 15px;
+
+}
+
+.uc.flagged-icon:hover {
+  cursor: pointer;
+  color: var(--green);
 }

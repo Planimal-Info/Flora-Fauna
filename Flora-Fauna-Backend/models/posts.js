@@ -55,7 +55,7 @@ class Posts {
     const data = fs.readFileSync(image.path);
 
     //Resize image before adding to database
-    const resizedImage = await sharp(data).resize(500,600).toBuffer();
+    const resizedImage = await sharp(data).resize(500, 600).toBuffer();
 
     //Inputs binary data in latest posts, to match up post and image.
     const results = await db.query(
@@ -113,40 +113,40 @@ class Posts {
     );
     return result.rows;
   }
- 
-  //Gets the first 5 posts from the database.
+
+  //Gets the 5 posts from the database.
   //Gets sent on page login/refresh
-  static async getInitialPosts(){
+  static async getInitialPosts() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
-      WHERE id < 6
+      LIMIT 5
       `
     )
+
     return result.rows;
   }
 
   //Gets more posts when called, does so in increments of 2
-  static async getMorePosts(post_id){
+  static async getMorePosts(post_id) {
     const moreId = post_id.id + 3;
     const result = await db.query(
       `
       SELECT * FROM user_posts
       WHERE id > $1 AND id < $2
       `,
-      [post_id.id, moreId]
-    )
+      [post_id.id, moreId],
+    );
     return result.rows;
   }
 
-
   //Gets the most likes orders in descending order
-  static async getMostLiked(){
+  static async getMostLiked() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
-      `
-    )
+      `,
+    );
     //Sorts the posts and reverses them to get them in ascending to descending order
     result.sort();
     result.reverse();

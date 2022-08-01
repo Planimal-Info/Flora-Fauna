@@ -2,26 +2,29 @@ import "./UserCards.css";
 import { useState } from "react";
 import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
+import { useAdminContext } from "../../contexts/admin.jsx";
 import { Card, Col, Text } from "@nextui-org/react";
 
-export default function UserCards(props){
-
-  const { source, title, desc, post } = props
-
+export default function UserCards(props) {
+  const { source, title, desc, post, id } = props;
+  const { reportPost } = useAdminContext(); 
   const [visible, setVisible] = useState(false);
   const [modalContent, setModalContent] = useState([]);
   const modalHandler = () => setVisible(true);
-  
+
   const closeHandler = () => {
     setVisible(false);
   };
 
-  const [liked, setIsLiked] = useState(false)
+  const [liked, setIsLiked] = useState(false);
   const toggleLikes = () => {
-    setIsLiked(!liked)
-  }
+    setIsLiked(!liked);
+  };
 
-  return(
+  const report = async () => {
+    await reportPost(id)
+  }
+  return (
     <div className="user-card">
     {/* <img src={props.source} className="user-img" onClick={modalHandler}/>
     <h2 className="user-card-title">{props.title}</h2>
@@ -66,21 +69,21 @@ export default function UserCards(props){
               <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
           )}
           </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon">flag</div>
+      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
     </div> */}
-
-    {visible && 
-    
-    <div className="modal-popup">
-              <ModalPopup
-                source={toBase64(post?.photo?.data)}
-                title={post.user_post_title}
-                desc={post.user_post_desc}
-                modalHandler={modalHandler}
-                visible={visible}
-                closeHandler={closeHandler}
-              />
-      </div>}
+      {visible &&
+        (
+          <div className="modal-popup">
+            <ModalPopup
+              source={toBase64(post?.photo?.data)}
+              title={post.user_post_title}
+              desc={post.user_post_desc}
+              modalHandler={modalHandler}
+              visible={visible}
+              closeHandler={closeHandler}
+            />
+          </div>
+        )}
     </div>
-  )
+  );
 }

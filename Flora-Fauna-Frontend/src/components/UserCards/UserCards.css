@@ -35,6 +35,12 @@
   color: white;
 }
 
+.report:hover{
+  background-color: red;
+  opacity: .9;
+
+}
+
 .uc.flagged-icon {
   display: flex;
   position: absolute;
@@ -48,9 +54,6 @@
   color: var(--yellow);
   transition: 0.4s;
 }
-
-/* -------- Changes to NextUI --------*/
-
 .nextui-c-iVzbCs-icDvGzP-css {
   height: 600px;
 }
@@ -64,3 +67,4 @@
 .single-post .overlay:hover {
   opacity: 0;
 }
+

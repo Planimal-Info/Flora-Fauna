@@ -67,6 +67,10 @@
   margin-bottom: 50px;
 }
 
+.flagged-posts{
+  margin: 30px;
+}
+
 .flagged-post-icon, .flagged-user-icon {
   font-size: 30px;
   margin-right: 40px;

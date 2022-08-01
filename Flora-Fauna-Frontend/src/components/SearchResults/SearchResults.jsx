@@ -34,10 +34,10 @@ export default function SearchResults() {
           onChange={(e) => handleOnChange(e)}
         >
         </input>
-      </div>
-      <button className="search-result-submit" onClick={handleOnSubmit}>
-        Submit
+        <button className="search-result-submit" onClick={handleOnSubmit}>
+        <span class="material-symbols-outlined search-logo">search</span>
       </button>
+      </div>
       <div className="animal-card-area">
         {searchResults?.data?.results?.map((e, inx) => (
           <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx} currentPlanimal={e}/>

@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
-  background-color: rgba(51,51,51, .6);
 }
 
 .user-feed-overview h2{
@@ -73,6 +72,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-top: 50px;
 }
 
 .user-upload-button{
@@ -83,15 +83,18 @@
 }
 
 .load-more-feed{
-  width: 100px;
+  width: 300px;
   padding: 8px 0px;
   align-self: center;
   margin-top: 25px;
   cursor: pointer;
-  transition: box-shadow .30s, opacity .30s;
+  font-family: Poppins;
+  background: var(--brown);
 }
 .load-more-feed:hover{
-  box-shadow: 11px 4px 4px rgba(0,0,0,.4);
+  transition: 0.3s;
+  background: white;
+  color: var(--brown);
 
 }
 

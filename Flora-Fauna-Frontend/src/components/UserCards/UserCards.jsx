@@ -21,6 +21,7 @@ export default function UserCards(props) {
     setIsLiked(!liked);
   };
 
+  //Reports the post and sends it to admin panel
   const report = async () => {
     await reportPost(id)
   }
@@ -57,7 +58,7 @@ export default function UserCards(props) {
               <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
           )}
           </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon">flag</div>
+      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
     </div>
   </Card>
 
@@ -81,6 +82,7 @@ export default function UserCards(props) {
               modalHandler={modalHandler}
               visible={visible}
               closeHandler={closeHandler}
+              id={id}
             />
           </div>
         )}

@@ -112,8 +112,8 @@ class Posts {
         `,
         [user.id, data.id],
       );
-    //Return the data that the user has liked the picture now.
-    return results.rows[0];
+      //Return the data that the user has liked the picture now.
+      return results.rows[0];
     }
     //Return the data that the user has already liked the picture
     return check.rows[0];
@@ -147,6 +147,7 @@ class Posts {
     const result = await db.query(
       `
       SELECT * FROM user_posts
+      ORDER BY created_at ASC
       LIMIT 5
       `,
     );
@@ -156,6 +157,10 @@ class Posts {
 
   //Gets more posts when called, does so in increments of 2
   static async getMorePosts(post_id) {
+    if (post_id.id < 5) {
+      return [];
+    }
+    console.log(post_id)
     const moreId = post_id.id + 3;
     const result = await db.query(
       `

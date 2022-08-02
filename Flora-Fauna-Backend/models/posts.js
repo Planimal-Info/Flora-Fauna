@@ -33,7 +33,7 @@ class Posts {
         data.values.title,
       ],
     );
-    return results.rows;
+    return results.rows[0];
   }
   //Gets all the posts for a user
   static async getPostsForUser(user_id) {

@@ -68,7 +68,6 @@ export default function UserFeed(props) {
         })
         return max;
     }
-    
     //Gets the highest id number and uses that as an id, done this way to avoid duplicates.
     const length = getHighestNum();
     setMorePosts(await getMorePosts(length));

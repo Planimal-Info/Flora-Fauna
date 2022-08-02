@@ -5,7 +5,7 @@ import './ModalPopup.css'
 
 export default function ModalPopup(props){
   const { reportPost } = useAdminContext();
-  const { visible, closeHandler, id } = props;
+  const { visible, closeHandler, id, handleUpdateLikes, post, postLikes } = props;
   const [liked, setIsLiked] = useState(false)
   const toggleLikes = () => {
     setIsLiked(!liked)
@@ -41,12 +41,12 @@ export default function ModalPopup(props){
     <Modal.Footer>
         <div className="likes">
         {liked ? (
-            <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
+            <span className="material-symbols-outlined liked" onClick={handleUpdateLikes}>thumb_up</span>
         ) : (
-            <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
+            <span className="material-symbols-outlined unliked" onClick={handleUpdateLikes}>thumb_up</span>
         )}
         </div>
-        <div className="likes-counter">0</div><div class="material-symbols-outlined post-modal flagged-icon" onClick={report}>flag</div>
+        <div className="likes-counter">{post.likes + postLikes}</div><div class="material-symbols-outlined post-modal flagged-icon" onClick={report}>flag</div>
     </Modal.Footer>
   </Modal>
   )

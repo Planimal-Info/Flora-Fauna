@@ -23,7 +23,6 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [refresh]);
-
   //Sends request to make a post
   const createPost = async (data) => {
     setIsLoading(true);
@@ -64,6 +63,17 @@ export const PostContextProvider = ({ children }) => {
     }
   };
 
+  //Updates the likes when called on using id
+  const updateLikes = async (id, likes) => {
+    try {
+      const obj = { id, likes };
+      const sendUpdateLikes = await ApiClient.getLikes(obj);
+
+      return sendUpdateLikes;
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const postValue = {
     posts,
     isLoading,
@@ -72,7 +82,9 @@ export const PostContextProvider = ({ children }) => {
     createPost,
     latestPost,
     getMorePosts,
-    setRefresh
+    setRefresh,
+    refresh,
+    updateLikes,
   };
 
   return (

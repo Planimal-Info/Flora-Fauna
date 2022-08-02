@@ -157,10 +157,10 @@ class Posts {
 
   //Gets more posts when called, does so in increments of 2
   static async getMorePosts(post_id) {
+    //If the post id is less than 5, there are no more posts to grab
     if (post_id.id < 5) {
       return [];
     }
-    console.log(post_id)
     const moreId = post_id.id + 3;
     const result = await db.query(
       `

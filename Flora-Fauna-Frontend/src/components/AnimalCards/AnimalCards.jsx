@@ -9,6 +9,7 @@ export default function AnimalCards(props){
   const navigate = useNavigate(); 
   const { currentPlanimal, setCurrentPlanimal, getPictures, searchPictures, searchPictureResults } = useSearchContext(); 
   const [background, setBackground] = useState("");
+  const [imageExist, setImageExist] = useState(false)
   //Sets current selected Planimal and gets pictures for that animal
   const handleOnSubmit = async () => {
     setCurrentPlanimal(props.currentPlanimal)
@@ -22,7 +23,7 @@ export default function AnimalCards(props){
       {/* <h2 className="card-common-name">{props.common_name}</h2>
       <h2 classname="card-scientific-name">{props.scientific_name}</h2>
       <button className="animal-moreInfo" onClick={handleOnSubmit}>More Info</button> */}
-      <Card css={{ w: "100%", h: "400px" }}>
+      {/* <Card css={{ w: "100%", h: "400px" }}>
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
         <Text size={12} weight="bold" transform="uppercase" color="#000000AA">
@@ -77,6 +78,28 @@ export default function AnimalCards(props){
         </Col>
       </Row>
     </Card.Footer>
+  </Card> */}
+
+  <Card>
+      <div className="overlay"></div>
+    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+      <Col>
+        <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
+          {props.scientific_name}
+        </Text>
+        <Text h4 color="white">
+          {props.common_name}
+        </Text>
+      </Col>
+    </Card.Header>
+    <Card.Image
+      src={props.picture?.source}
+      objectFit="cover"
+      width="100%"
+      height={340}
+      alt={props.currentPlanimal.common_name}
+      onClick={handleOnSubmit}
+    />
   </Card>
     </div>
   )

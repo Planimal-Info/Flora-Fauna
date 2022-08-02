@@ -81,7 +81,7 @@ export default function AnimalCards(props){
   </Card> */}
 
   <Card>
-      <div className="overlay"></div>
+      <div className="overlay" onClick={handleOnSubmit}></div>
     <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
       <Col>
         <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
@@ -98,7 +98,6 @@ export default function AnimalCards(props){
       width="100%"
       height={340}
       alt={props.currentPlanimal.common_name}
-      onClick={handleOnSubmit}
     />
   </Card>
     </div>

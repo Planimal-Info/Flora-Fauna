@@ -63,11 +63,14 @@
 .single-post .overlay {
   z-index: 1;
   transition: 0.5s;
+  transition-property: top, bottom;
   cursor: pointer;
 }
 
 .single-post .overlay:hover {
-  opacity: 0;
+  transition: 0.6s;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 13%, rgba(0, 0, 0, 0) 84%, rgba(0, 0, 0, 1) 100%);
+  opacity: 0.6;
 }
 
 .flagged-tooltip {

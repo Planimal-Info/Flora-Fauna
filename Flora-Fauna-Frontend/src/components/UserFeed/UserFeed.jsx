@@ -59,7 +59,18 @@ export default function UserFeed(props) {
   
   //Loads more images when prompted
   const loadMore = async () => {
-    const length = posts.length;
+    const getHighestNum = () => {
+        let max = 0;
+        posts.forEach(e => {
+            if(e.id > max){
+                max = e.id;
+            }
+        })
+        return max;
+    }
+    
+    //Gets the highest id number and uses that as an id, done this way to avoid duplicates.
+    const length = getHighestNum();
     setMorePosts(await getMorePosts(length));
   }
   //If there is no user, AKA a viewer. Show only the hero

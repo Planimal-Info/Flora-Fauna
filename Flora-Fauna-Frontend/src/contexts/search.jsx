@@ -5,6 +5,7 @@ const SearchContext = createContext(null);
 
 export const SearchContextProvider = ({ children }) => {
   const [searchResults, setSearchResults] = useState({});
+  const [searchPictureResults, setSearchPics] = useState([]);
   const [searchPictures, setSearchPictures] = useState({});
   const [url, setUrl] = useState({});
   const [description, setDescription] = useState({});
@@ -19,9 +20,14 @@ export const SearchContextProvider = ({ children }) => {
   const searchInput = async (data) => {
     setIsLoading(true);
     setInitial(false);
+    setSearchPics([])
     try {
+      //Gets the search results from the database
       const req = await ApiClient.searchResults({ data: data });
       setSearchResults(req);
+      //Gets the picture results from the wikipedia API
+      const picReq = await ApiClient.getSearchPictureResults({query: req.data.results})
+      setSearchPics(picReq?.data?.pictureResults)
     } catch (err) {
       setError(err)
     }
@@ -29,11 +35,12 @@ export const SearchContextProvider = ({ children }) => {
     setInitial(true);
   };
 
+  //Gets the pictures from the current selected planimal, used for the animals details page
   const getPictures = async (data) => {
       setIsLoading(true);
       setInitial(false);
       try {
-        const req = await ApiClient.searchPictures({ query: data });
+        const req = await ApiClient.searchPictures({query: data});
         setSearchPictures(req?.data?.results?.photo);
         setUrl(req?.data?.results?.url)
         const key = Object.keys(req?.data?.results?.description)[0];
@@ -44,6 +51,7 @@ export const SearchContextProvider = ({ children }) => {
       setIsLoading(false);
       setInitial(true);
   };
+
   const searchValue = {
     searchResults,
     isLoading,
@@ -56,7 +64,8 @@ export const SearchContextProvider = ({ children }) => {
     searchPictures,
     setUrl,
     url,
-    description
+    description,
+    searchPictureResults
   };
 
   return (

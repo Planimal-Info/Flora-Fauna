@@ -101,6 +101,14 @@ class ApiClient {
       data: data,
     });
   }
+  //Gets the pictures for all the search results
+  async getSearchPictureResults(data){
+    return await this.request({
+      endpoint: "planimal/getPictures",
+      method: "POST",
+      data:data
+    })
+  }
 
   //---------------------------//
   //Admin Endpoints

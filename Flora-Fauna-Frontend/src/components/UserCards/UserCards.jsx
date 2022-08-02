@@ -4,7 +4,7 @@ import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
 import { useAdminContext } from "../../contexts/admin.jsx";
 import { usePostContext } from "../../contexts/posts";
-import { Card, Col, Text, Tooltip, Grid, Link } from "@nextui-org/react";
+import { Card, Col, Grid, Link, Text, Tooltip } from "@nextui-org/react";
 
 export default function UserCards(props) {
   const { source, title, desc, post, id } = props;
@@ -14,7 +14,7 @@ export default function UserCards(props) {
   const [modalContent, setModalContent] = useState([]);
   const [postLikes, setPostLikes] = useState(0);
   const modalHandler = () => setVisible(true);
-  
+
   const closeHandler = () => {
     setVisible(false);
   };
@@ -28,74 +28,97 @@ export default function UserCards(props) {
   };
   //Updates the likes for the post
   const handleUpdateLikes = async () => {
-    await updateLikes(id, post.likes);
-    //Temporarily updates the likes shown to the user by 1, will updated when component refreshes.
-    setPostLikes(1);
+    const check = await updateLikes(id, post.likes);
+    //To avoid users being able to like multiple times
+    if (Object.keys(check.data.updatedLikes).length === 3) {
+      if(postLikes != 1){
+        setPostLikes(0);
+      }
+    } else {
+      setPostLikes(1);
+    }
   };
   return (
     <div className="user-card">
       {
         /* <img src={props.source} className="user-img" onClick={modalHandler}/>
     <h2 className="user-card-title">{props.title}</h2>
-
-    <h4 className="user-card-desc">{props.desc}</h4> */}
-    <Card className="single-post">
-      <div className="overlay" onClick={modalHandler}></div>
-    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-      <Col>
-        <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-          {/* INSERT CATEGORY */}
-          Mammals
-        </Text>
-        <Text h4 color="white">
-          {props.title}
-        </Text>
-      </Col>
-    </Card.Header>
-    <Card.Image
-      src={props.source}
-      objectFit="cover"
-      width="100%"
-      height={340}
-      alt="Card image background"
-    />
-
-    {/* Likes */}
-    <div className="likes-container">
-      <div className="likes">
-          {liked ? (
-              <span className="material-symbols-outlined liked" onClick={toggleLikes}>thumb_up</span>
-          ) : (
-              <span className="material-symbols-outlined unliked" onClick={toggleLikes}>thumb_up</span>
-          )}
-          </div>
-      <div className="likes-counter">0</div><div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
-    </div> */
+    <h4 className="user-card-desc">{props.desc}</h4> */
       }
-
-      </div>
-      <div className="likes-counter">{post.likes + postLikes}</div>
-
-      {/* Tooltip for when post is flagged */}
-    <div className="flag-user">
-      <Tooltip
-          className="flagged-tooltip"
-          content={"Post has been flagged"}
-          trigger="click"
-          color="error"
-          placement="topEnd"
-          leaveDelay={2000}
-          hideArrow
-        >
-          <Link>
-            <Text b color="primary">
-              <div class="material-symbols-outlined uc flagged-icon" onClick={report}>flag</div>
+      <Card className="single-post">
+        <div className="overlay" onClick={modalHandler}></div>
+        <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+          <Col>
+            <Text
+              size={12}
+              weight="bold"
+              transform="uppercase"
+              color="#ffffffAA"
+            >
+              {/* INSERT CATEGORY */}
+              Mammals
             </Text>
-          </Link>
-        </Tooltip>
-    </div>
-    </div>
-  </Card>
+            <Text h4 color="white">
+              {props.title}
+            </Text>
+          </Col>
+        </Card.Header>
+        <Card.Image
+          src={props.source}
+          objectFit="cover"
+          width="100%"
+          height={340}
+          alt="Card image background"
+        />
+
+        {/* Likes */}
+        <div className="likes-container">
+          <div className="likes">
+            {liked
+              ? (
+                <span
+                  className="material-symbols-outlined liked"
+                  onClick={handleUpdateLikes}
+                >
+                  thumb_up
+                </span>
+              )
+              : (
+                <span
+                  className="material-symbols-outlined unliked"
+                  onClick={handleUpdateLikes}
+                >
+                  thumb_up
+                </span>
+              )}
+          </div>
+          <div className="likes-counter">{post.likes + postLikes}</div>
+
+          {/* Tooltip for when post is flagged */}
+          <div className="flag-user">
+            <Tooltip
+              className="flagged-tooltip"
+              content={"Post has been flagged"}
+              trigger="click"
+              color="error"
+              placement="topEnd"
+              leaveDelay={2000}
+              hideArrow
+            >
+              <Link>
+                <Text b color="primary">
+                  <div
+                    class="material-symbols-outlined uc flagged-icon"
+                    onClick={report}
+                  >
+                    flag
+                  </div>
+                </Text>
+              </Link>
+            </Tooltip>
+          </div>
+        </div>
+      </Card>
       {visible &&
         (
           <div className="modal-popup">
@@ -107,7 +130,6 @@ export default function UserCards(props) {
               visible={visible}
               closeHandler={closeHandler}
               id={id}
-              handleUpdateLikes={handleUpdateLikes}
               post={post}
               postLikes={postLikes}
             />

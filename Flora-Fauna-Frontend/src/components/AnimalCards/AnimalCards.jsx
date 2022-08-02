@@ -1,4 +1,5 @@
 import "./AnimalCards.css"
+import { useState } from "react";
 import { useSearchContext } from "../../contexts/search.jsx";
 import { useNavigate } from "react-router-dom";
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
@@ -6,12 +7,12 @@ import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 
 export default function AnimalCards(props){
   const navigate = useNavigate(); 
-  const { currentPlanimal, setCurrentPlanimal, getPictures, searchPictures } = useSearchContext(); 
-
+  const { currentPlanimal, setCurrentPlanimal, getPictures, searchPictures, searchPictureResults } = useSearchContext(); 
+  const [background, setBackground] = useState("");
   //Sets current selected Planimal and gets pictures for that animal
   const handleOnSubmit = async () => {
     setCurrentPlanimal(props.currentPlanimal)
-    await getPictures(props.currentPlanimal.common_name)
+    await getPictures(props.common_name)
 
     navigate("/animaldetails")
   }
@@ -34,11 +35,11 @@ export default function AnimalCards(props){
     </Card.Header>
     <Card.Body css={{ p: 0 }}>
       <Card.Image
-        src={searchPictures}
+        src={props.picture?.source}
         width="100%"
         height="100%"
         objectFit="cover"
-        alt="Card example background"
+        alt=""
       />
     </Card.Body>
     <Card.Footer

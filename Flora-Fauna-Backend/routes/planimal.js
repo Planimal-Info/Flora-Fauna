@@ -23,4 +23,15 @@ router.post("/search/getPhotos", async(req,res,next) => {
     }
 }) 
 
+//Returns the picture results
+router.post("/getPictures", async(req,res,next) => {
+    try{
+        const pictureResults = await Planimal.getPictureResults(req.body);
+        return res.status(200).json({ pictureResults });
+    }
+    catch(err){
+        next(err)
+    }
+})
+
 module.exports = router

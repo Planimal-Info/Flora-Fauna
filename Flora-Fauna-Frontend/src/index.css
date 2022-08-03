@@ -44,7 +44,7 @@
 
 body {
   height: 100%;
-  overflow-y: scroll !important;
+  overflow: auto !important;
   background: #33333399;
 }
 

@@ -6,16 +6,31 @@
   margin-left: 40px;
 }
 
-.details-return{
+.details-return {
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 50%;
   margin-top: 20px;
   cursor: pointer;
   transition: box-shadow 15s;
 }
 
+.details-return.btn {
+  color: var(--green);
+  background: white;
+  transition: 0.2s;
+}
+
 .details-return:hover{
-  box-shadow: 10px 5px 5px rgba(0,0,0,.4);
+  color: white;
+  background: var(--green);
+}
+
+.details-return .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 600,
+    'GRAD' 0,
+    'opsz' 48
 }
 
 

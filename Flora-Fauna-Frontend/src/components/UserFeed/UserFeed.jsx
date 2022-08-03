@@ -87,6 +87,7 @@ export default function UserFeed(props) {
     const length = getHighestNum();
     setMorePosts(await getMorePosts(length));
   };
+  console.log(filteredPosts)
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
     return (
@@ -103,7 +104,7 @@ export default function UserFeed(props) {
       <h2>User Feed</h2>
       <div className="user-feed-wrapper">
         <SearchFilter />
-        {selectedCategory.size >= 2 && filteredPosts.length === 0
+        {filteredPosts.length <= 1
           ? <h3 className="no-filter">No Posts for this Category</h3>
           : ""}
         <div className="user-feed-body">

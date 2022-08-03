@@ -11,9 +11,9 @@ export default function Hero() {
   return (
     <div className="hero">
       <div className="bio-info">
-        <h1 className="hero-title">{currentPlanimal?.data?.taxonomic_group}</h1>
-        <h2 className="hero-title">{currentPlanimal?.data?.common_name}</h2>
-        <h3 className="hero-title">{currentPlanimal?.data?.scientific_name}</h3>
+        <h1 className="hero-title">{currentPlanimal?.data?.common_name}</h1>
+        <h2 className="hero-title">{currentPlanimal?.data?.scientific_name}</h2>
+        <h3 className="hero-title">{currentPlanimal?.data?.taxonomic_group}</h3>
         <p className="hero-desc">
         {description.extract}
         </p>

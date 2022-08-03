@@ -5,13 +5,25 @@ class Filter {
   //Returns all posts from the plants category in descending order based on likes.
   static async getFilteredCategory(category) {
     let outputArr = [];
-    for (let e of category.data) {
-      if (e != "categories") {
-        const inputString = `${e}`
+    for (let e of category.data.category) {
+      if (e != "categories" && category.data.time.anchorKey === "Most Liked") {
+        const inputString = `${e}`;
         const results = await db.query(
           `
         SELECT * FROM user_posts
-        WHERE category = $1 
+        WHERE category = $1
+        ORDER BY likes DESC
+        `,
+          [inputString],
+        );
+        outputArr.push(results.rows);
+      } else {
+        const inputString = `${e}`;
+        const results = await db.query(
+          `
+        SELECT * FROM user_posts
+        WHERE category = $1
+        ORDER BY likes ASC
         `,
           [inputString],
         );

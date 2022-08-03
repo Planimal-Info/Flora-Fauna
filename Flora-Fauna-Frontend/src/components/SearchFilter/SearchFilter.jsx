@@ -12,7 +12,7 @@ export default function App() {
 
   const [selectedTime, setSelectedTime] = useState(new Set(["time"]));
   const [selectedCat, setSelectedCat] = useState(new Set(["categories"]));
-  const { setSelectedCategory } = usePostContext();
+  const { setSelectedCategory, setSelectedTimeFrame } = usePostContext();
   // Value for Time dropdown
   const selectedValueTime = useMemo(
     () => Array.from(selectedTime).join(": ").replaceAll("_", " "),
@@ -25,6 +25,7 @@ export default function App() {
   );
 
   setSelectedCategory(selectedCat)
+  setSelectedTimeFrame(selectedTime);
   return (
     <div className="search-filter">
 
@@ -41,9 +42,8 @@ export default function App() {
         selectedKeys={selectedTime}
         onSelectionChange={setSelectedTime}
       >
-        <Dropdown.Item key="daily">Daily</Dropdown.Item>
-        <Dropdown.Item key="weekly">Weekly</Dropdown.Item>
-        <Dropdown.Item key="monthly">Monthly</Dropdown.Item>
+        <Dropdown.Item key="Most Liked">Most Liked</Dropdown.Item>
+        <Dropdown.Item key="Least Liked">Least Liked</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
 

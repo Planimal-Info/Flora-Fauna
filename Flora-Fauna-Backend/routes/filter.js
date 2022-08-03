@@ -14,7 +14,7 @@ router.post("/", async(req,res,next) => {
 })
 
 //Route to get most liked posts per day
-router.get("/day", async(req,res,next) => {
+router.get("/most", async(req,res,next) => {
   try{
     res.status(200);
   }
@@ -24,7 +24,7 @@ router.get("/day", async(req,res,next) => {
 })
 
 //Route to get most liked posts per week
-router.get("/week", async(req,res,next) => {
+router.get("/least", async(req,res,next) => {
   try{
     res.status(200);
   }
@@ -32,15 +32,4 @@ router.get("/week", async(req,res,next) => {
     next(err)
   }
 })
-
-//Route to get most liked posts per month
-router.get("/month", async(req,res,next) => {
-  try{
-    res.status(200);
-  }
-  catch(err){
-    next(err)
-  }
-})
-
 module.exports = router;

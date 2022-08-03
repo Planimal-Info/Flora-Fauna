@@ -11,6 +11,7 @@ export const PostContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTimeFrame, setSelectedTimeFrame] = useState("");
   const [error, setError] = useState({});
   const [test, setTest] = useState(false);
   //Uses refresh from admin context to refresh both admin and post components
@@ -30,12 +31,12 @@ export const PostContextProvider = ({ children }) => {
   useEffect(async () => {
     try{
       const iterator = selectedCategory?.values();
-      let filters = [];
+      let filterCategory = [];
       for(let filter of iterator){
-        filters.push(filter)
+        filterCategory.push(filter)
       }
-      if(filters.length >= 2){
-        const data = await ApiClient.getFilteredPosts(filters)
+      if(filterCategory.length >= 2){
+        const data = await ApiClient.getFilteredPosts({category: filterCategory, time: selectedTimeFrame})
         setFilteredPosts(data?.data?.data);
       }
       else{
@@ -45,7 +46,7 @@ export const PostContextProvider = ({ children }) => {
     catch(err){
       console.error(err);
     }
-  },[selectedCategory])
+  },[selectedCategory, selectedTimeFrame])
 
   //Sends request to make a post
   const createPost = async (data) => {
@@ -96,7 +97,6 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   };
-
   const postValue = {
     posts,
     isLoading,
@@ -111,7 +111,9 @@ export const PostContextProvider = ({ children }) => {
     updateLikes,
     selectedCategory,
     setSelectedCategory,
-    filteredPosts
+    filteredPosts,
+    selectedTimeFrame,
+    setSelectedTimeFrame
   };
 
   return (

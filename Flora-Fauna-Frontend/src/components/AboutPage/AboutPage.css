@@ -1,6 +1,12 @@
 .about-page {
+    display: flex;
+    justify-content: flex-start;
     margin: 20px 30px;
     padding: 30px 30px;
+}
+
+.about-page::before {
+    
 }
 
 .about-info {

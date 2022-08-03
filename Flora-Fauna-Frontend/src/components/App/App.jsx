@@ -14,12 +14,13 @@ import UserFeed from "../UserFeed/UserFeed.jsx";
 import UserProfile from "../UserProfile/UserProfile.jsx";
 import SearchResults from "../SearchResults/SearchResults.jsx";
 import AnimalDetails from "../AnimalDetails/AnimalDetails.jsx";
+import AdminDetails from "../AdminDetails/AdminDetails.jsx";
 import "./App.css";
 
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
 import { SearchContextProvider } from "../../contexts/search.jsx";
 import { PostContextProvider } from "../../contexts/posts";
-import { AdminContextProvider } from "../../contexts/admin.jsx";
+import { AdminContextProvider, useAdminContext } from "../../contexts/admin.jsx";
 import UploadPage from "../UploadPage/UploadPage";
 
 export default function AppContainer() {
@@ -38,7 +39,6 @@ export default function AppContainer() {
 
 function App() {
   const { user, isLoading } = useAuthContext();
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -55,6 +55,7 @@ function App() {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/animaldetails" element={<AnimalDetails />} />
+          <Route path="/post/:productId" element={<AdminDetails />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/denied" element={<AccessForbidden />} />
         </Routes>

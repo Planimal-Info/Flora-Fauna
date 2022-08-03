@@ -146,6 +146,13 @@ class ApiClient {
       data: { id: post_id },
     });
   }
+  //Gets the post when an admin wants to know more about the post
+  async getSelectedPost(post_id){
+    return await this.request({
+      endpoint: `post/${post_id}`,
+      method: "GET",
+    })
+  }
   //-----------------------//
   //Post Endpoints
   //Sends request to create post and sends another request to store image in that post

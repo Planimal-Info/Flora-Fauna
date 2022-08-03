@@ -92,14 +92,18 @@
 
 .user-profile .content .column.right .uploaded-content {
     background: peachpuff;
-    width: 60vw;
+    width: 1300px;
     height: 90vh;
     margin-top: 30px;
     overflow-y: scroll;
 }
 
-.profile-posts {
+.profile-content {
     margin-top: 200px;
+}
+
+.profile-content h2 {
+    margin-bottom: 30px;
 }
 
 .user-settings {
@@ -127,6 +131,29 @@
     background: var(--brown);
     border-radius: 8px;
     width: inherit;
+}
+
+.form-input.new-password-input {
+    position: relative;
+}
+
+.visibility-eye {
+    position: absolute;
+}
+
+/*--------- Account Settings ----------*/
+
+.account {
+    width: 1300px;
+    height: 700px;
+}
+
+.user-changes .form {
+    width: 380px;
+}
+
+.user-changes .form .input-field {
+    margin-bottom: 20px;
 }
 
 /* TEMP STYLES */

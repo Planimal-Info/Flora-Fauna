@@ -2,6 +2,7 @@ import * as React from "react"
 import { useState, useMemo } from "react"
 import { Dropdown } from "@nextui-org/react";
 import { useAuthContext } from "../../contexts/auth.jsx"
+import { usePostContext } from "../../contexts/posts.jsx";
 import './SearchFilter.css'
 
 export default function App() {
@@ -11,7 +12,7 @@ export default function App() {
 
   const [selectedTime, setSelectedTime] = useState(new Set(["time"]));
   const [selectedCat, setSelectedCat] = useState(new Set(["categories"]));
-
+  const { setSelectedCategory } = usePostContext();
   // Value for Time dropdown
   const selectedValueTime = useMemo(
     () => Array.from(selectedTime).join(": ").replaceAll("_", " "),
@@ -23,7 +24,7 @@ export default function App() {
     [selectedCat]
   );
 
-
+  setSelectedCategory(selectedCat)
   return (
     <div className="search-filter">
 

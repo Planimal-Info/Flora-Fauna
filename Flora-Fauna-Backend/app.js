@@ -6,6 +6,7 @@ const router = require("./routes/auth.js")
 const planimalRouter = require("./routes/planimal.js")
 const adminRouter = require("./routes/admin.js")
 const postRouter = require("./routes/posts.js")
+const filterRouter = require("./routes/filter.js")
 const security = require("./middleware/security.js")
 
 const app = express()
@@ -21,6 +22,7 @@ app.use("/auth", router)
 app.use("/planimal", planimalRouter)
 app.use("/admin", adminRouter)
 app.use("/post", postRouter)
+app.use("/filter", filterRouter)
 
 app.get("/", async (req,res,next) => {
     try {

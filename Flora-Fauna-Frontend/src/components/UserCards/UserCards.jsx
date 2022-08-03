@@ -7,7 +7,7 @@ import { usePostContext } from "../../contexts/posts";
 import { Card, Col, Grid, Link, Text, Tooltip } from "@nextui-org/react";
 
 export default function UserCards(props) {
-  const { source, title, desc, post, id } = props;
+  const { source, title, desc, post, id, category } = props;
   const { reportPost } = useAdminContext();
   const { updateLikes } = usePostContext();
   const [visible, setVisible] = useState(false);
@@ -55,8 +55,7 @@ export default function UserCards(props) {
               transform="uppercase"
               color="#ffffffAA"
             >
-              {/* INSERT CATEGORY */}
-              Mammals
+              {category}
             </Text>
             <Text h4 color="white">
               {props.title}

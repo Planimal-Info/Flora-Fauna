@@ -3,19 +3,22 @@ const { BadRequestError } = require("../utils/errors.js");
 
 class Filter {
   //Returns all posts from the plants category in descending order based on likes.
-  static async getPlantsCategory() {
-  }
-
-  //Returns all posts from the mammals category in descending order based on likes.
-  static async getMammalsCategory() {
-  }
-
-  //Returns all posts from the insects category in descending order based on likes
-  static async getInsectsCategory() {
-  }
-
-  //Returns all posts from the reptiles category in descending order based on likes
-  static async getReptilesCategory() {
+  static async getFilteredCategory(category) {
+    let outputArr = [];
+    for (let e of category.data) {
+      if (e != "categories") {
+        const inputString = `${e}`
+        const results = await db.query(
+          `
+        SELECT * FROM user_posts
+        WHERE category = $1 
+        `,
+          [inputString],
+        );
+        outputArr.push(results.rows);
+      }
+    }
+    return outputArr;
   }
 
   //Returns most like posts per day.

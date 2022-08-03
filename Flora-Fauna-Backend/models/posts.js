@@ -11,26 +11,29 @@ class Posts {
       "photo",
       "caption",
       "title",
+      "category",
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
         return new BadRequestError(`Missing ${e} in request body`);
       }
     });
-
+    const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
           user_post_desc,
           user_id,
-          user_post_title
+          user_post_title,
+          category 
         )
-        VALUES ($1, $2, $3)
-        RETURNING id, user_post_desc, user_id, likes, user_post_title
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, user_post_desc, user_id, likes, user_post_title, category
         `,
       [
         data.values.caption,
         user_id,
         data.values.title,
+        category
       ],
     );
     return results.rows[0];

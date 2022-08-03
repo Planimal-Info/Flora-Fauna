@@ -9,8 +9,7 @@
 
 .search-result-content{
   display: flex;
-  align-items: center;
-  margin: 40px;    
+  align-items: center;  
 }
 
 .search-result-submit{
@@ -22,8 +21,13 @@
   cursor: pointer;
 }
 
+.search-wrapper {
+  margin: 50px 0;
+}
+
 .animal-card-area{
   width: 100%;
+  margin-top: 90px;
   display:flex;
   justify-content: space-evenly;
   flex-wrap: wrap;

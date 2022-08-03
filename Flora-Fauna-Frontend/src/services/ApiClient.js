@@ -189,6 +189,16 @@ class ApiClient {
         data: data,
       })
   }
+  //------------------//
+  //Filter Endpoints
+  //Gets the filtered Posts from the backend
+  async getFilteredPosts(data) {
+    return await this.request({
+      endpoint: "filter",
+      method: "POST",
+      data: {data: data} 
+    })
+  }
 }
 
 export default new ApiClient("http://localhost:3001");

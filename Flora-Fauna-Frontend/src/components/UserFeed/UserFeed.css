@@ -95,6 +95,7 @@
   transition: 0.3s;
   background: white;
   color: var(--brown);
-
 }
-
+.no-filter{
+  margin-top: 30px;
+}

@@ -13,6 +13,7 @@ export default function UploadPage() {
     imageUrl: "",
     title: "",
     caption: "",
+    category: ""
   });
 
   // Handle value changes for image url, title and caption
@@ -59,7 +60,6 @@ export default function UploadPage() {
   };
   //e.target.value = null
   ////////////////////
- 
   return (
     <div className="upload-page">
       <div className="upload-form">
@@ -110,7 +110,7 @@ export default function UploadPage() {
               name="category"
               onChange={handleUploadChange}
             /> */}
-            <select name="category" id="post-category">
+            <select name="category" id="post-category" onChange={handleUploadChange}>
               <option value="Select">- Select category -</option>
               <option value="Insects">Insects</option>
               <option value="Mammals">Mammals</option>

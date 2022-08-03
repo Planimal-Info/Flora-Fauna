@@ -6,11 +6,25 @@
 }
 
 .about-page::before {
-    
+    content: "";
+    background-image: url('../../assets/ny-bird-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    overflow-y: visible;
 }
 
 .about-info {
-    width: 800px;
+    width: 900px;
 }
 
 .about-title {
@@ -19,4 +33,9 @@
 
 .about-desc {
     line-height: 1.7;
+    font-size: 20px;
+}
+
+.about-register {
+    color: var(--yellow);
 }

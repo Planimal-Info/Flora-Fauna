@@ -37,7 +37,7 @@
 .hero-image {
     width: 100vw;
     height: 600px;
-    opacity: .2;
+    opacity: 1;
 }
 
 .hero .hero-image img {
@@ -62,6 +62,11 @@
 
 .hero-title{
     margin-top: 10px; 
+}
+
+.bio-info h3 {
+    opacity: 0.6;
+    font-weight: 500;
 }
 
 .credits{

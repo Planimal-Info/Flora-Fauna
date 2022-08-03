@@ -27,7 +27,11 @@
     width: 100%;
     max-width: 700px;
     margin-top: 20px;
-    font-size: 12px;
+    font-size: 16px;
+    line-height: 2;
+    margin-top: 20px;
+    height: 350px;
+    overflow: scroll;
 }
 
 .hero-image {
@@ -54,11 +58,6 @@
     background-color: black;
     z-index: 0;
     opacity: 0.5;
-}
-
-.hero-desc{
-  line-height: 2;
-  margin-top: 20px;
 }
 
 .hero-title{

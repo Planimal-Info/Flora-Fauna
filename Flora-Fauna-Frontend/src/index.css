@@ -67,6 +67,9 @@ html {
   background-clip: content-box;
 }
 
+::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
 
 a {
   font-weight: 500;

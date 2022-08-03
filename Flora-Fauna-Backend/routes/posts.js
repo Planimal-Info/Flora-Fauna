@@ -99,5 +99,16 @@ router.get("/mostLikes", async(req,res,next) => {
   }
 })
 
+//Returns the post from the post id
+router.get("/:productId", async(req,res,next) => {
+  try{
+    const id = req.params.productId;
+    const post = await Posts.getPost(id);
+    res.status(200).json({ post });
+  }
+  catch(err){
+    next(err)
+  }
+})
 
 module.exports = router;

@@ -46,7 +46,6 @@ class Profile {
     //Deletes file from uploads file, as to not become bloated
     fs.unlink(`${image.path}`, () => {
       //Need to improve before going into production || Alternative: Put success info into txt
-      console.log("success");
     });
 
     //Returns profile image
@@ -76,7 +75,6 @@ class Profile {
    //Deletes file from uploads file, as to not become bloated
    fs.unlink(`${image.path}`, () => {
      //Need to improve before going into production || Alternative: Put success info into txt
-     console.log("success");
    });
 
    //Returns header image
@@ -128,7 +126,6 @@ class Profile {
     }
     
     static async updatePassword(password, user_id) {
-      console.log(password, user_id)
       const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
 
       const results = await db.query(

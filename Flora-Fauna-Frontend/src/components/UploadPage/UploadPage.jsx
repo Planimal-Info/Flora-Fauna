@@ -91,7 +91,7 @@ export default function UploadPage() {
           </div>
         )}
         {/* UPLOAD VIA IMAGE URL */}
-        <UploadImageUrl handleUploadChange={handleUploadChange} />
+        {/* <UploadImageUrl handleUploadChange={handleUploadChange} /> */}
 
         {/* INSERT TITLE */}
         <form enctype="multipart/form-data">

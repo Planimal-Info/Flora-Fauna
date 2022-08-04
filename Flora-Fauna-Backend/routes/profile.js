@@ -37,8 +37,8 @@ const upload = multer({ dest: 'uploads/' })
     try {
       const { email } = res.locals.user;
       const user = await User.fetchUser(email);
-      const addImage = await Profile.updateEmail(req.email, user.id)
-      res.status(200).json({ addImage });
+      const addEmail = await Profile.updateEmail(req.body.email, user.id)
+      res.status(200).json({ addEmail });
       
     } catch (error) {
       next(error);
@@ -50,8 +50,8 @@ const upload = multer({ dest: 'uploads/' })
       try {
         const { email } = res.locals.user;
         const user = await User.fetchUser(email);
-        const addImage = await Profile.updateEmail(req.password, user.id)
-        res.status(200).json({ addImage });
+        const addPass = await Profile.updatePassword(req.body.password, user.id)
+        res.status(200).json({ addPass });
         
       } catch (error) {
         next(error);

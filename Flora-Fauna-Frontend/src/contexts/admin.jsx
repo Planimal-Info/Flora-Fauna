@@ -8,7 +8,6 @@ export const AdminContextProvider = ({ children }) => {
   const [flaggedPosts, setFlaggedPosts] = useState({});
   //Stores all flagged Users
   const [flaggedUsers, setFlaggedUsers] = useState({});
-  const [selectedPost, setSelectedPost] = useState({});
   //Stores the post that is used in the Admin Details page (bascially a more info page)
   const [focusedPost, setFocusedPost] = useState({});
 
@@ -72,8 +71,6 @@ export const AdminContextProvider = ({ children }) => {
     deleteUser,
     refresh,
     setRefresh,
-    selectedPost,
-    setSelectedPost,
     focusedPost,
     setFocusedPost,
   };

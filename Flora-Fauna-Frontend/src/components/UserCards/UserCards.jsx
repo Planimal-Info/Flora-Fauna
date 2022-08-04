@@ -131,6 +131,7 @@ export default function UserCards(props) {
               id={id}
               post={post}
               postLikes={postLikes}
+              handleUpdateLikes={handleUpdateLikes}
             />
           </div>
         )}

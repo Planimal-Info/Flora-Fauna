@@ -156,6 +156,24 @@
     margin-bottom: 20px;
 }
 
+.current-email {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.current-email h4 {
+    margin-right: 8px;
+}
+
+.current-email span {
+    color: rgb(168, 168, 168);
+}
+
+.change-password {
+    margin-top: 50px;
+}
+
+
 /* TEMP STYLES */
 .black {
     color: black;

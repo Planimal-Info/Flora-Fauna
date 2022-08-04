@@ -119,13 +119,19 @@ export function LikedPosts() {
   return (
     <div className="liked-posts">
       <h2>Liked Posts</h2>
+      <div className="liked-posts-container">
+        {/* INSERT LIKED POSTS HERE */}
+      </div>
     </div>
   );
 }
 
 export function Account() {
 
+  const { user } = useAuthContext()
+
   const [values, setValues] = useState({
+    newEmail: "",
     oldPassword: "",
     newPassword: "",
     confPassword: "",
@@ -150,7 +156,21 @@ export function Account() {
       <h2>Account Settings</h2>
       <div className="user-changes">
         <div className="form">
+          <h2>Change Email</h2>
+          <div className="current-email"><h4>Current email:</h4><span>{user.user.email}</span></div>
+          <div className="input-field input-email">
+            <label htmlFor="new-email">New Email</label>
+            <input 
+              className="form-input"
+              type="email"
+              name="email"
+              placeholder="Enter new email"
+              value={values.newEmail}
+              onChange={handleChange}
+              />
+          </div>
 
+          <h2 className="change-password">Change Password</h2>
           {/* Old Password Field */}
           <div className="input-field">
             <label htmlFor="old-password">Old Password</label>

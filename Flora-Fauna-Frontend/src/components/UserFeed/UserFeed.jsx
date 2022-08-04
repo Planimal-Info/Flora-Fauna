@@ -45,7 +45,7 @@ export default function UserFeed(props) {
 
   //Weird way of making sure the "No More Posts" sign dosent show up when first mounting/re-mounting
   //May refractor if a better way is found
-  useEffect(() => {
+  useEffect(async () => {
     const arr = [1];
     setMorePosts(arr);
   }, []);

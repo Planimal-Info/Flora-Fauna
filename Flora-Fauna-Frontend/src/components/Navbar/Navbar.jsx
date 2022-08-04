@@ -2,6 +2,7 @@ import * as React from "react"
 import { Link } from "react-router-dom"
 import Logo from "../Logo/Logo"
 import { useAuthContext } from "../../contexts/auth.jsx"
+import { usePostContext } from "../../contexts/posts.jsx";
 import "./Navbar.css"
 
 export default function Navbar({isLoading}) {
@@ -18,6 +19,7 @@ export default function Navbar({isLoading}) {
 //used a html tags to be able to go back to home and refresh the page after logout
 //also used one to refresh page before navigating to user profile
 export function NavLinks({ isLoading, user, logoutUser }) {
+  const { setRefresh, refresh } = usePostContext();
   return (
     <div className="nav-links">
                 {/*Will display Non User NavLinks if user is logged in*/}
@@ -40,7 +42,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                   <ul className="links">
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/search">Planimals</Link></li>
-                      <li><Link to='/userfeed'>Your Feed</Link></li>
+                      <li><Link to='/userfeed' onClick={() => setRefresh(!refresh)}>Your Feed</Link></li>
                       <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
                       <li className="user-options">
                         <Link to="/upload"><span className="material-symbols-outlined upload-button">add_circle</span></Link>

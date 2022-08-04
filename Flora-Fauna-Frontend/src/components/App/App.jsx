@@ -15,6 +15,7 @@ import UserProfile from "../UserProfile/UserProfile.jsx";
 import SearchResults from "../SearchResults/SearchResults.jsx";
 import AnimalDetails from "../AnimalDetails/AnimalDetails.jsx";
 import AdminDetails from "../AdminDetails/AdminDetails.jsx";
+import ResourcesPage from "../ResourcesPage/ResourcesPage";
 import "./App.css";
 
 import { AuthContextProvider, useAuthContext } from "../../contexts/auth.jsx";
@@ -53,6 +54,7 @@ function App() {
           <Route path="/userfeed" element={<UserFeed />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/upload" element={<UploadPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/animaldetails" element={<AnimalDetails />} />
           <Route path="/post/:productId" element={<AdminDetails />} />

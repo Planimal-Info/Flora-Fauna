@@ -26,7 +26,6 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [refresh]);
- 
   //Gets the sets array for selected filters, and send to backend to get posts for that match the filters
   useEffect(async () => {
     try{

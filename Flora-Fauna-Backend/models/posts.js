@@ -186,7 +186,7 @@ class Posts {
     else{
       nextPostLength = allId.rows.length;
     }
-    //Gets the posts and adds them to this array we will output
+    //Gets the posts and adds them to this array, which we will output
     let morePosts = [];
     for(let i = 0; i < nextPostLength; i++){
       const result = await db.query(

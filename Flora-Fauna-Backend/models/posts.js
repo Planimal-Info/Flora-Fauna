@@ -33,7 +33,7 @@ class Posts {
         data.values.caption,
         user_id,
         data.values.title,
-        category
+        category,
       ],
     );
     return results.rows[0];
@@ -50,10 +50,7 @@ class Posts {
   }
 
   //Attach image to corresponding post in db
-  static async attachImage(image, user) {
-    //Get all posts from a user and use that to get the latest entry
-    const getPosts = await this.getPostsForUser(user.id);
-    const postId = getPosts[getPosts.length - 1];
+  static async attachImage(image, post_id) {
     //Reads binary data from file and stores it.
     const data = fs.readFileSync(image.path);
 
@@ -68,7 +65,7 @@ class Posts {
       WHERE id = $2
       RETURNING *
       `,
-      [resizedImage, postId.id],
+      [resizedImage, post_id],
     );
 
     //Deletes file from uploads file, as to not become bloated
@@ -164,15 +161,45 @@ class Posts {
     if (post_id.id < 5) {
       return [];
     }
-    const moreId = post_id.id + 3;
-    const result = await db.query(
+    
+    //Gets the the first 50 id that are greater than the given ID.
+    const allId = await db.query(
       `
-      SELECT * FROM user_posts
-      WHERE id > $1 AND id < $2
+      SELECT id FROM user_posts
+      WHERE id > $1
+      LIMIT 50
       `,
-      [post_id.id, moreId],
+      [post_id.id]
     );
-    return result.rows;
+
+    //If Nothing is returned then there are no most posts
+    if(allId.rows.length === 0){
+      return [];
+    }
+    
+    //Variable used to loop through and get the posts, done in either increments of 3 or 
+    //less than that if the results returned are less than 3
+    let nextPostLength = 0;
+    if(allId.rows.length >= 3){
+      nextPostLength = 3;
+    }
+    else{
+      nextPostLength = allId.rows.length;
+    }
+    //Gets the posts and adds them to this array, which we will output
+    let morePosts = [];
+    for(let i = 0; i < nextPostLength; i++){
+      const result = await db.query(
+        `
+        SELECT * FROM user_posts
+        WHERE id = $1
+        `,
+        [allId.rows[i].id]
+      )
+      morePosts.push(result.rows[0]);
+    }
+    
+    return morePosts;
   }
 
   //Gets the most likes orders in descending order

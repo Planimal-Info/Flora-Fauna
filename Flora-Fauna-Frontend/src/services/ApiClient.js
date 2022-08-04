@@ -44,13 +44,14 @@ class ApiClient {
   async imageRequest({ endpoint, method = "POST", data = {} }) {
     const url = `${this.remoteHostUrl}/${endpoint}`;
     let formData = new FormData();
-    formData.set("file", data);
+    formData.set("file", data.image);
     const headers = {
       "Content-Type": "multipart/form-data",
     };
     if (this.token) {
       headers["Authorization"] = `Bearer ${this.token}`;
     }
+    headers["PostId"] = data.post_id;
     try {
       const request = await axios.post(url, formData, { headers: headers });
       if (request) {
@@ -166,7 +167,7 @@ class ApiClient {
     const addImage = await this.imageRequest({
       endpoint: "post/upload",
       method: "POST",
-      data: data.image,
+      data: {image:data.image, post_id: post?.data?.post?.id},
     });
     return { post, addImage };
   }

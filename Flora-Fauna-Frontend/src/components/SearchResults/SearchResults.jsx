@@ -18,7 +18,6 @@ export default function SearchResults() {
     searchInput(searchInputValue);
   };
   
-  console.log(searchPictureResults.length)
   //Displays all the results from the search.
   //Will display a no results message if nothing is returned from the request
   return (

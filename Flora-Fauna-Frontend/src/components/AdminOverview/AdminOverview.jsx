@@ -32,11 +32,6 @@ export default function AdminOverview(props) {
   const handleDeleteUser = async (user_id) => {
     await deleteUser(user_id);
   };
-  
-  //Sets the post when the admin clicks on the go to post button
-  const setPost = (post) => {
-    setSelectedPost(post);
-  }
   return (
     <div className="admin-overview">
       <div className="content">
@@ -74,7 +69,6 @@ export default function AdminOverview(props) {
                       handleDeleteToggle={handleDeleteToggle}
                       post={e}
                       deletePost={handleDeletePost}
-                      setPost={setPost}
                     />
                   ))
                   : <h4>No Posts Reported</h4>
@@ -93,7 +87,6 @@ export default function AdminOverview(props) {
                       handleDeleteToggle={handleDeleteToggle}
                       user={e}
                       deleteUser={handleDeleteUser}
-                      setPost={setPost}
                     />
                   ))
                   : <h4>No Users Reported</h4>
@@ -130,7 +123,7 @@ export function AdminFlaggedPosts(props) {
             {post.user_post_desc}
           </p>
           <div className="number-flags">Flag marks: 0</div>
-          <Link to={`/post/${post.id}`} onClick={() => setPost(post)}>Go to Post</Link>
+          <Link to={`/post/${post.id}`}>Go to Post</Link>
           <button
             className="btn delete-btn"
             onClick={() => props.deletePost(post.id, post.user_id)}

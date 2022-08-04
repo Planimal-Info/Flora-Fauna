@@ -4,13 +4,18 @@ import ApiClient from "../services/ApiClient.js";
 const AdminContext = createContext(null);
 
 export const AdminContextProvider = ({ children }) => {
+  //Stores all flagged Posts
   const [flaggedPosts, setFlaggedPosts] = useState({});
+  //Stores all flagged Users
   const [flaggedUsers, setFlaggedUsers] = useState({});
-  const [selectedPost, setSelectedPost] = useState({});
+  //Stores the post that is used in the Admin Details page (bascially a more info page)
   const [focusedPost, setFocusedPost] = useState({});
+
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [error, setError] = useState(false);
+
+  //Refreshes the component
   const [refresh, setRefresh] = useState(false);
   //Gets flagged posts and flagged users on each refresh
   useEffect(async () => {
@@ -19,17 +24,6 @@ export const AdminContextProvider = ({ children }) => {
     const getUsers = await ApiClient.getFlaggedUsers();
     setFlaggedUsers(getUsers.data.flaggedUsers);
   }, [refresh]);
-  
-  //Gets the post for an admin when they want to know more
-  useEffect(async () => {
-    try{
-      const data = await ApiClient.getSelectedPost(selectedPost.id);
-      setFocusedPost(data);
-    }
-    catch(err){
-      console.error(err)
-    }
-  },[selectedPost])
 
   //Reports the post when prompted
   const reportPost = async (data) => {
@@ -77,9 +71,8 @@ export const AdminContextProvider = ({ children }) => {
     deleteUser,
     refresh,
     setRefresh,
-    selectedPost,
-    setSelectedPost,
-    focusedPost
+    focusedPost,
+    setFocusedPost,
   };
 
   return (

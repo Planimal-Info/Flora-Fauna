@@ -60,7 +60,20 @@ export const AdminContextProvider = ({ children }) => {
       setError(err);
     }
   };
-
+ 
+  //Removes the post from being flagged
+  const unFlagPost = async (post_id, user_id) => {
+    try{
+      const req = await ApiClient.unFlagPost(post_id, user_id);
+      
+      //Refreshes the component
+      setRefresh(true);
+      setRefresh(false);
+    }
+    catch(err){
+      setError(err);
+    }
+  }
   const authValue = {
     flaggedPosts,
     flaggedUsers,
@@ -73,6 +86,7 @@ export const AdminContextProvider = ({ children }) => {
     setRefresh,
     focusedPost,
     setFocusedPost,
+    unFlagPost
   };
 
   return (

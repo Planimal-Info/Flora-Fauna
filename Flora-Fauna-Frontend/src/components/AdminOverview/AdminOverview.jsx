@@ -8,7 +8,7 @@ export default function AdminOverview(props) {
   const [togglePosts, setTogglePosts] = useState(true);
   const [toggleUsers, setToggleUsers] = useState(false);
   const [deleteItem, setDeleteItem] = useState(false);
-  const { flaggedPosts, flaggedUsers, deletePost, deleteUser, setSelectedPost } = useAdminContext();
+  const { flaggedPosts, flaggedUsers, deletePost, deleteUser, setSelectedPost, unFlagPost } = useAdminContext();
 
   const adminPostsHandler = () => {
     setTogglePosts(true);
@@ -32,6 +32,11 @@ export default function AdminOverview(props) {
   const handleDeleteUser = async (user_id) => {
     await deleteUser(user_id);
   };
+
+  //Removes the post from the flagged post, used when admin deems post appropriate.
+  const removeFlaggedPost = async (post_id, user_id) => {
+    await unFlagPost(post_id, user_id);
+  }
   return (
     <div className="admin-overview">
       <div className="content">
@@ -69,6 +74,7 @@ export default function AdminOverview(props) {
                       handleDeleteToggle={handleDeleteToggle}
                       post={e}
                       deletePost={handleDeletePost}
+                      removeFlaggedPost={removeFlaggedPost}
                     />
                   ))
                   : <h4>No Posts Reported</h4>
@@ -106,7 +112,7 @@ export default function AdminOverview(props) {
 //Implement when backend authentication is connected to frontend.
 //use this to return all the flagged posts.
 export function AdminFlaggedPosts(props) {
-  const { deleteItem, setDeleteItem, handleDeleteToggle, post, setPost } = props;
+  const { deleteItem, setDeleteItem, handleDeleteToggle, post, setPost, removeFlaggedPost } = props;
   return (
     <div className="flagged-posts">
       {/* FLAGGED ITEM | POSTS */}
@@ -114,7 +120,7 @@ export function AdminFlaggedPosts(props) {
         <span className="material-symbols-outlined flagged-post-icon">
           error
         </span>
-        <span className="material-symbols-outlined flagged-item-close">
+        <span className="material-symbols-outlined flagged-item-close" onClick={() => removeFlaggedPost(post.id, post.user_id)}>
           close
         </span>
         <div className="post-content">

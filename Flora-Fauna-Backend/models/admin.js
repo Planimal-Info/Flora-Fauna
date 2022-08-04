@@ -104,6 +104,20 @@ class Admin {
 
     return results.rows[0];
   }
+  
+  //unflags a post
+  static async unFlagPost(data){
+    const results = await db.query(
+      `
+      UPDATE user_posts
+      SET flagged = false
+      WHERE id = $1
+      RETURNING flagged
+      `,
+      [data.post]
+    )
+    return results.rows[0];
+  }
 }
 
 module.exports = Admin;

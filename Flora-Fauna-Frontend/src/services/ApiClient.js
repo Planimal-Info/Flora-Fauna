@@ -154,6 +154,14 @@ class ApiClient {
       method: "GET",
     })
   }
+  //Calls for a post to be unflagged, used when a admin deems a post appropriate.
+  async unFlagPost(post_id, user_id){
+    return await this.request({
+      endpoint: `admin/unflag`,
+      method: "POST",
+      data: {post: post_id, user: user_id}
+    })
+  }
   //-----------------------//
   //Post Endpoints
   //Sends request to create post and sends another request to store image in that post

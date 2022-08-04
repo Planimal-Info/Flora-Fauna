@@ -12,10 +12,11 @@
 .admin-delete{
   padding:10px;
   width: 100px;
-  border-radius: 20px;
   border-width: 1px;
   cursor:pointer;
+  border-radius: 10px;
   transition: background-color .30s, box-shadow .30s;
+  margin-right: 10px;
 }
 .admin-delete:hover{
   background-color: rgba(255,0,0, .7);

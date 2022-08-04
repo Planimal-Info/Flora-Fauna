@@ -62,4 +62,15 @@ router.post("/flagpost", async(req,res,next) => {
   }
 })
 
+//Removes the post from the flagged ones
+router.post("/unflag", async(req,res,next) => {
+  try{
+    const unFlaggedPost = await Admin.unFlagPost(req.body);
+    res.status(200).json({ unFlaggedPost })
+  }
+  catch(err){
+    next(err)
+  }
+})
+
 module.exports = router

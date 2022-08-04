@@ -29,6 +29,7 @@ export default function UserCards(props) {
   //Updates the likes for the post
   const handleUpdateLikes = async () => {
     const check = await updateLikes(id, post.likes);
+    setIsLiked(true)
     //To avoid users being able to like multiple times
     if (Object.keys(check.data.updatedLikes).length === 3) {
       if(postLikes != 1){
@@ -131,6 +132,7 @@ export default function UserCards(props) {
               id={id}
               post={post}
               postLikes={postLikes}
+              handleUpdateLikes={handleUpdateLikes}
             />
           </div>
         )}

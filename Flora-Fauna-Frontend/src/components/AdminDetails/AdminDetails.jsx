@@ -7,7 +7,7 @@ import ApiClient from "../../services/ApiClient.js";
 import { toBase64 } from "../UserFeed/UserFeed.jsx";
 
 export default function AdminDetails(props) {
-  const { selectedPost, focusedPost, deletePost, setFocusedPost } = useAdminContext();
+  const { selectedPost, focusedPost, deletePost, setFocusedPost, unFlagPost  } = useAdminContext();
   const navigate = useNavigate();
 
   //Gets the url and grabs post id from it
@@ -23,6 +23,12 @@ export default function AdminDetails(props) {
       console.error(err);
     }
   }, [selectedPost]);
+
+  //wrapper function to unflag post and navigate to admin panel
+  const unflag = async (post_id, user_id) => {
+    await unFlagPost(post_id, user_id);
+    navigate("/admin");
+  }
 
   //Deletes the post and also navigates to admin panel again
   const wrapperDelete = async () => {
@@ -43,7 +49,10 @@ export default function AdminDetails(props) {
             category={focusedPost?.category}
           />
         </div>
-        <button className="admin-delete" onClick={wrapperDelete}>Delete</button>
+      <div>
+        <button className="admin-delete" onClick={wrapperDelete}>Delete Post</button>
+        <button className="admin-delete" onClick={() => unflag(focusedPost.id, focusedPost.user_id)}>Unflag Post</button>
+      </div>
       </div>
     );
   } else {

@@ -33,7 +33,7 @@ class Posts {
         data.values.caption,
         user_id,
         data.values.title,
-        category
+        category,
       ],
     );
     return results.rows[0];
@@ -50,10 +50,7 @@ class Posts {
   }
 
   //Attach image to corresponding post in db
-  static async attachImage(image, user) {
-    //Get all posts from a user and use that to get the latest entry
-    const getPosts = await this.getPostsForUser(user.id);
-    const postId = getPosts[getPosts.length - 1];
+  static async attachImage(image, post_id) {
     //Reads binary data from file and stores it.
     const data = fs.readFileSync(image.path);
 
@@ -68,7 +65,7 @@ class Posts {
       WHERE id = $2
       RETURNING *
       `,
-      [resizedImage, postId.id],
+      [resizedImage, post_id],
     );
 
     //Deletes file from uploads file, as to not become bloated

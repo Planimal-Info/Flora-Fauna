@@ -19,11 +19,11 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
 });
 
 //Route that takes in the image file, uses multer middlware to parse and adds to uploads file.
-router.post("/upload", upload.single(`file`), security.reqAuthUser, async (req, res, next) => {
+//Also uses a post id header that was attach on request to link with post
+router.post("/upload", upload.single(`file`), async (req, res, next) => {
   try {
-    const { email } = res.locals.user;
-    const user = await User.fetchUser(email);
-    const addImage = await Posts.attachImage(req.file, user)
+    const { headers } = req;
+    const addImage = await Posts.attachImage(req.file, headers.postid)
     res.status(200).json({ addImage });
     
   } catch (error) {

@@ -92,14 +92,18 @@
 
 .user-profile .content .column.right .uploaded-content {
     background: peachpuff;
-    width: 60vw;
+    width: 1300px;
     height: 90vh;
     margin-top: 30px;
     overflow-y: scroll;
 }
 
-.profile-posts {
+.profile-content {
     margin-top: 200px;
+}
+
+.profile-content h2 {
+    margin-bottom: 30px;
 }
 
 .user-settings {
@@ -128,6 +132,47 @@
     border-radius: 8px;
     width: inherit;
 }
+
+.form-input.new-password-input {
+    position: relative;
+}
+
+.visibility-eye {
+    position: absolute;
+}
+
+/*--------- Account Settings ----------*/
+
+.account {
+    width: 1300px;
+    height: 700px;
+}
+
+.user-changes .form {
+    width: 380px;
+}
+
+.user-changes .form .input-field {
+    margin-bottom: 20px;
+}
+
+.current-email {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.current-email h4 {
+    margin-right: 8px;
+}
+
+.current-email span {
+    color: rgb(168, 168, 168);
+}
+
+.change-password {
+    margin-top: 50px;
+}
+
 
 /* TEMP STYLES */
 .black {

@@ -28,24 +28,25 @@ export const PostContextProvider = ({ children }) => {
   }, [refresh]);
   //Gets the sets array for selected filters, and send to backend to get posts for that match the filters
   useEffect(async () => {
-    try{
+    try {
       const iterator = selectedCategory?.values();
       let filterCategory = [];
-      for(let filter of iterator){
-        filterCategory.push(filter)
+      for (let filter of iterator) {
+        filterCategory.push(filter);
       }
-      if(filterCategory.length >= 2){
-        const data = await ApiClient.getFilteredPosts({category: filterCategory, time: selectedTimeFrame})
+      if (filterCategory.length >= 2) {
+        const data = await ApiClient.getFilteredPosts({
+          category: filterCategory,
+          time: selectedTimeFrame,
+        });
         setFilteredPosts(data?.data?.data);
-      }
-      else{
+      } else {
         setFilteredPosts([]);
       }
-    }
-    catch(err){
+    } catch (err) {
       console.error(err);
     }
-  },[selectedCategory, selectedTimeFrame])
+  }, [selectedCategory, selectedTimeFrame]);
 
   //Sends request to make a post
   const createPost = async (data) => {
@@ -112,7 +113,7 @@ export const PostContextProvider = ({ children }) => {
     setSelectedCategory,
     filteredPosts,
     selectedTimeFrame,
-    setSelectedTimeFrame
+    setSelectedTimeFrame,
   };
 
   return (

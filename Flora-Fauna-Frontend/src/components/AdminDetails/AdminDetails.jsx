@@ -30,7 +30,7 @@ export default function AdminDetails(props) {
     navigate("/admin");
   };
 
-  if (Object.keys(focusedPost).length > 0) {
+  if (focusedPost != undefined) {
     return (
       <div className="admin-details">
         <div className="admin-content">
@@ -47,6 +47,6 @@ export default function AdminDetails(props) {
       </div>
     );
   } else {
-    return <div>Loading</div>;
+    return <div className="loading-admin">Loading</div>;
   }
 }

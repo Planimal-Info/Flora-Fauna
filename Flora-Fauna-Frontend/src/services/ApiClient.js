@@ -44,15 +44,16 @@ class ApiClient {
   async imageRequest({ endpoint, method = "POST", data = {} }) {
     const url = `${this.remoteHostUrl}/${endpoint}`;
     let formData = new FormData();
-    formData.set("file", data);
+    formData.set("file", data.image);
     const headers = {
-      "Content-Type":"multipart/form-data",
+      "Content-Type": "multipart/form-data",
+    };
+    if (this.token) {
+      headers["Authorization"] = `Bearer ${this.token}`;
     }
-    if(this.token){
-      headers["Authorization"] = `Bearer ${this.token}`
-    }
+    headers["PostId"] = data.post_id;
     try {
-      const request = await axios.post(url, formData, {headers:headers});
+      const request = await axios.post(url, formData, { headers: headers });
       if (request) {
         return request.data.addImage;
       }
@@ -101,6 +102,14 @@ class ApiClient {
       data: data,
     });
   }
+  //Gets the pictures for all the search results
+  async getSearchPictureResults(data){
+    return await this.request({
+      endpoint: "planimal/getPictures",
+      method: "POST",
+      data:data
+    })
+  }
 
   //---------------------------//
   //Admin Endpoints
@@ -115,11 +124,11 @@ class ApiClient {
   }
 
   //Deletes post from site
-  async deletePosts(post_id) {
+  async deletePost(data) {
     return await this.request({
       endpoint: "admin/deletePost",
       method: "POST",
-      data: post_id,
+      data: { data: data },
     });
   }
   //Deletes user from site
@@ -127,8 +136,23 @@ class ApiClient {
     return await this.request({
       endpoint: "admin/deleteUser",
       method: "POST",
-      data: user_id,
+      data: {id: user_id},
     });
+  }
+  //Flags a post when called
+  async flagPost(post_id) {
+    return await this.request({
+      endpoint: "admin/flagpost",
+      method: "POST",
+      data: { id: post_id },
+    });
+  }
+  //Gets the post when an admin wants to know more about the post
+  async getSelectedPost(post_id){
+    return await this.request({
+      endpoint: `post/${post_id}`,
+      method: "GET",
+    })
   }
   //-----------------------//
   //Post Endpoints
@@ -143,22 +167,45 @@ class ApiClient {
     const addImage = await this.imageRequest({
       endpoint: "post/upload",
       method: "POST",
-      data: data.image,
+      data: {image:data.image, post_id: post?.data?.post?.id},
     });
     return { post, addImage };
   }
   //Sends request to get all posts in database
-  async getAllPosts(){
-    return await this.request({ endpoint:"post/all", method: "GET" })
+  async getAllPosts() {
+    return await this.request({ endpoint: "post/all", method: "GET" });
   }
-  
+
   //Sends request to get initial posts to load in.
-  async getInitialPosts(){
-    return await this.request({ endpoint:"post/initial", method: "GET" })
+  async getInitialPosts() {
+    return await this.request({ endpoint: "post/initial", method: "GET" });
   }
   //Sends request to get more posts
-  async getMorePosts(post_id){
-    return await this.request({ endpoint:"post/more", method: "POST", data: {id: post_id} })
+  async getMorePosts(post_id) {
+    return await this.request({
+      endpoint: "post/more",
+      method: "POST",
+      data: { id: post_id },
+    });
+  }
+
+  //Sends request to update likes for a post
+  async getLikes(data) {
+    return await this.request({
+        endpoint: "post/update",
+        method: "POST",
+        data: data,
+      })
+  }
+  //------------------//
+  //Filter Endpoints
+  //Gets the filtered Posts from the backend
+  async getFilteredPosts(data) {
+    return await this.request({
+      endpoint: "filter",
+      method: "POST",
+      data: {data: data} 
+    })
   }
 }
 

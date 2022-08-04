@@ -42,11 +42,23 @@ router.get("/users", async(req, res, next) => {
 //Takes in a user_id
 router.post("/deleteUser", async(req,res,next) => {
   try{
-    const deleteUser = await Admin.deleteUser(req.body);
+    const deleteUser = await Admin.deleteAccount(req.body.id);
     res.status(200).json({ deleteUser })
   }
   catch(err){
     next(err)
+  }
+})
+
+//Flags a post when called
+router.post("/flagpost", async(req,res,next) => {
+  try {
+    const updatedPosts = await Admin.reportPost(req.body.id);
+    const allPosts = await Admin.getFlaggedPosts();
+    res.status(200).json({ allPosts })
+  }
+  catch(err){
+    next(err);
   }
 })
 

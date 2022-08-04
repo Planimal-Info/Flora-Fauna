@@ -1,16 +1,21 @@
 import ApiClient from "../services/ApiClient";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAdminContext } from "./admin.jsx";
 
 const PostContext = createContext(null);
 
 export const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [latestPost, setLatestPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedTimeFrame, setSelectedTimeFrame] = useState("");
   const [error, setError] = useState({});
-  const [refresh, setRefresh] = useState(false);
-  const doRefresh = !refresh;
+  const [test, setTest] = useState(false);
+  //Uses refresh from admin context to refresh both admin and post components
+  const { refresh, setRefresh } = useAdminContext();
 
   //Grabs the posts when the component renders
   useEffect(async () => {
@@ -21,6 +26,27 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [refresh]);
+  //Gets the sets array for selected filters, and send to backend to get posts for that match the filters
+  useEffect(async () => {
+    try {
+      const iterator = selectedCategory?.values();
+      let filterCategory = [];
+      for (let filter of iterator) {
+        filterCategory.push(filter);
+      }
+      if (filterCategory.length >= 2) {
+        const data = await ApiClient.getFilteredPosts({
+          category: filterCategory,
+          time: selectedTimeFrame,
+        });
+        setFilteredPosts(data?.data?.data);
+      } else {
+        setFilteredPosts([]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, [selectedCategory, selectedTimeFrame]);
 
   //Sends request to make a post
   const createPost = async (data) => {
@@ -61,7 +87,16 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   };
-
+  //Updates the likes when called on using id
+  const updateLikes = async (id, likes) => {
+    try {
+      const obj = { id, likes };
+      const sendUpdateLikes = await ApiClient.getLikes(obj);
+      return sendUpdateLikes;
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const postValue = {
     posts,
     isLoading,
@@ -69,7 +104,16 @@ export const PostContextProvider = ({ children }) => {
     error,
     createPost,
     latestPost,
+    setPosts,
     getMorePosts,
+    setRefresh,
+    refresh,
+    updateLikes,
+    selectedCategory,
+    setSelectedCategory,
+    filteredPosts,
+    selectedTimeFrame,
+    setSelectedTimeFrame,
   };
 
   return (

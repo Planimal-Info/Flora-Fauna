@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+  position: relative;
   margin: 20px 0px;
-  background-color: rgba(51,51,51,.5);
   width: 500px;
   text-align: left;
 }
@@ -22,9 +22,57 @@
   margin-bottom: 20px;
 }
 
-.likes-container {
+.user-card .likes-container {
   display: flex;
+  position: absolute;
+  bottom: 2.5%;
+  left: 3%;
+  width: 100%;
+  z-index: 50;
 }
-.likes-counter {
+.user-card .likes-counter {
   margin: 0 8px;
+  color: white;
+}
+
+.report:hover{
+  background-color: red;
+  opacity: .9;
+
+}
+
+.flag-user {
+  display: flex;
+  position: absolute;
+  right: 5%;
+}
+
+.uc.flagged-icon {
+  color: white;
+}
+
+.uc.flagged-icon:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-error);
+  transition: 0.4s;
+}
+.nextui-c-iVzbCs-icDvGzP-css {
+  height: 600px;
+}
+
+.single-post .overlay {
+  z-index: 1;
+  transition: 0.5s;
+  transition-property: top, bottom;
+  cursor: pointer;
+}
+
+.single-post .overlay:hover {
+  transition: 0.6s;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 13%, rgba(0, 0, 0, 0) 84%, rgba(0, 0, 0, 1) 100%);
+  opacity: 0.6;
+}
+
+.flagged-tooltip {
+  margin-left: 50px;
 }

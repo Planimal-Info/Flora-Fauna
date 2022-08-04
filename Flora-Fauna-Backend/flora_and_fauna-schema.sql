@@ -24,6 +24,7 @@ photo               BYTEA,
 user_post_desc      TEXT NOT NULL,
 user_id             INT NOT NULL,
 likes               INTEGER DEFAULT 0,
+category            TEXT NOT NULL,
 created_at          TIMESTAMP NOT NULL DEFAULT NOW(),
 updated_at          TIMESTAMP NOT NULL DEFAULT NOW(),
 flagged             BOOLEAN DEFAULT FALSE,
@@ -32,8 +33,8 @@ user_post_title     TEXT NOT NULL
 
 CREATE TABLE likes (
 id              SERIAL PRIMARY KEY,
-user_id         INT REFERENCES users(id),
-user_post_id    INT REFERENCES user_posts(id)
+user_id         INT NOT NULL,
+user_post_id    INT NOT NULL
 );
 
 CREATE TABLE planimals (

@@ -3,11 +3,12 @@
 }
 
 .liked, .unliked {
-    color: var(--green);
+    color: var(--yellow);
 }
 
 .nextui-c-gYbKeQ-ibZmKkd-css {
     justify-content: flex-start;
+    position: relative;
 }
 
 .likes {
@@ -34,4 +35,16 @@
         'wght' 400,
         'GRAD' 0,
         'opsz' 48
+}
+
+.post-modal.flagged-icon {
+    display: flex;
+    position: absolute;
+    right: 15px;
+
+}
+
+.post-modal.flagged-icon:hover {
+    cursor: pointer;
+    color: var(--yellow);
 }

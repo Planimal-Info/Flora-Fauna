@@ -19,11 +19,11 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
 });
 
 //Route that takes in the image file, uses multer middlware to parse and adds to uploads file.
-router.post("/upload", upload.single(`file`), security.reqAuthUser, async (req, res, next) => {
+//Also uses a post id header that was attach on request to link with post
+router.post("/upload", upload.single(`file`), async (req, res, next) => {
   try {
-    const { email } = res.locals.user;
-    const user = await User.fetchUser(email);
-    const addImage = await Posts.attachImage(req.file, user)
+    const { headers } = req;
+    const addImage = await Posts.attachImage(req.file, headers.postid)
     res.status(200).json({ addImage });
     
   } catch (error) {
@@ -68,7 +68,9 @@ router.get("/initial", async(req,res,next) => {
 //Update likes by 1
 router.post("/update", security.reqAuthUser, async (req, res, next) => {
   try {
-    const updatedLikes = await Posts.updateLikes(req.body);
+    const { email } = res.locals.user;
+    const user = await User.fetchUser(email);
+    const updatedLikes = await Posts.updateLikes(req.body, user);
     res.status(200).json({ updatedLikes });
   } catch (error) {
     next(error);
@@ -97,5 +99,16 @@ router.get("/mostLikes", async(req,res,next) => {
   }
 })
 
+//Returns the post from the post id
+router.get("/:productId", async(req,res,next) => {
+  try{
+    const id = req.params.productId;
+    const post = await Posts.getPost(id);
+    res.status(200).json({ post });
+  }
+  catch(err){
+    next(err)
+  }
+})
 
 module.exports = router;

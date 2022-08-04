@@ -5,7 +5,7 @@ import AnimalCards from "../AnimalCards/AnimalCards.jsx";
 
 export default function SearchResults() {
   const [searchInputValue, setSearchInput] = useState("");
-  const { searchInput, isLoading, searchResults, initialized } = useSearchContext();
+  const { searchInput, isLoading, searchResults, initialized, searchPictureResults } = useSearchContext();
 
   //Changes the useState to reflect input inside search bar
   function handleOnChange(e) {
@@ -34,13 +34,15 @@ export default function SearchResults() {
           onChange={(e) => handleOnChange(e)}
         >
         </input>
-      </div>
-      <button className="search-result-submit" onClick={handleOnSubmit}>
-        Submit
+        <button className="search-result-submit" onClick={handleOnSubmit}>
+        <span class="material-symbols-outlined search-logo">search</span>
       </button>
+      </div>
       <div className="animal-card-area">
-        {searchResults?.data?.results?.map((e, inx) => (
+        {searchPictureResults.length === 0 ? searchResults?.data?.results?.map((e, inx) => (
           <AnimalCards common_name={e.common_name} scientific_name={e.scientific_name} key={inx} currentPlanimal={e}/>
+      )) : searchPictureResults.map((e,idx) => (
+        <AnimalCards common_name={e.data.common_name} scientific_name={e.data.scientific_name} currentPlaninal={e.data} picture={e.picture.photo} currentPlanimal={e}/>
       ))}
       <h2 className={searchResults?.data?.results?.length <= 0 && initialized === true ? "no-results-title" : "hidden"}>No Results, Try Something More Specific</h2>
       </div>

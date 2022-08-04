@@ -13,6 +13,7 @@ export default function UploadPage() {
     imageUrl: "",
     title: "",
     caption: "",
+    category: ""
   });
 
   // Handle value changes for image url, title and caption
@@ -59,7 +60,6 @@ export default function UploadPage() {
   };
   //e.target.value = null
   ////////////////////
- 
   return (
     <div className="upload-page">
       <div className="upload-form">
@@ -102,6 +102,21 @@ export default function UploadPage() {
               name="title"
               onChange={handleUploadChange}
             />
+          </div>
+          <div className="user-post-category">
+            <label htmlFor="post-title">Category:</label>
+            {/* <input
+              type="text"
+              name="category"
+              onChange={handleUploadChange}
+            /> */}
+            <select name="category" id="post-category" onChange={handleUploadChange}>
+              <option value="Select">- Select category -</option>
+              <option value="Insects">Insects</option>
+              <option value="Mammals">Mammals</option>
+              <option value="Plants">Plants</option>
+              <option value="Reptiles">Reptiles</option>
+            </select>
           </div>
         </form>
         {/* INSERT CAPTION */}

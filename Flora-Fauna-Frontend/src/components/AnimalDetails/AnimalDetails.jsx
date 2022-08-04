@@ -16,7 +16,7 @@ export default function AnimalDetails(){
       <h1 className="details-title">Animal Details</h1> 
       <Hero /> 
     <div className="return-wrapper">
-      <button className="details-return" onClick={returnBtn}>Return</button>
+      <button className="details-return btn" onClick={returnBtn}><span class="material-symbols-outlined prev-page">undo</span></button>
     </div>
     </div>
   )

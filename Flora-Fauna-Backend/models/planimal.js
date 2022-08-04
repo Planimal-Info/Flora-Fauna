@@ -21,9 +21,12 @@ class Planimal {
   //Fetches the photos from wikipedia API and displays that.
   static async getPhotoResults(searchInput) {
     const lowerCaseInput = searchInput.query.toLowerCase();
-    const FirstCallUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${searchInput.query}&limit=5&namespace=0&format=json&redirects=resolve`;
-    const SecondCallUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles=`;
-    const thirdCall = `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${lowerCaseInput}`;
+    const FirstCallUrl =
+      `https://en.wikipedia.org/w/api.php?action=opensearch&search=${lowerCaseInput}&limit=5&namespace=0&format=json&redirects=resolve`;
+    const SecondCallUrl =
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles=`;
+    const thirdCall =
+      `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=${lowerCaseInput}`;
 
     const data = await fetch(FirstCallUrl);
     const jsonData = await data.json();
@@ -33,12 +36,15 @@ class Planimal {
     // array empty or does not exist
     if (wikiLink.length <= 0) {
       return "";
-    }
-    else {
-      let wikiLinkSub = wikiLink[0].substring(wikiLink[0].lastIndexOf("/")+1);
-      const secondCallData = await fetch(SecondCallUrl+wikiLinkSub);
+    } else {
+      let wikiLinkSub = wikiLink[0].substring(wikiLink[0].lastIndexOf("/") + 1);
+      const secondCallData = await fetch(SecondCallUrl + wikiLinkSub);
       const secondJsonData = await secondCallData.json();
-      const obj = {url: wikiLink, photo: secondJsonData.query.pages[0].original.source, description: paragraph.query.pages}
+      const obj = {
+        url: wikiLink,
+        photo: secondJsonData.query.pages[0].original,
+        description: paragraph.query.pages,
+      };
       return obj;
     }
   }
@@ -54,8 +60,20 @@ class Planimal {
       `https://data.ny.gov/resource/tk82-7km5.json?$$app_token=${API_KEY}&${GENERIC_FILTER} AND common_name like "${PARSED_TERMS}"`;
     const response = await fetch(url);
     const myJson = await response.json();
-
+   
     return myJson;
+  }
+
+  //Gets pictures for each search result, done seperatly to avoid slow search times.
+  static async getPictureResults(myJson){
+    //Gets each picture for the search results animals and returns an array of them
+    let arr = [];
+    for(let e of myJson.query){
+      const picture = await this.getPhotoResults({query: e.common_name.toLowerCase()});
+      const tempObj = {data: e, picture: picture};
+      arr.push(tempObj)
+    }
+    return arr;
   }
 }
 

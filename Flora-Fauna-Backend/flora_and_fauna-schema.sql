@@ -11,6 +11,13 @@ strikes     INTEGER DEFAULT 0,
 created_at  TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE user_images (
+    id              SERIAL PRIMARY KEY,
+    profile_image   BYTEA,
+    header_image    BYTEA,
+    user_id         INT REFERENCES users(id)
+);
+
 CREATE TABLE user_posts (
 id                  SERIAL PRIMARY KEY, 
 photo               BYTEA,

@@ -20,7 +20,7 @@ app.use(security.getUser)
 //Routes
 app.use("/auth", router)
 app.use("/planimal", planimalRouter)
-app.use("/profile", planimalRouter)
+app.use("/profile", profileRouter)
 app.use("/admin", adminRouter)
 app.use("/post", postRouter)
 

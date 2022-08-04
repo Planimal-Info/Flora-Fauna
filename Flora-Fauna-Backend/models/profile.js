@@ -120,7 +120,7 @@ class Profile {
         UPDATE users 
         SET email = $1
         WHERE id = $2
-        RETURNING header_image
+        RETURNING email
         `,
         [cleanEmail, user_id],
       );
@@ -128,15 +128,15 @@ class Profile {
     }
     
     static async updatePassword(password, user_id) {
-
+      console.log(password, user_id)
       const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
 
       const results = await db.query(
         `
         UPDATE users 
-        SET email = $1
+        SET password = $1
         WHERE id = $2
-        RETURNING header_image
+        RETURNING email
         `,
         [hashedPassword, user_id],
       );

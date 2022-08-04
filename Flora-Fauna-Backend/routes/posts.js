@@ -103,7 +103,6 @@ router.get("/mostLikes", async(req,res,next) => {
 router.get("/:productId", async(req,res,next) => {
   try{
     const id = req.params.productId;
-    console.log(req.body)
     const post = await Posts.getPost(id);
     res.status(200).json({ post });
   }

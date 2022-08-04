@@ -164,7 +164,6 @@ class ApiClient {
       method: "POST",
       data: data,
     });
-    console.log(post?.data?.post?.id)
     const addImage = await this.imageRequest({
       endpoint: "post/upload",
       method: "POST",

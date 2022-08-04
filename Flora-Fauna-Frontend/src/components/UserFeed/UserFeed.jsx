@@ -49,7 +49,6 @@ export default function UserFeed(props) {
     const arr = [1];
     setMorePosts(arr);
   }, []);
-
   //hides and shows the time filters
   function handleTime() {
     if (showCategories === true) {
@@ -74,18 +73,15 @@ export default function UserFeed(props) {
   };
   //Loads more images when prompted
   const loadMore = async () => {
-    const getHighestNum = () => {
-      let max = 0;
-      posts.forEach((e) => {
-        if (e.id > max) {
-          max = e.id;
-        }
-      });
-      return max;
-    };
-    //Gets the highest id number and uses that as an id, done this way to avoid duplicates.
-    const length = getHighestNum();
-    setMorePosts(await getMorePosts(length));
+    const id = posts[posts.length - 1].id;
+    const morePosts = await getMorePosts(id);
+    if(morePosts.length === 0){
+      setMorePosts([]);
+      return;
+    }
+    if(posts[0] != morePosts[morePosts.length - 1]){
+      setMorePosts(morePosts)
+    }
   };
   //If there is no user, AKA a viewer. Show only the hero
   if (!user) {
@@ -133,9 +129,9 @@ export default function UserFeed(props) {
             ))}
         </div>
       </div>
-      <h2 className={morePosts?.length <= 0 ? "" : "hidden"}>No More Posts</h2>
+      <h2 className={morePosts?.length === 0 ? "" : "hidden"}>No More Posts</h2>
       <button
-        className={posts.length <= 0 ? "hidden" : "load-more-feed btn"}
+        className={posts.length <= 0 || selectedCategory.size > 1 ? "hidden" : "load-more-feed btn"}
         onClick={loadMore}
       >
         Load More

@@ -215,6 +215,19 @@ class Posts {
 
     return result.rows;
   }
+
+  //Gets related posts for the given input
+  static async getRelatedPosts(input){
+    const inputString = `${input}`;
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      WHERE animal_name = $1 
+      `,
+      [inputString]
+    )
+    return result.rows;
+  }
 }
 
 module.exports = Posts;

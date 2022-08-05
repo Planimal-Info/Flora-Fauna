@@ -161,7 +161,7 @@ class Posts {
     if (post_id.id < 5) {
       return [];
     }
-    
+
     //Gets the the first 50 id that are greater than the given ID.
     const allId = await db.query(
       `
@@ -169,53 +169,59 @@ class Posts {
       WHERE id > $1
       LIMIT 50
       `,
-      [post_id.id]
+      [post_id.id],
     );
 
     //If Nothing is returned then there are no most posts
-    if(allId.rows.length === 0){
+    if (allId.rows.length === 0) {
       return [];
     }
-    
-    //Variable used to loop through and get the posts, done in either increments of 3 or 
+
+    //Variable used to loop through and get the posts, done in either increments of 3 or
     //less than that if the results returned are less than 3
     let nextPostLength = 0;
-    if(allId.rows.length >= 3){
+    if (allId.rows.length >= 3) {
       nextPostLength = 3;
-    }
-    else{
+    } else {
       nextPostLength = allId.rows.length;
     }
     //Gets the posts and adds them to this array, which we will output
     let morePosts = [];
-    for(let i = 0; i < nextPostLength; i++){
+    for (let i = 0; i < nextPostLength; i++) {
       const result = await db.query(
         `
         SELECT * FROM user_posts
         WHERE id = $1
         `,
-        [allId.rows[i].id]
-      )
+        [allId.rows[i].id],
+      );
       morePosts.push(result.rows[0]);
     }
-    
+
     return morePosts;
   }
-
   //Gets the most likes orders in descending order
   static async getMostLiked() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
-      `,
+      ORDER BY likes DESC
+      `
     );
-    //Sorts the posts and reverses them to get them in ascending to descending order
-    result.sort();
-    result.reverse();
-
     return result.rows;
   }
 
+  //Gets posts in order by least liked
+  static async getLeastLiked(){
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      ORDER BY likes ASC
+      `
+    )
+    return result.rows;
+  }
+  
   //Gets related posts for the given input
   static async getRelatedPosts(input){
     const inputString = `${input}`;

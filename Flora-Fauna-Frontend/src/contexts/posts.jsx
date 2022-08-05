@@ -47,6 +47,23 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [selectedCategory, selectedTimeFrame]);
+  
+  //Gets most or least liked posts if only a column is selected in the sort filter
+  useEffect(async () => {
+    if (selectedCategory.size === 1 && selectedTimeFrame.size === 1) {
+      try {
+        //Make request to get filtered posts by time,
+        const getFilteredLikes = await ApiClient.getFilteredLiked(
+          selectedTimeFrame,
+        );
+        if (getFilteredLikes != undefined) {
+          setPosts(getFilteredLikes?.data?.sortedPosts);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [selectedTimeFrame]);
 
   //Sends request to make a post
   const createPost = async (data) => {

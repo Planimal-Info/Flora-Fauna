@@ -10,7 +10,7 @@ export default function App() {
   // NextUI Library for reference: https://nextui.org/
   // NextUI Dropdown component: https://nextui.org/docs/components/dropdown
 
-  const [selectedTime, setSelectedTime] = useState(new Set(["time"]));
+  const [selectedTime, setSelectedTime] = useState(new Set(["Sort"]));
   const [selectedCat, setSelectedCat] = useState(new Set(["categories"]));
   const { setSelectedCategory, setSelectedTimeFrame } = usePostContext();
   // Value for Time dropdown

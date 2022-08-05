@@ -162,6 +162,18 @@ class ApiClient {
       data: {post: post_id, user: user_id}
     })
   }
+  //Gets posts in Descending order of likes.
+  async getFilteredLiked(filter){
+    const iterator = filter.values();
+    if(iterator?.next()?.value != "Sort"){
+      return await this.request({
+        endpoint: "post/filterLikes",
+        method: "POST",
+        data: {filter: filter}
+      })
+    }
+    
+  }
   //-----------------------//
   //Post Endpoints
   //Sends request to create post and sends another request to store image in that post

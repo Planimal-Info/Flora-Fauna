@@ -53,7 +53,7 @@ export default function UserProfile() {
             <div className="profile">
               <div className="profile-header"></div>
               <div className="profile-details">
-                <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
+                <div className="profile-image"></div>
                 <div className="profile-info">
                   {user.user
                     ? <h2>{user.user.username} / {user.user.email}</h2>

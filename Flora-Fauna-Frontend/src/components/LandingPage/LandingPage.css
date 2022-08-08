@@ -1,10 +1,16 @@
 .landing-page {
+   display: block;
+   height: 60vh;
+} 
+
+.landing-page-content {
+   height: 100vh;
+   width: 100vw;
    display: flex;
    justify-content: center;
-   height: 60vh;
 }
 
-.landing-page::before {
+.landing-page-content::before {
    content: "";
    background-image: url('../../assets/toucan-background.jpg');
    background-size: cover;
@@ -18,20 +24,19 @@
    bottom: 0;
    left: 0;
    right: 0;
-   z-index: -1;
+   z-index: -50;
    overflow-y: visible;
 }
 
-.landing-page div{
-   display:flex;
-   justify-content: center;
-   align-items: center;
-   text-align: center;
-}
-
 /*------------ Search Input -------------*/
-
+.search-input {
+   display: flex;
+   justify-content: center;
+   text-align: center;
+   margin-top: 260px;
+}
 .landing-page-input {
+   display: flex;
    width: 700px;
    height: 50px;
    margin-right: 15px;
@@ -49,6 +54,9 @@
 /*------------ Search Button/Icon -------------*/
 
 .landing-page .search-icon {
+   display: flex;
+   justify-content: center;
+   align-items: center;
    height: 55px;
    width: 55px;
    border-radius: 50%;

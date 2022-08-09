@@ -23,16 +23,17 @@ export function NavLinks({ isLoading, user, logoutUser }) {
   const { setRefresh, refresh } = usePostContext();
   const [endpoint, setEndpoint] = useState("");
 
-  //Fixes not being able to use about and contact us links on resources page
+  //Fixes refs not working on other endpoints
   useEffect(() => {
     const url = window.location.href;
-    if(url.substring(url.length - 9, url.length) === "resources"){
+    console.log(url.split("/").pop().length)
+    if(url.split("/").pop().length === 0){
       setEndpoint("/#about")
     }
     else{
-      setEndpoint("#about")
+      setEndpoint("/")
     }
-  },[endpoint])
+  },[refresh])
 
   return (
     <div className="nav-links">
@@ -42,7 +43,6 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                   <>
                     <ul className="links">
                       <li><a href={endpoint}>about</a></li>
-                      <li><Link to='/resources' onClick={() => checkEndpoint()}>resources</Link></li>
                       <li><a href={endpoint}>contact us</a></li>
                     </ul>
                     <div className="login-register">

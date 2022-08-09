@@ -1,5 +1,4 @@
 const validation = (values) => {
-    console.log(values)
     let errors={};
 
     //Throw error if...

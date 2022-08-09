@@ -39,3 +39,20 @@
   justify-content: space-around;
   width: 93vw;
 }
+.related-posts{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.see-more-btn{
+  padding: 10px;
+  border-radius: 10px;
+  cursor:pointer;
+  transition: background-color .30s;
+}
+.see-more-btn:hover{
+  background-color: rgba(0,0,0 , .5);
+}

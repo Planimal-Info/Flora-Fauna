@@ -3,37 +3,49 @@ const { BadRequestError } = require("../utils/errors");
 const { unlink } = require("node:fs/promises");
 const fs = require("fs");
 const sharp = require("sharp");
+const Fuse = require("fuse.js");
 
 class Posts {
   //Adds a post to the database
   static async createPosts(data, user_id) {
     const requiredFields = [
-      "photo",
-      "caption",
       "title",
+      "caption",
       "category",
+      "animal_name",
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
         return new BadRequestError(`Missing ${e} in request body`);
       }
     });
+
+    //Validation
+    const keys = Object.keys(data.values);
+    keys.forEach((e) => {
+      if (data.values[e].length <= 1) {
+        return new BadRequestError(`Invalid input for ${e}`);
+      }
+    });
+
     const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
           user_post_desc,
           user_id,
           user_post_title,
-          category 
+          category,
+          animal_name
         )
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, user_post_desc, user_id, likes, user_post_title, category
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, user_post_desc, user_id, likes, user_post_title, category, animal_name
         `,
       [
         data.values.caption,
         user_id,
         data.values.title,
         category,
+        data.values.animal_name,
       ],
     );
     return results.rows[0];
@@ -206,33 +218,78 @@ class Posts {
       `
       SELECT * FROM user_posts
       ORDER BY likes DESC
-      `
+      `,
     );
     return result.rows;
   }
 
   //Gets posts in order by least liked
-  static async getLeastLiked(){
+  static async getLeastLiked() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
       ORDER BY likes ASC
-      `
-    )
+      `,
+    );
     return result.rows;
   }
-  
+
   //Gets related posts for the given input
-  static async getRelatedPosts(input){
-    const inputString = `${input}`;
-    const result = await db.query(
+  static async getRelatedPosts(input) {
+    const inputString = `${input?.name?.toLowerCase()}`;
+    const groupString = `${input?.group?.toLowerCase()}`;
+
+    //Options for fuzzy search
+    const options = {
+      isCaseSensitive: false,
+      // includeScore: false,
+      // shouldSort: true,
+      // includeMatches: false,
+      findAllMatches: true,
+      minMatchCharLength: 2,
+      // location: 0,
+      threshold: 0.62,
+      // distance: 100,
+      // useExtendedSearch: false,
+      // ignoreLocation: false,
+      // ignoreFieldNorm: false,
+      // fieldNormWeight: 1,
+      keys: [
+        "animal_name",
+        "category",
+      ],
+    };
+
+    //Getting from posts to search
+    const result1 = await db.query(
       `
-      SELECT * FROM user_posts
-      WHERE animal_name = $1 
+      SELECT animal_name, id, category FROM user_posts
       `,
-      [inputString]
-    )
-    return result.rows;
+    );
+    //Constructor for fuzzy search dependecy and calling to get related posts id
+    const fuzzy = new Fuse(result1.rows, options);
+    const relatedPosts = fuzzy.search(inputString);
+
+    //Getting the first 5 entries from the related posts fuzzy search
+    const limitPosts = relatedPosts.slice(0, 5);
+    //Related posts holding array
+    let tempArr = [];
+    //Fuzzy searching for related animal_names in the database and getting the posts
+    for (const e in limitPosts) {
+      const req = async () => {
+        const results = await db.query(
+          `
+          SELECT * FROM user_posts
+          WHERE id = $1
+          `,
+          [relatedPosts[e].item.id],
+        );
+        tempArr.push(results.rows[0]);
+      };
+      await req();
+    }
+
+    return tempArr;
   }
 }
 

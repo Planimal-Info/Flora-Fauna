@@ -1,8 +1,12 @@
 .about-page {
     display: flex;
-    justify-content: flex-start;
-    margin: 20px 30px;
-    padding: 30px 30px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden !important;
+    padding: 20px 30px;
+    text-align: center;
+    height: 50vh;
+    position: relative;
 }
 
 .about-page::before {
@@ -13,7 +17,7 @@
     background-size: 100%;
     background-position: center;
     background-attachment: fixed;
-    opacity: 0.2;
+    opacity: 0.1;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -33,7 +37,6 @@
 
 .about-desc {
     line-height: 1.7;
-    font-size: 20px;
 }
 
 .about-register {

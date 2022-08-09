@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import validation from "../../validate";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
+import Footer from "../Footer/Footer";
 
 export default function LoginPage() {
   const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
@@ -23,6 +24,7 @@ export default function LoginPage() {
         authErrors={reqError}
         isLoading={isLoading}
       />
+      <Footer />
     </div>
   );
 }

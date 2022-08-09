@@ -2,6 +2,7 @@ import "./SearchResults.css";
 import { useState } from "react";
 import { useSearchContext } from "../../contexts/search";
 import AnimalCards from "../AnimalCards/AnimalCards.jsx";
+import Footer from "../Footer/Footer";
 
 export default function SearchResults() {
   const [searchInputValue, setSearchInput] = useState("");
@@ -72,6 +73,7 @@ export default function SearchResults() {
           No Results, Try Something More Specific
         </h2>
       </div>
+      <Footer />
     </div>
   );
 }

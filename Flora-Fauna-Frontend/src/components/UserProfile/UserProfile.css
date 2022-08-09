@@ -9,6 +9,10 @@
     margin-top: 50px;
 }
 
+.user-profile .f-footer {
+    margin-top: 153vh;
+}
+
 .user-profile .content {
     width: 100%;
     max-width: 1600px;

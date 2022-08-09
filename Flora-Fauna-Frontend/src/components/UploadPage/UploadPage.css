@@ -10,6 +10,9 @@
   text-align: center;
   width: 700px;
 }
+.upload-page .f-footer {
+  margin-top: 130vh;
+}
 
 .file-upload {
   display: flex;

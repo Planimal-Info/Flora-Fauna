@@ -2,6 +2,7 @@ import "./UploadPage.css";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePostContext } from "../../contexts/posts.jsx";
+import Footer from "../Footer/Footer";
 
 export default function UploadPage() {
   const { createPost, posts, bufferToBase64 } = usePostContext();
@@ -208,6 +209,7 @@ export default function UploadPage() {
           Submit
         </button>
       </div>
+      <Footer />
     </div>
   );
 }

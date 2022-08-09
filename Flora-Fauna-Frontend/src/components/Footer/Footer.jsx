@@ -20,7 +20,7 @@ export default function Footer() {
 
 
    return (
-    <div className="footer">
+    <div className="f-footer">
         <Grid.Container gap={2} justify='center'>
           <Grid xs={3} justify='center' direction='column'>
         <FooterItem text="Developed by" />

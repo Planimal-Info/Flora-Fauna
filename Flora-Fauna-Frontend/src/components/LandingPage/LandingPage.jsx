@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchContext } from "../../contexts/search.jsx";
 import AboutPage from "../AboutPage/AboutPage.jsx";
+import Footer from "../Footer/Footer.jsx";
 import "./LandingPage.css"
 
 export default function LandingPage() {
@@ -39,6 +40,7 @@ export default function LandingPage() {
             </div>
         </div>
         <AboutPage />
+        <Footer />
    </div>
 )
 }

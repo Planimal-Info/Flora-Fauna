@@ -4,6 +4,8 @@ import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
 import { useEffect, useState } from "react";
 import { useSearchContext } from "../../contexts/search.jsx";
+import { useAuthContext } from "../../contexts/auth.jsx";
+import { Link } from "react-router-dom";
 
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
@@ -27,7 +29,10 @@ export default function AnimalDetails() {
     description,
     getRelatedPosts,
   } = useSearchContext();
-
+  
+  //Used to render specific messages for viewers and users
+  const { user } = useAuthContext();
+  
   //function to navigate to search page.
   const navigate = useNavigate();
   const returnBtn = () => {
@@ -47,16 +52,16 @@ export default function AnimalDetails() {
   //Returns the animal details page, renders in information set by the current selected planimal in search context
   return (
     <div className="animal-details">
-      <h1 className="details-title">Animal Details</h1>
+      <h1 className="details-title">Wildlife Details</h1>
       <Hero />
       <div className="return-wrapper">
         <button className="details-return btn" onClick={returnBtn}>
           <span class="material-symbols-outlined prev-page">undo</span>
         </button>
       </div>
-      <h1>Related Posts</h1>
+      <h1 className={user ? "" : "hidden"}>Related Posts</h1>
       <div className="related-posts">
-        {relatedPosts.map((e, idx) => (
+        {user ? relatedPosts.map((e, idx) => (
           <UserCards
             key={idx}
             source={toBase64(e?.photo?.data)}
@@ -66,21 +71,26 @@ export default function AnimalDetails() {
             id={e?.id}
             category={e?.category}
           />
-        ))}
+        )) : ""}
       </div>
       <div className="return-wrapper">
         <button
-          className={relatedPosts?.length <= 0 ? "hidden" : "see-more-btn"}
+          className={relatedPosts?.length <= 0 || !user ? "hidden" : "see-more-btn"}
           onClick={() => navigate("/userfeed")}
         >
           See More Posts
         </button>
       </div>
       <div className="return-wrapper">
-        <h2 className={relatedPosts?.length <= 0 ? "" : "hidden"}>
+        <h2 className={relatedPosts?.length <= 0 && user ? "" : "hidden"}>
           No Related Posts
         </h2>
+        <h2 className={user ? "hidden" : ""}>Log in to See Related Posts</h2>
       </div>
+      <div className="return-wrapper">
+      <Link to="/login" className={user ? "hidden" : ""}><button className="login-btn-viewer">Log In</button></Link>
+      </div>
+
     </div>
   );
 }

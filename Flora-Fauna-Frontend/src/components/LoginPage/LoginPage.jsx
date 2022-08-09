@@ -103,7 +103,7 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
         <div className="footer">
           <p>
             Don't have an account? Sign up{" "}
-            <Link className="auth-link" to="/registration">here.</Link>
+            <Link className="auth-link" to="/register">here.</Link>
           </p>
         </div>
       </div>

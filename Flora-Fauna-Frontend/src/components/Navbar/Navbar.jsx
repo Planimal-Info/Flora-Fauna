@@ -27,7 +27,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 {!user ? (
                   <>
                     <ul className="links">
-                      <li><Link to='/about'>about</Link></li>
+                      <li><a href='#about'>about</a></li>
                       <li><Link to='/resources'>resources</Link></li>
                       <li><Link to='/'>contact us</Link></li>
                     </ul>
@@ -40,7 +40,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 ) : (
                   <ul className="links">
                       <li><Link to="/">Home</Link></li>
-                      <li><Link to="/search">Seach</Link></li>
+                      <li><Link to="/search">Search</Link></li>
                       <li><Link to='/userfeed' onClick={() => setRefresh(!refresh)}>Your Feed</Link></li>
                       <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
                       <li className="user-options">

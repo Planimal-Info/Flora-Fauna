@@ -61,7 +61,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #949494;
+  background-color: var(--yellow);
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;

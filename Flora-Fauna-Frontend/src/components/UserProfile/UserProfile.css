@@ -52,6 +52,7 @@
     height: 200px;
     background: var(--yellow);
     border-radius: 140px 0 0 0;
+    background-image: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1748&q=80");
 }
 
 .user-profile .content .profile .profile-image {
@@ -61,6 +62,7 @@
     background: skyblue;
     border: 6px solid white;
     margin-right: 30px;
+    background-image: url("https://images.unsplash.com/photo-1640007689209-3ccc3f59c6a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8c21pbGV5JTIwZmFjZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60");
 }
 
 .user-profile .content .profile .profile-details {

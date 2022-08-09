@@ -1,19 +1,17 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
+import { Text } from "@nextui-org/react"
 import "./AboutPage.css"
 
 export default function AboutPage() {
   return (
-    <div className="about-page">
-        <div className="about-info">
-            <h1 className="about-title">About Flora&Fauna</h1>
-            <p className="about-desc">
-                Flora&Fauna's database is a search engine derived from the New York state database that enables users to easily find information on local plants and animals. Search results are presented in an image-focused list of cards that provide 
-                a broad set of animal and plant entries, with scientific and common names, as well as a collection of images.<br></br><br></br>
-                Explore, share and learn about New York's local flora and fauna with our comprehensive catalog. Whether you're a K-12 or college student, an educator or simply a plant/animal enthusiast, you can get the most out of Flora&Fauna's search index and image sharing features.<br></br><br></br>
-                Have you come across beautiful flowering bushes in Central Park that you'd like to share? Have you gone whale watching at the Long Island Sound and snapped a nice pic?<br></br>
-                Make an account <Link className="about-register" to="/register">here</Link> and upload it for everyone to see!</p>
-        </div>
+    <div className="about-page" id="about">
+          <div className="about-info">
+              <Text className="about-desc" size='100%' color='white'>
+                  Flora&Fauna is a search engine derived from the New York state database <br></br> that enables users to easily find information on New York's local plants and animals.<br></br><br></br>
+                  Explore, share and learn about New York's local flora and fauna with our comprehensive catalog. <br></br>Whether you're a K-12 or college student, an educator or simply a nature enthusiast, you can <br></br> get the most out of Flora&Fauna's search index and image sharing features.<br></br><br></br>
+                  Make an account <Link className="about-register" to="/register">here</Link> and upload it for everyone to see!</Text>
+          </div>
     </div>
   )
 }

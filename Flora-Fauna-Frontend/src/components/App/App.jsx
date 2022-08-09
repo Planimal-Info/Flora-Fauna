@@ -23,6 +23,7 @@ import { SearchContextProvider } from "../../contexts/search.jsx";
 import { PostContextProvider } from "../../contexts/posts";
 import { AdminContextProvider, useAdminContext } from "../../contexts/admin.jsx";
 import UploadPage from "../UploadPage/UploadPage";
+import Footer from "../Footer/Footer";
 
 export default function AppContainer() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/denied" element={<AccessForbidden />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );

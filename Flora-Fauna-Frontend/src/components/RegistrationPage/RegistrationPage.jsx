@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import validation from "../../validate";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import "./RegistrationPage.css";
+import Footer from "../Footer/Footer";
 
 export default function RegistrationPage() {
   const { user, registerUser } = useAuthContext();
@@ -154,6 +155,7 @@ export function RegistrationForm({ registerUser, user }) {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

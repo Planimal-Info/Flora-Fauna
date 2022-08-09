@@ -16,6 +16,7 @@ import {
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
 import SearchFilter from "../SearchFilter/SearchFilter";
+import Footer from "../Footer/Footer";
 
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
@@ -136,6 +137,7 @@ export default function UserFeed(props) {
       >
         Load More
       </button>
+      <Footer />
     </div>
   );
 }

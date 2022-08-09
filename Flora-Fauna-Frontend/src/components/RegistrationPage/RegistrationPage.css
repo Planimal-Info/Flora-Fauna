@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+.registration-form .f-footer {
+    margin-top: 100vh;
+}
+
 .registration-page {
     min-height: calc(100vh - 100px);
     height: 100%;

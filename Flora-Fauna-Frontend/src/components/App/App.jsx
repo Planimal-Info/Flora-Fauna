@@ -62,7 +62,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/denied" element={<AccessForbidden />} />
         </Routes>
-        <Footer/>
       </BrowserRouter>
     </div>
   );

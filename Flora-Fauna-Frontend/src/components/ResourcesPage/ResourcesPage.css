@@ -13,3 +13,7 @@
 .resources-page a {
     color: var(--yellow);
 }
+
+.resources-page .f-footer {
+    bottom: 0;
+}

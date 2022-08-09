@@ -3,6 +3,10 @@
     justify-content: center;
 }
 
+.login-page .f-footer {
+    bottom: 0;
+}
+
 .login-form {
     display: flex;
     justify-content: center;

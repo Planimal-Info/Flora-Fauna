@@ -7,6 +7,10 @@
   align-items: center;
 }
 
+.search-results .f-footer {
+  bottom: 0;
+}
+
 .search-result-content{
   display: flex;
   align-items: center;  

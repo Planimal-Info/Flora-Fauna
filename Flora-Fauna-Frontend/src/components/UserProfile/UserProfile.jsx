@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./UserProfile.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import AccessForbidden from "../AccessForbidden/AccessForbidden";
+import Footer from "../Footer/Footer";
 
 export default function UserProfile() {
 
@@ -86,12 +87,14 @@ export default function UserProfile() {
             
           </div>
         </div>
+        <Footer />
       </div>
     );
   } else {
     return(
       <div>
       <AccessForbidden />
+      <Footer />
       </div>
     )
   }

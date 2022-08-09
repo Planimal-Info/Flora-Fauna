@@ -8,16 +8,18 @@ class Posts {
   //Adds a post to the database
   static async createPosts(data, user_id) {
     const requiredFields = [
-      "photo",
-      "caption",
       "title",
+      "caption",
       "category",
+      "animal_name",
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
         return new BadRequestError(`Missing ${e} in request body`);
       }
     });
+
+
     const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
@@ -206,32 +208,33 @@ class Posts {
       `
       SELECT * FROM user_posts
       ORDER BY likes DESC
-      `
+      `,
     );
     return result.rows;
   }
 
   //Gets posts in order by least liked
-  static async getLeastLiked(){
+  static async getLeastLiked() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
       ORDER BY likes ASC
-      `
-    )
+      `,
+    );
     return result.rows;
   }
-  
+
   //Gets related posts for the given input
-  static async getRelatedPosts(input){
-    const inputString = `${input}`;
+  static async getRelatedPosts(input) {
+    const inputString = `${input.toLowerCase()}`;
     const result = await db.query(
       `
       SELECT * FROM user_posts
-      WHERE animal_name = $1 
+      WHERE category = $1 
+      LIMIT 5
       `,
-      [inputString]
-    )
+      [inputString],
+    );
     return result.rows;
   }
 }

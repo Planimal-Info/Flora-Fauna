@@ -172,7 +172,15 @@ class ApiClient {
         data: {filter: filter}
       })
     }
-    
+  }
+
+  //Gets related posts for search results
+  async getRelatedPosts(input){
+    return await this.request({
+      endpoint: "post/related",
+      method: "POST",
+      data: {input: input}
+    })
   }
   //-----------------------//
   //Post Endpoints
@@ -229,4 +237,5 @@ class ApiClient {
   }
 }
 
-export default new ApiClient("https://flora-and-fauna.herokuapp.com");
+export default new ApiClient("http://localhost:3001");
+//("https://flora-and-fauna.herokuapp.com");

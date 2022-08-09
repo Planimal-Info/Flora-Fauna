@@ -98,3 +98,6 @@
     border: 2px solid white;
     background: var(--green);
 }
+.hidden{
+    display: none;
+}

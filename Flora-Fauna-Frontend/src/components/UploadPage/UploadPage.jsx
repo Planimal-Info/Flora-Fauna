@@ -10,10 +10,10 @@ export default function UploadPage() {
   //const [fileImage, setFilemage] = useState({})
   const [selectedImage, setSelectedImage] = useState();
   const [uploadValues, setUploadValues] = useState({
-    imageUrl: "",
     title: "",
     caption: "",
-    category: ""
+    category: "",
+    name: "",
   });
 
   // Handle value changes for image url, title and caption
@@ -24,14 +24,13 @@ export default function UploadPage() {
     });
   };
   //////////////////////
-
   //Updates image when changes happen
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
     }
   };
-  
+
   //Removes image preview if clicked on
   const removeSelectedImage = () => {
     setSelectedImage();
@@ -51,12 +50,12 @@ export default function UploadPage() {
       return;
     }
   };
-  
+
   //Submit function that is called when user submits form
   const handleOnSubmit = () => {
     const inputObj = { image: selectedImage, values: uploadValues };
     createPost(inputObj);
-    navigate('/userfeed');
+    navigate("/userfeed");
   };
   //e.target.value = null
   ////////////////////
@@ -105,18 +104,36 @@ export default function UploadPage() {
           </div>
           <div className="user-post-category">
             <label htmlFor="post-title">Category:</label>
-            {/* <input
+            {
+              /* <input
               type="text"
               name="category"
               onChange={handleUploadChange}
-            /> */}
-            <select name="category" id="post-category" onChange={handleUploadChange}>
+            /> */
+            }
+            {/* Category */}
+
+            <select
+              name="category"
+              id="post-category"
+              onChange={handleUploadChange}
+            >
               <option value="Select">- Select category -</option>
               <option value="Insects">Insects</option>
               <option value="Mammals">Mammals</option>
               <option value="Plants">Plants</option>
               <option value="Reptiles">Reptiles</option>
             </select>
+          </div>
+          {/* Animal Name */}
+
+          <div className="user-post-title">
+            <label htmlFor="post-title">Animal Name:</label>
+            <input
+              type="text"
+              name="animal_name"
+              onChange={handleUploadChange}
+            />
           </div>
         </form>
         {/* INSERT CAPTION */}

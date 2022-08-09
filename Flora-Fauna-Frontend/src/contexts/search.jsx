@@ -52,6 +52,16 @@ export const SearchContextProvider = ({ children }) => {
       setInitial(true);
   };
 
+  //Gets the related posts for the selected animal
+  const getRelatedPosts = async () => {
+    try {
+      const data = await ApiClient.getRelatedPosts(currentPlanimal?.data?.taxonomic_group);
+      return data?.data?.relatedPosts;
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
   const searchValue = {
     searchResults,
     isLoading,
@@ -65,7 +75,8 @@ export const SearchContextProvider = ({ children }) => {
     setUrl,
     url,
     description,
-    searchPictureResults
+    searchPictureResults,
+    getRelatedPosts
   };
 
   return (

@@ -28,7 +28,7 @@
    right: 0;
    z-index: -50;
    overflow-y: visible;
-   height: 100vh;
+   margin-bottom: -100px;
 }
 
 /*------------ Search Input -------------*/
@@ -36,7 +36,7 @@
    display: flex;
    justify-content: center;
    text-align: center;
-   margin-top: 260px;
+   margin-top: 400px;
 }
 .landing-page-input {
    display: flex;

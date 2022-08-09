@@ -1,4 +1,4 @@
-import { Grid, Text, css } from "@nextui-org/react"
+import { Grid, Text, Link, css } from "@nextui-org/react"
 import "./Footer.css"
 
 export default function Footer() {
@@ -18,6 +18,7 @@ export default function Footer() {
     );
   };
 
+
    return (
     <div className="footer">
         <Grid.Container gap={2} justify='center'>
@@ -25,12 +26,15 @@ export default function Footer() {
         <FooterItem text="Developed by" />
         <MinorFooterItem text="Amaar Mohammed, Kevin Gomes and Valerie Michel" />
       </Grid>
-      <Grid xs={6} justify='center' direction='column' alignItems="center">
+      <Grid xs={6} justify='center' alignItems="flex-end">
         <MinorFooterItem text="© 2022 Flora and Fauna. All Rights reserved." />
       </Grid>
       <Grid xs={3} justify='center' direction='column'>
         <FooterItem text="Contact Us" />
         <MinorFooterItem text="admin@florafauna.org" />
+        <Link className="socials" href='https://github.com/Planimal-Info/Flora-Fauna'>
+            <i className="fa-brands fa-github"></i>
+        </Link>
       </Grid>
         </Grid.Container>
    </div>

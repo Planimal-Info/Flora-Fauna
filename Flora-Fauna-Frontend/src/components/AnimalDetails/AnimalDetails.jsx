@@ -54,7 +54,7 @@ export default function AnimalDetails() {
           <span class="material-symbols-outlined prev-page">undo</span>
         </button>
       </div>
-      <h1 className>Related Posts</h1>
+      <h1>Related Posts</h1>
       <div className="related-posts">
         {relatedPosts.map((e, idx) => (
           <UserCards
@@ -69,9 +69,17 @@ export default function AnimalDetails() {
         ))}
       </div>
       <div className="return-wrapper">
-        <button className="see-more-btn" onClick={() => navigate("/userfeed")}>
+        <button
+          className={relatedPosts?.length <= 0 ? "hidden" : "see-more-btn"}
+          onClick={() => navigate("/userfeed")}
+        >
           See More Posts
         </button>
+      </div>
+      <div className="return-wrapper">
+        <h2 className={relatedPosts?.length <= 0 ? "" : "hidden"}>
+          No Related Posts
+        </h2>
       </div>
     </div>
   );

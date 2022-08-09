@@ -72,7 +72,7 @@ export default function UploadPage() {
         return;
       }
     }
-  
+
     //Making request and navigating to user feed
     const inputObj = { image: selectedImage, values: uploadValues };
     createPost(inputObj);
@@ -126,7 +126,11 @@ export default function UploadPage() {
               onChange={handleUploadChange}
             />
           </div>
-          <div className={valueError?.title?.length > 0 ? "error-message" : "hidden"}>
+          <div
+            className={valueError?.title?.length > 0
+              ? "error-message"
+              : "hidden"}
+          >
             Invalid Input for Title
           </div>
           <div className="user-post-category">
@@ -150,9 +154,14 @@ export default function UploadPage() {
               <option value="Mammals">Mammals</option>
               <option value="Plants">Plants</option>
               <option value="Reptiles">Reptiles</option>
+              <option value="Birds">Birds</option>
             </select>
           </div>
-          <div className={valueError?.category?.length > 0 ? "error-message" : "hidden"}>
+          <div
+            className={valueError?.category?.length > 0
+              ? "error-message"
+              : "hidden"}
+          >
             Invalid Input for Category
           </div>
 
@@ -167,7 +176,11 @@ export default function UploadPage() {
             />
           </div>
         </form>
-        <div className={valueError?.animal_name?.length > 0 ? "error-message" : "hidden"}>
+        <div
+          className={valueError?.animal_name?.length > 0
+            ? "error-message"
+            : "hidden"}
+        >
           Invalid Input for Animal Name
         </div>
         {/* INSERT CAPTION */}
@@ -184,7 +197,11 @@ export default function UploadPage() {
           >
           </textarea>
         </div>
-        <div className={valueError?.caption?.length > 0 ? "error-message" : "hidden"}>
+        <div
+          className={valueError?.caption?.length > 0
+            ? "error-message"
+            : "hidden"}
+        >
           Invalid Input for Caption
         </div>
         <button className="post-submit btn" onClick={handleOnSubmit}>

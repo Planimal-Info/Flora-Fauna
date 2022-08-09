@@ -1,6 +1,7 @@
 .landing-page {
    display: block;
-   height: 60vh;
+   height: 100%;
+   overflow: hidden !important;
 } 
 
 .landing-page-content {
@@ -8,9 +9,10 @@
    width: 100vw;
    display: flex;
    justify-content: center;
+   position: relative;
 }
 
-.landing-page-content::before {
+.landing-page::before {
    content: "";
    background-image: url('../../assets/toucan-background.jpg');
    background-size: cover;
@@ -26,6 +28,7 @@
    right: 0;
    z-index: -50;
    overflow-y: visible;
+   height: 100vh;
 }
 
 /*------------ Search Input -------------*/

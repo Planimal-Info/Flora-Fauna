@@ -1,8 +1,11 @@
 .about-page {
     display: flex;
     justify-content: flex-start;
-    margin: 20px 30px;
+    overflow: hidden !important;
+    /* margin: 20px 30px;
     padding: 30px 30px;
+    width: 100%;
+    height: 100%; */
 }
 
 /* .about-page::before {

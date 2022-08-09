@@ -4,7 +4,7 @@ import "./AboutPage.css"
 
 export default function AboutPage() {
   return (
-    <section className="about-page">
+    <div className="about-page">
           <div className="about-info">
               <h1 className="about-title">About Flora&Fauna</h1>
               <p className="about-desc">
@@ -14,7 +14,7 @@ export default function AboutPage() {
                   Have you come across beautiful flowering bushes in Central Park that you'd like to share? Have you gone whale watching at the Long Island Sound and snapped a nice pic?<br></br>
                   Make an account <Link className="about-register" to="/register">here</Link> and upload it for everyone to see!</p>
           </div>
-    </section>
+    </div>
   )
 }
 

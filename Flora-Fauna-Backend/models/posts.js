@@ -248,7 +248,7 @@ class Posts {
       findAllMatches: true,
       minMatchCharLength: 2,
       // location: 0,
-      threshold: 0.6,
+      threshold: 0.62,
       // distance: 100,
       // useExtendedSearch: false,
       // ignoreLocation: false,

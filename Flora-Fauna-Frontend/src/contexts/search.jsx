@@ -55,7 +55,7 @@ export const SearchContextProvider = ({ children }) => {
   //Gets the related posts for the selected animal
   const getRelatedPosts = async () => {
     try {
-      const data = await ApiClient.getRelatedPosts(currentPlanimal?.data?.taxonomic_group);
+      const data = await ApiClient.getRelatedPosts({name: currentPlanimal?.data?.common_name, group: currentPlanimal?.data?.taxonomic_group});
       return data?.data?.relatedPosts;
     }
     catch(err){

@@ -113,7 +113,7 @@ router.get("/:productId", async (req, res, next) => {
 //Gets the related posts for a user
 router.post("/related", async(req,res,next) => {
   try{
-    const relatedPosts = await Posts.getRelatedPosts(req.body.input);
+    const relatedPosts = await Posts.getRelatedPosts(req.body);
     res.status(200).json({ relatedPosts })
   }
   catch(err){

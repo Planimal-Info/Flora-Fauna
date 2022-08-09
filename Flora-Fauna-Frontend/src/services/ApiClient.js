@@ -179,7 +179,7 @@ class ApiClient {
     return await this.request({
       endpoint: "post/related",
       method: "POST",
-      data: {input: input}
+      data: input
     })
   }
   //-----------------------//

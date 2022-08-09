@@ -3,6 +3,7 @@ const { BadRequestError } = require("../utils/errors");
 const { unlink } = require("node:fs/promises");
 const fs = require("fs");
 const sharp = require("sharp");
+const Fuse = require("fuse.js");
 
 class Posts {
   //Adds a post to the database
@@ -19,14 +20,14 @@ class Posts {
       }
     });
 
-    //Validation  
+    //Validation
     const keys = Object.keys(data.values);
     keys.forEach((e) => {
-      if(data.values[e].length <= 1){
-        return new BadRequestError(`Invalid input for ${e}`)
+      if (data.values[e].length <= 1) {
+        return new BadRequestError(`Invalid input for ${e}`);
       }
-    })
-    
+    });
+
     const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
@@ -44,7 +45,7 @@ class Posts {
         user_id,
         data.values.title,
         category,
-        data.values.animal_name
+        data.values.animal_name,
       ],
     );
     return results.rows[0];
@@ -235,16 +236,60 @@ class Posts {
 
   //Gets related posts for the given input
   static async getRelatedPosts(input) {
-    const inputString = `${input.toLowerCase()}`;
-    const result = await db.query(
+    const inputString = `${input?.name?.toLowerCase()}`;
+    const groupString = `${input?.group?.toLowerCase()}`;
+
+    //Options for fuzzy search
+    const options = {
+      isCaseSensitive: false,
+      // includeScore: false,
+      // shouldSort: true,
+      // includeMatches: false,
+      findAllMatches: true,
+      minMatchCharLength: 2,
+      // location: 0,
+      threshold: 0.67,
+      // distance: 100,
+      // useExtendedSearch: false,
+      // ignoreLocation: false,
+      // ignoreFieldNorm: false,
+      // fieldNormWeight: 1,
+      keys: [
+        "animal_name",
+        "category",
+      ],
+    };
+
+    //Getting from posts to search
+    const result1 = await db.query(
       `
-      SELECT * FROM user_posts
-      WHERE category = $1 
-      LIMIT 5
+      SELECT animal_name, id, category FROM user_posts
       `,
-      [inputString],
     );
-    return result.rows;
+    //Constructor for fuzzy search dependecy and calling to get related posts id
+    const fuzzy = new Fuse(result1.rows, options);
+    const relatedPosts = fuzzy.search(inputString);
+
+    //Getting the first 5 entries from the related posts fuzzy search
+    const limitPosts = relatedPosts.slice(0, 5);
+    //Related posts holding array
+    let tempArr = [];
+    //Fuzzy searching for related animal_names in the database and getting the posts
+    for (const e in limitPosts) {
+      const req = async () => {
+        const results = await db.query(
+          `
+          SELECT * FROM user_posts
+          WHERE id = $1
+          `,
+          [relatedPosts[e].item.id],
+        );
+        tempArr.push(results.rows[0]);
+      };
+      await req();
+    }
+
+    return tempArr;
   }
 }
 

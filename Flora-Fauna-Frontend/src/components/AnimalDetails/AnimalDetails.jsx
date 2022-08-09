@@ -37,9 +37,7 @@ export default function AnimalDetails() {
   //Gets related posts using the current selected planimal
   useEffect(async () => {
     try {
-      const data = await getRelatedPosts(
-        currentPlanimal?.data?.taxonomic_group,
-      );
+      const data = await getRelatedPosts();
       setRelatedPosts(data);
     } catch (err) {
       console.error(err);
@@ -62,11 +60,11 @@ export default function AnimalDetails() {
           <UserCards
             key={idx}
             source={toBase64(e?.photo?.data)}
-            title={e.user_post_title}
-            desc={e.user_post_desc}
+            title={e?.user_post_title}
+            desc={e?.user_post_desc}
             post={e}
-            id={e.id}
-            category={e.category}
+            id={e?.id}
+            category={e?.category}
           />
         ))}
       </div>

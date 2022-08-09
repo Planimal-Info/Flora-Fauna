@@ -19,23 +19,32 @@ class Posts {
       }
     });
 
-
+    //Validation  
+    const keys = Object.keys(data.values);
+    keys.forEach((e) => {
+      if(data.values[e].length <= 1){
+        return new BadRequestError(`Invalid input for ${e}`)
+      }
+    })
+    
     const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
           user_post_desc,
           user_id,
           user_post_title,
-          category 
+          category,
+          animal_name
         )
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, user_post_desc, user_id, likes, user_post_title, category
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, user_post_desc, user_id, likes, user_post_title, category, animal_name
         `,
       [
         data.values.caption,
         user_id,
         data.values.title,
         category,
+        data.values.animal_name
       ],
     );
     return results.rows[0];

@@ -11,9 +11,16 @@ export default function UploadPage() {
   const [selectedImage, setSelectedImage] = useState();
   const [uploadValues, setUploadValues] = useState({
     title: "",
-    caption: "",
     category: "",
-    name: "",
+    animal_name: "",
+    caption: "",
+  });
+  const [imageError, setImageError] = useState({});
+  const [valueError, setValueError] = useState({
+    title: "",
+    category: "",
+    animal_name: "",
+    caption: "",
   });
 
   // Handle value changes for image url, title and caption
@@ -28,6 +35,7 @@ export default function UploadPage() {
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files[0]);
+      setImageError({});
     }
   };
 
@@ -50,9 +58,22 @@ export default function UploadPage() {
       return;
     }
   };
-
   //Submit function that is called when user submits form
   const handleOnSubmit = () => {
+    //Validation before sending to backend
+    if (selectedImage === undefined) {
+      setImageError({ image: "Select an Image" });
+      return;
+    }
+    for (const e in uploadValues) {
+      if (uploadValues[e].length <= 1) {
+        setValueError({});
+        setValueError((prevState) => ({ ...prevState, [e]: `error for ${e}` }));
+        return;
+      }
+    }
+  
+    //Making request and navigating to user feed
     const inputObj = { image: selectedImage, values: uploadValues };
     createPost(inputObj);
     navigate("/userfeed");
@@ -89,6 +110,9 @@ export default function UploadPage() {
             </button>
           </div>
         )}
+        <div className={imageError.image ? "error-message" : "hidden"}>
+          Select and Image
+        </div>
         {/* UPLOAD VIA IMAGE URL */}
         {/* <UploadImageUrl handleUploadChange={handleUploadChange} /> */}
 
@@ -101,6 +125,9 @@ export default function UploadPage() {
               name="title"
               onChange={handleUploadChange}
             />
+          </div>
+          <div className={valueError?.title?.length > 0 ? "error-message" : "hidden"}>
+            Invalid Input for Title
           </div>
           <div className="user-post-category">
             <label htmlFor="post-title">Category:</label>
@@ -125,6 +152,10 @@ export default function UploadPage() {
               <option value="Reptiles">Reptiles</option>
             </select>
           </div>
+          <div className={valueError?.category?.length > 0 ? "error-message" : "hidden"}>
+            Invalid Input for Category
+          </div>
+
           {/* Animal Name */}
 
           <div className="user-post-title">
@@ -136,6 +167,9 @@ export default function UploadPage() {
             />
           </div>
         </form>
+        <div className={valueError?.animal_name?.length > 0 ? "error-message" : "hidden"}>
+          Invalid Input for Animal Name
+        </div>
         {/* INSERT CAPTION */}
         <div className="user-caption">
           <label htmlFor="caption">Insert Caption:</label>
@@ -149,6 +183,9 @@ export default function UploadPage() {
             onChange={handleUploadChange}
           >
           </textarea>
+        </div>
+        <div className={valueError?.caption?.length > 0 ? "error-message" : "hidden"}>
+          Invalid Input for Caption
         </div>
         <button className="post-submit btn" onClick={handleOnSubmit}>
           Submit

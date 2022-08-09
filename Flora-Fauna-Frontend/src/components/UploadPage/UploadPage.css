@@ -131,4 +131,11 @@
   align-items: center;
   margin-right: 7px;
   letter-spacing: 1.1px;
- }
+}
+.hidden{
+  display: none;
+}
+.error-message{
+  color: red;
+  margin-top: 10px;
+}

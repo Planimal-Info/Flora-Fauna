@@ -5,12 +5,14 @@ import AnimalCards from "../AnimalCards/AnimalCards.jsx";
 
 export default function SearchResults() {
   const [searchInputValue, setSearchInput] = useState("");
+  const [error, setError] = useState("");
   const {
     searchInput,
     isLoading,
     searchResults,
     initialized,
     searchPictureResults,
+    setSearchResults
   } = useSearchContext();
 
   //Changes the useState to reflect input inside search bar
@@ -20,9 +22,17 @@ export default function SearchResults() {
 
   //Sends input value to be requested
   const handleOnSubmit = () => {
+    //Frontend error handling for valid searches
+    setError("");
+    if(searchInputValue.length <= 1){
+      setError("Invalid Input, Try Again");
+      setSearchResults({});
+      return;
+    } 
     //Send search request
     searchInput(searchInputValue);
   };
+
   //Displays all the results from the search.
   //Will display a no results message if nothing is returned from the request
   return (
@@ -43,7 +53,8 @@ export default function SearchResults() {
           <span class="material-symbols-outlined search-logo">search</span>
         </button>
       </div>
-      <h2 className={Object.keys(searchResults).length <= 0 ? "search-message" : "hidden"}>Search for Animals and Plants in New York</h2>
+      <h2 className={searchResults.length <= 0 && initialized === false && error.length <= 0 ? "search-message" : "hidden"}>Search for Animals and Plants in New York</h2>
+      <h2 className={isLoading ? "search-loading" : "hidden"}>Loading</h2>
       <div className="animal-card-area">
         {searchPictureResults?.length === 0 && searchResults.length > 0
           ? searchResults?.map((e, inx) => (
@@ -65,13 +76,14 @@ export default function SearchResults() {
             />
           ))}
         <h2
-          className={searchResults?.data?.results?.length <= 0 &&
-              initialized === true
+          className={searchResults?.length <= 0 &&
+              initialized === true && error.length <= 0
             ? "no-results-title"
             : "hidden"}
         >
           No Results, Try Something More Specific
         </h2>
+        <h2 className={error.length > 0 ? "search-error-msg" : "hidden"}>{error}</h2>
       </div>
     </div>
   );

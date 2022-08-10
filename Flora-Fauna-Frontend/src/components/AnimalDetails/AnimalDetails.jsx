@@ -30,6 +30,8 @@ export default function AnimalDetails() {
     getRelatedPosts,
   } = useSearchContext();
   
+  console.log(currentPlanimal)
+
   //Used to render specific messages for viewers and users
   const { user } = useAuthContext();
   
@@ -59,7 +61,7 @@ export default function AnimalDetails() {
           <span class="material-symbols-outlined prev-page">undo</span>
         </button>
       </div>
-      <h1 className={user ? "" : "hidden"}>Related Posts</h1>
+      <h1 className={user ? "details-title" : "hidden"}>Related Posts</h1>
       <div className="related-posts">
         {user ? relatedPosts.map((e, idx) => (
           <UserCards
@@ -90,7 +92,6 @@ export default function AnimalDetails() {
       <div className="return-wrapper">
       <Link to="/login" className={user ? "hidden" : ""}><button className="login-btn-viewer">Log In</button></Link>
       </div>
-
     </div>
   );
 }

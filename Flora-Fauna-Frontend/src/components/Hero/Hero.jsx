@@ -12,9 +12,9 @@ export default function Hero() {
   return (
     <div className="hero">
       <div className="bio-info">
-        <h1 className="hero-title">{currentPlanimal?.data?.common_name}</h1>
-        <h2 className="hero-title">{currentPlanimal?.data?.scientific_name}</h2>
-        <h3 className="hero-title">{currentPlanimal?.data?.taxonomic_group}</h3>
+        <h1 className="hero-title">{currentPlanimal?.common_name}</h1>
+        <h2 className="hero-title">{currentPlanimal?.scientific_name}</h2>
+        <h3 className="hero-title">{currentPlanimal?.taxonomic_group}</h3>
         <p className="hero-desc">
           {description.extract}
         </p>
@@ -25,7 +25,7 @@ export default function Hero() {
       <div className="hero-image">
         <div className="overlay"></div>
         <img
-          src={currentPlanimal?.picture?.photo?.source}
+          src={currentPlanimal?.image_url}
           alt={currentPlanimal?.common_name}
         />
       </div>

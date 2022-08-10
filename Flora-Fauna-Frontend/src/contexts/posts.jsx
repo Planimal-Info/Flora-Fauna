@@ -105,15 +105,27 @@ export const PostContextProvider = ({ children }) => {
     }
   };
   //Updates the likes when called on using id
-  const updateLikes = async (id, likes) => {
+  const updateLikes = async (id, likes, liked, postLikes) => {
     try {
-      const obj = { id, likes };
+      const obj = { id, likes, liked, postLikes};
       const sendUpdateLikes = await ApiClient.getLikes(obj);
       return sendUpdateLikes;
     } catch (err) {
       console.error(err);
     }
   };
+
+  //Gets current likes for a post
+  const getLikes = async (id) => {
+    try{
+      const likes = await ApiClient.getCurrentLikes(id);
+      return likes;
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
   const postValue = {
     posts,
     isLoading,
@@ -131,6 +143,7 @@ export const PostContextProvider = ({ children }) => {
     filteredPosts,
     selectedTimeFrame,
     setSelectedTimeFrame,
+    getLikes
   };
 
   return (

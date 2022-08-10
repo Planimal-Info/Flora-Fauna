@@ -225,6 +225,14 @@ class ApiClient {
         data: data,
       })
   }
+  //Sends request to get current likes for a post.
+  async getCurrentLikes(id){
+    return await this.request({
+      endpoint:"post/get",
+      method: "POST",
+      data: {data: id}
+    })
+  }
   //------------------//
   //Filter Endpoints
   //Gets the filtered Posts from the backend

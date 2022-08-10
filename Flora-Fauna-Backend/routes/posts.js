@@ -121,4 +121,16 @@ router.post("/related", async(req,res,next) => {
   }
 })
 
+//Gets the likes for a post
+router.post("/get", security.reqAuthUser, async (req, res, next) => {
+  try {
+    const { email } = res.locals.user;
+    const user = await User.fetchUser(email);
+    const getLikes = await Posts.getLikes(req.body.data, user);
+    res.status(200).json({ getLikes })
+  }
+  catch(err){
+    next(err);
+  }
+})
 module.exports = router;

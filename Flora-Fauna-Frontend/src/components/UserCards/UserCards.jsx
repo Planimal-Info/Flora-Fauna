@@ -7,18 +7,28 @@ import { usePostContext } from "../../contexts/posts";
 import { Card, Col, Grid, Link, Text, Tooltip } from "@nextui-org/react";
 
 export default function UserCards(props) {
-  const { source, title, desc, post, id, category } = props;
+  const { source, title, desc, post, id, category, refresh, setRefresh } =
+    props;
   const { reportPost } = useAdminContext();
-  const { updateLikes } = usePostContext();
+  const { updateLikes, getLikes } = usePostContext();
   const [visible, setVisible] = useState(false);
   const [modalContent, setModalContent] = useState([]);
   const [postLikes, setPostLikes] = useState(0);
-  const modalHandler = () => setVisible(true);
+  const [liked, setIsLiked] = useState(false);
 
+  useEffect(async () => {
+    const currentLikes = await getLikes(id);
+    if (currentLikes?.data?.getLikes?.checkLiked[0]?.liked === true) {
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  }, [refresh]);
+
+  const modalHandler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
   };
-  const [liked, setIsLiked] = useState(false);
   const toggleLikes = () => {
     setIsLiked(!liked);
   };
@@ -28,15 +38,21 @@ export default function UserCards(props) {
   };
   //Updates the likes for the post
   const handleUpdateLikes = async () => {
-    const check = await updateLikes(id, post.likes);
-    setIsLiked(true)
-    //To avoid users being able to like multiple times
-    if (Object.keys(check.data.updatedLikes).length === 3) {
-      if(postLikes != 1){
-        setPostLikes(0);
-      }
-    } else {
+    const check = await updateLikes(id, post.likes, !liked, postLikes);
+    setIsLiked(!liked);
+    
+    //First time a user likes a post
+    if (check?.data?.updatedLikes?.liked) {
       setPostLikes(1);
+    }
+    //When they are liking a post
+    if (check?.data?.updatedLikes?.liked === true) {
+      setPostLikes(1);
+    }
+    //When a user unlikes a post
+    if (check?.data?.updatedLikes?.liked === false) {
+      setPostLikes(0);
+      setRefresh(!refresh);
     }
   };
   return (
@@ -92,7 +108,7 @@ export default function UserCards(props) {
                 </span>
               )}
           </div>
-          <div className="likes-counter">{post.likes + postLikes}</div>
+          <div className="likes-counter">{postLikes + post.likes}</div>
 
           {/* Tooltip for when post is flagged */}
           <div className="flag-user">

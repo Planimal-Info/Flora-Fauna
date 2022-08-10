@@ -43,7 +43,6 @@ export default function AnimalDetails() {
   useEffect(async () => {
     try {
       const data = await getRelatedPosts();
-      console.log(data)
       setRelatedPosts(data);
     } catch (err) {
       console.error(err);

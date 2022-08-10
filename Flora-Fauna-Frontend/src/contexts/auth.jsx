@@ -31,7 +31,6 @@ export const AuthContextProvider = ({ children }) => {
       const req = await ApiClient.fetchUserFromToken();
       setUser(req.data);
     } catch (err) {
-      console.log(err)
       console.error(err);
     }
     setIsLoading(false);

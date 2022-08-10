@@ -100,9 +100,13 @@ class Posts {
       `,
       [data.id, user.id],
     );
-    //If user hasnt liked the post before, update.
-    if (check.rows.length <= 0) {
-      const updatedLikes = data.likes + 1;
+    
+    //Case when a user first likes a post
+    let updatedLikes = 0;
+    if (check.rows.length === 0 && data?.liked === true) {
+      updatedLikes = data.likes + 1;
+      
+      //Adding the like to the post
       const results = await db.query(
         `
       UPDATE user_posts
@@ -117,18 +121,71 @@ class Posts {
         `
         INSERT into likes(
           user_id,
-          user_post_id
+          user_post_id,
+          liked
         )
-        VALUES($1, $2)
+        VALUES($1, $2, $3)
         RETURNING *
         `,
-        [user.id, data.id],
+        [user.id, data.id, true],
       );
-      //Return the data that the user has liked the picture now.
-      return results.rows[0];
+      return { liked: results.rows[0], check: check.rows[0] };
+    } 
+    //Case when a user hasnt liked the post on the backend but has on the frontend
+    else if (check?.rows[0]?.liked === false && data?.liked === true) {
+      updatedLikes = data.likes + 1;
+      
+      //Update the likes for the post
+      const update = await db.query(
+        `
+        UPDATE user_posts
+        SET likes = $1
+        WHERE id = $2
+        RETURNING *
+        `,
+        [updatedLikes, data.id],
+      );
+      //Update the liked table to reflect the user liking the post
+      const query = await db.query(
+        `
+          UPDATE likes
+          SET liked = $1
+          WHERE user_id = $2 AND user_post_id = $3
+          RETURNING * 
+          `,
+        [true, user.id, data.id],
+      );
+      return { update: update, liked: true };
+    } 
+    //Case where user has liked the post on the backend, but has unliked it on the frontend
+    else if (check?.rows[0]?.liked === true && data?.liked === false) {
+      updatedLikes = data.likes - 1;
+      if (updatedLikes < 0) {
+        updatedLikes = 0;
+      }
+      //Removed from liked table
+      const query = await db.query(
+        `
+          UPDATE likes
+          SET liked = $1
+          WHERE user_id = $2 AND user_post_id = $3
+          RETURNING * 
+          `,
+        [false, user.id, data.id],
+      );
+      //Update the posts likes
+      const update = await db.query(
+        `
+        UPDATE user_posts
+        SET likes = $1
+        WHERE id = $2
+        RETURNING *
+        `,
+        [updatedLikes, data.id],
+      );
+      return { update: update, liked: false, refresh: true };
     }
-    //Return the data that the user has already liked the picture
-    return check.rows[0];
+
   }
 
   //Returns the post that matches the post_id
@@ -289,6 +346,24 @@ class Posts {
     }
 
     return tempArr;
+  }
+
+  //Gets the likes for a post
+  static async getLikes(id, user) {
+    const results = await db.query(
+      `
+      SELECT likes FROM user_posts WHERE id = $1
+      `,
+      [id],
+    );
+    const checkLiked = await db.query(
+      `
+      SELECT * FROM likes
+      WHERE user_id = $1 AND user_post_id = $2
+      `,
+      [user.id, id],
+    );
+    return { postLikes: results.rows[0], checkLiked: checkLiked.rows };
   }
 }
 

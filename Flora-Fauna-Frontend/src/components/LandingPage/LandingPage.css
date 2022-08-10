@@ -63,7 +63,7 @@
    height: 55px;
    width: 55px;
    border-radius: 50%;
-   background: var(--yellow);
+   background: var(--green);
 }
 
 .landing-page-input:hover, .landing-page-input:focus{

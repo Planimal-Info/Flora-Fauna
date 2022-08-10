@@ -24,7 +24,7 @@ export default function Footer() {
         <Grid.Container gap={2} justify='center'>
           <Grid xs={3} justify='center' direction='column'>
         <FooterItem text="Developed by" />
-        <MinorFooterItem text="Amaar Mohammed, Kevin Gomes and Valerie Michel" />
+        <MinorFooterItem text="Amaar Mohamed, Kevin Gomes and Valerie Michel" />
       </Grid>
       <Grid xs={6} justify='center' alignItems="flex-end">
         <MinorFooterItem text="© 2022 Flora and Fauna. All Rights reserved." />

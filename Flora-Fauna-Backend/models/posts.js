@@ -238,7 +238,6 @@ class Posts {
   static async getRelatedPosts(input) {
     const inputString = `${input?.name?.toLowerCase()}`;
     const groupString = `${input?.group?.toLowerCase()}`;
-
     //Options for fuzzy search
     const options = {
       isCaseSensitive: false,

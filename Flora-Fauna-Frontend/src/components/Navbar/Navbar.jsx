@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import Logo from "../Logo/Logo"
 import { useAuthContext } from "../../contexts/auth.jsx"
@@ -20,6 +21,24 @@ export default function Navbar({isLoading}) {
 //also used one to refresh page before navigating to user profile
 export function NavLinks({ isLoading, user, logoutUser }) {
   const { setRefresh, refresh } = usePostContext();
+  const [endpoint, setEndpoint] = useState("");
+
+  //Fixes refs not working on other endpoints
+  useEffect(() => {
+    //Checks whether the url and determines path based on that.
+    //Done this way to make using the ref/scroll animation of some links is happening with no weird navigation issues/experiences
+    const url = window.location.href;
+    if(url.split("/").pop().length === 0){
+      setEndpoint("/#about")
+    }
+    else if(url.split("/").pop() === "#about"){
+      setEndpoint("/#about")
+    }
+    else{
+      setEndpoint("/")
+    }
+  },[endpoint])
+
   return (
     <div className="nav-links">
                 {/*Will display Non User NavLinks if user is logged in*/}
@@ -27,14 +46,13 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                 {!user ? (
                   <>
                     <ul className="links">
-                      <li><a href='#about'>about</a></li>
-                      <li><Link to='/resources'>resources</Link></li>
-                      <li><Link to='/'>contact us</Link></li>
+                      <li><a href={endpoint}>about</a></li>
+                      <li><a href={endpoint}>contact us</a></li>
                     </ul>
                     <div className="login-register">
-                      <div className={user ? "hidden" : "login-btn"}><Link to='/login'>Login</Link></div>
-                      <div className={user ? "hidden" : "btn"}><Link to='/register'>Sign Up</Link></div>
-                      <a href="/" onClick={logoutUser}><button className={user ? "logout-button btn" : "hidden"}>Log Out</button></a>
+                      <div className={user ? "hidden" : "login-btn"}><Link to='/login'>login</Link></div>
+                      <div className={user ? "hidden" : "btn"}><Link to='/register'>sign Up</Link></div>
+                      <a href="/" onClick={logoutUser}><button className={user ? "logout-button btn" : "hidden"}>log Out</button></a>
                     </div>
                     </>
                 ) : (

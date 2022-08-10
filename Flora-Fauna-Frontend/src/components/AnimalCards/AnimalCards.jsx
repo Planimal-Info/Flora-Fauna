@@ -17,6 +17,13 @@ export default function AnimalCards(props){
 
     navigate("/animaldetails")
   }
+  let picture = "";
+  if(props.picture?.length > 0){
+    picture = props.picture
+  }
+  else{
+    picture = props.picture?.source
+  }
   //Displays information about the animal on a card.
   return(
     <div className="animal-card">
@@ -36,7 +43,7 @@ export default function AnimalCards(props){
       </Col>
     </Card.Header>
     <Card.Image
-      src={props.picture?.source}
+      src={picture}
       objectFit="cover"
       width="100%"
       height={340}

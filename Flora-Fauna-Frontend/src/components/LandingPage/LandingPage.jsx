@@ -26,7 +26,7 @@ export default function LandingPage() {
     <div className="landing-page">
         <div className="landing-page-content">
             <div className="search-input">
-               <input className="landing-page-input" value={searchInputValue} type="text" placeholder="Search" onChange={e => handleOnChange(e)}></input>
+               <input className="landing-page-input" value={searchInputValue} type="text" placeholder="Search the Database for an Animal or Plant in New York" onChange={e => handleOnChange(e)}></input>
                      <div className="search-icon" onClick={handleOnSubmit}>
                         <span class="material-symbols-outlined search-logo">search</span>
                         {/* <svg

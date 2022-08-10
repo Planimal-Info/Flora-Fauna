@@ -43,7 +43,6 @@ id                  SERIAL PRIMARY KEY,
 common_name         TEXT NOT NULL,
 scientific_name     TEXT NOT NULL,
 taxonomic_group     TEXT NOT NULL,
-last_seen           DATE NOT NULL,
 image_url           TEXT NOT NULL,
-conservation_rate   TEXT NOT NULL
+conservation_rate   TEXT
 );

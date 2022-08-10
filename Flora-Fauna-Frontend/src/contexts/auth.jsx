@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import ApiClient from "../services/ApiClient.js";
 
@@ -24,9 +30,8 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const req = await ApiClient.fetchUserFromToken();
       setUser(req.data);
-      setError(null);
     } catch (err) {
-      setError(error);
+      console.error(err);
     }
     setIsLoading(false);
     setInitial(true);
@@ -43,10 +48,10 @@ export const AuthContextProvider = ({ children }) => {
           password: data.password,
         });
         ApiClient.setToken(getData?.data?.token);
-        setUser(getData?.data?.user);
+        setUser(getData.data?.user);
         setError(getData?.error);
       } catch (err) {
-        setError(err);
+        setError(getData?.error);
       }
     };
     await req();
@@ -84,11 +89,10 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
     await req();
-   
+
     //Refreshes the component.
     setRefresh(true);
     setRefresh(false);
-
 
     setIsLoading(false);
     setInitial(true);

@@ -37,15 +37,13 @@
   flex-wrap: wrap;
   gap: 30px;
 }
-
-.no-results-title{
-  margin-top: 40px;
-}
-
 .hidden{
   display: none;
 }
 
 .search-message{
   margin-top: 40px;
+}
+.search-loading{
+  margin-top: 20px;
 }

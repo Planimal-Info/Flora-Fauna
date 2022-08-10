@@ -25,6 +25,8 @@ export function NavLinks({ isLoading, user, logoutUser }) {
 
   //Fixes refs not working on other endpoints
   useEffect(() => {
+    //Checks whether the url and determines path based on that.
+    //Done this way to make using the ref/scroll animation of some links is happening with no weird navigation issues/experiences
     const url = window.location.href;
     if(url.split("/").pop().length === 0){
       setEndpoint("/#about")

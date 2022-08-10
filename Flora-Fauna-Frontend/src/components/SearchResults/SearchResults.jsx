@@ -45,16 +45,17 @@ export default function SearchResults() {
       </div>
       <h2 className={Object.keys(searchResults).length <= 0 ? "search-message" : "hidden"}>Search for Animals and Plants in New York</h2>
       <div className="animal-card-area">
-        {searchPictureResults.length === 0
-          ? searchResults?.data?.results?.map((e, inx) => (
+        {searchPictureResults?.length === 0 && searchResults.length > 0
+          ? searchResults?.map((e, inx) => (
             <AnimalCards
               common_name={e.common_name}
               scientific_name={e.scientific_name}
               key={inx}
               currentPlanimal={e}
+              picture={e.image_url}
             />
           ))
-          : searchPictureResults.map((e, idx) => (
+          : searchPictureResults?.map((e, idx) => (
             <AnimalCards
               common_name={e.data.common_name}
               scientific_name={e.data.scientific_name}

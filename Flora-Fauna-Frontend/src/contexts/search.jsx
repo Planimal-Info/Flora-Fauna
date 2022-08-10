@@ -24,9 +24,15 @@ export const SearchContextProvider = ({ children }) => {
     try {
       //Gets the search results from the database
       const req = await ApiClient.searchResults({ data: data });
-      setSearchResults(req);
+      console.log(req)
+      if(req.data?.results?.exists === true){
+        setSearchResults(req.data?.results?.data);
+        setIsLoading(false)
+        return;
+      }
+      setSearchResults(req)
       //Gets the picture results from the wikipedia API
-      const picReq = await ApiClient.getSearchPictureResults({query: req.data.results})
+      const picReq = await ApiClient.getSearchPictureResults({query: req?.data?.results})
       setSearchPics(picReq?.data?.pictureResults)
     } catch (err) {
       setError(err)
@@ -34,7 +40,6 @@ export const SearchContextProvider = ({ children }) => {
     setIsLoading(false);
     setInitial(true);
   };
-
   //Gets the pictures from the current selected planimal, used for the animals details page
   const getPictures = async (data) => {
       setIsLoading(true);

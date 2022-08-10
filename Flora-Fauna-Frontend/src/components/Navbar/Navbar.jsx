@@ -29,10 +29,13 @@ export function NavLinks({ isLoading, user, logoutUser }) {
     if(url.split("/").pop().length === 0){
       setEndpoint("/#about")
     }
+    else if(url.split("/").pop() === "#about"){
+      setEndpoint("/#about")
+    }
     else{
       setEndpoint("/")
     }
-  },[refresh])
+  },[endpoint])
 
   return (
     <div className="nav-links">

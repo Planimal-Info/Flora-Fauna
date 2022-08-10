@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
 .navbar .content .nav-links {
@@ -99,6 +99,55 @@
     border: 2px solid white;
     background: var(--green);
 }
-.hidden{
+
+.m-links {
     display: none;
+}
+
+.nextui-popover-content-container {
+    display: none;
+}
+
+@media screen and (max-width: 746px) {
+    .links {
+        display: none !important;
+    }
+
+    .m-links {
+        display: flex;
+        position: absolute;
+        right: 5%;
+        top: 3%;
+        color: white;
+    }
+
+    .m-links .item-bg {
+        background: #00000080;
+        padding: 8px 15px 8px 50px;
+        border-bottom: 1px solid #ffffff50;
+    }
+
+    .nextui-dropdown-item-content .menu-login a {
+        font-weight: 600 !important;
+        color: var(--green) !important;
+    }
+
+    .nextui-popover-content-container {
+        display: block;
+        overflow: hidden;
+    }
+
+    .nextui-popover-content-container a {
+        color: black !important;
+        font-weight: normal;
+    }
+
+    .nextui-button-icon-right {
+        display: none;
+    }
+
+    .menu-logout {
+        font-weight: 600 !important;
+        color: var(--green);
+    }
 }

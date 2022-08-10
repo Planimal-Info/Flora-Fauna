@@ -10,3 +10,8 @@
     color: var(--green);
     font-size: 35px;
 }
+
+.web-title {
+    font-weight: 700;
+    font-size: 25px;
+}

@@ -98,3 +98,12 @@
     width: 100%;
     color: var(--black);
 }
+@media screen and (max-width: 746px) {
+    .registration-form .card {
+        width: 330px;
+    }
+
+    .registration-page {
+        margin-bottom: 40vh;
+    }
+}

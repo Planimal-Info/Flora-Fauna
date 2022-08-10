@@ -10,6 +10,7 @@ export default function Logo() {
           <Link to="/">
             <div className="material-symbols-outlined leaf">eco</div>
           </Link>
+          <div className="web-title">Flora&Fauna</div>
         </div>
     </div>
   )

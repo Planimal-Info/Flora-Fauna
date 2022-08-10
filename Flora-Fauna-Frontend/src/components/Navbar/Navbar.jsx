@@ -26,7 +26,6 @@ export function NavLinks({ isLoading, user, logoutUser }) {
   //Fixes refs not working on other endpoints
   useEffect(() => {
     const url = window.location.href;
-    console.log(url.split("/").pop().length)
     if(url.split("/").pop().length === 0){
       setEndpoint("/#about")
     }

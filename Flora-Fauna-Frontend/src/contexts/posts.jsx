@@ -109,7 +109,6 @@ export const PostContextProvider = ({ children }) => {
     try {
       const obj = { id, likes, liked, postLikes};
       const sendUpdateLikes = await ApiClient.getLikes(obj);
-      console.log(sendUpdateLikes);
       return sendUpdateLikes;
     } catch (err) {
       console.error(err);

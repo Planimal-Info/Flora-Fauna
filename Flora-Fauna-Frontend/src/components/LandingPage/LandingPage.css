@@ -1,5 +1,6 @@
 .landing-page {
-   display: block;
+   display: flex;
+   flex-direction: column;
    height: 100%;
    overflow: hidden !important;
 } 
@@ -12,12 +13,15 @@
    position: relative;
 }
 
+.landing-page .f-footer {
+   position: relative;
+}
+
 .landing-page::before {
    content: "";
    background-image: url('../../assets/toucan-background.jpg');
    background-size: cover;
    background-repeat: no-repeat;
-   background-size: 100%;
    background-position: center;
    background-attachment: fixed;
    opacity: 0.4;
@@ -90,4 +94,30 @@
    font-size: 15px;
    letter-spacing: 0.6px;
    opacity: 0.5;
+}
+
+@media screen and (max-width: 1015px) {
+   .landing-page-input {
+      width: 550px;
+   }
+}
+
+@media screen and (max-width: 746px) {
+   .landing-page-input {
+         width: 400px;
+      }
+   
+   .f-footer div {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-content: center;
+      align-items: center;
+   }
+}
+
+@media screen and (max-width: 481px) {
+   .landing-page-input {
+      width: 400px;
+   }
 }

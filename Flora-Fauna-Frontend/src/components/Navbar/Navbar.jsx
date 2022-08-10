@@ -94,6 +94,8 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                       <li><Link to="/search">Search</Link></li>
                       <li><Link to='/userfeed' onClick={() => setRefresh(!refresh)}>Your Feed</Link></li>
                       <li><Link to="/admin" className={user?.user?.is_admin ? "" : "hidden"}>Admin</Link></li>
+                      
+                      {/* UPLOAD PHOTO AND USER PROFILE IMAGE */}
                       <li className="user-options">
                         <Link to="/upload"><span className="material-symbols-outlined upload-button">add_circle</span></Link>
                         <Link to="/userprofile">
@@ -107,6 +109,16 @@ export function NavLinks({ isLoading, user, logoutUser }) {
 
                   {/* NAV MENU FOR MOBILE */}
                   <ul className="m-links">
+
+                    {/* UPLOAD PHOTO AND USER PROFILE IMAGE */}
+                    <li className="user-options">
+                        <Link to="/upload"><span className="material-symbols-outlined upload-button">add_circle</span></Link>
+                        <Link to="/userprofile">
+                        <div className="profile-img">
+                          {/* USER PROFILE IMAGE */}
+                          <img src="/" alt="" />
+                        </div></Link>
+                      </li>
                     <Dropdown className="mobile-menu">
                       <Dropdown.Button className="menu-btn" color={selectedColor} light>
                         <span class="material-symbols-outlined">menu</span>

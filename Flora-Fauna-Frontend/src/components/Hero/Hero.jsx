@@ -8,6 +8,15 @@ export default function Hero() {
   //Uses the current planimal set in the context to render in this info.
   const { currentPlanimal, searchPictures, getPictures, url, description } =
     useSearchContext();
+  
+  //Uses this picture of there is none available
+  let picture = "";
+  if (!currentPlanimal?.image_url) {
+    picture = `https://fakeimg.pl/450x1000/000000/?text=Not Found`;
+  }
+  else{
+    picture = currentPlanimal?.image_url
+  }
   //Displays the current selected animals information on the Animal Details page.
   return (
     <div className="hero">
@@ -25,7 +34,7 @@ export default function Hero() {
       <div className="hero-image">
         <div className="overlay"></div>
         <img
-          src={currentPlanimal?.image_url}
+          src={picture}
           alt={currentPlanimal?.common_name}
         />
       </div>

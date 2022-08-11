@@ -5,9 +5,21 @@ import "./UserProfile.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import Footer from "../Footer/Footer";
+import UserCards from "../UserCards/UserCards.jsx";
+
+//Changes array buffer in posts response to base64 to display
+export const toBase64 = function (arr) {
+  //Changes ArrayBuffer to base 64
+  const baseSource = btoa(
+    arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
+  );
+  //Takes base64 string and concats to get right source for image
+  const source = `data:image/jpeg;base64,${baseSource}`;
+  return source;
+};
 
 export default function UserProfile() {
-
+  const { likedPosts } = useAuthContext();
   // Toggle profile section view when settings links are clicked
   const [toggleProfile, setToggleProfile] = useState(true);
   const [toggleLikedPosts, setToggleLikedPosts] = useState(false);
@@ -32,7 +44,7 @@ export default function UserProfile() {
   }
 
   //Extract user from context and used to populate data.
-  const { user, initialized } = useAuthContext();
+  const { user, initialized, refresh, setRefresh } = useAuthContext();
   //added conditional to combat null errors when rendering in this component
   //All conditionals in the html are to combat null errors
   if (initialized && user != null) {
@@ -77,7 +89,7 @@ export default function UserProfile() {
 
             {/* Liked Posts Toggle */}
             <div className={toggleLikedPosts ? "profile-content" : "hidden"}>
-              <LikedPosts />
+              <LikedPosts likedPosts={likedPosts} refresh={refresh} setRefresh={setRefresh}/>
             </div>
 
             {/* Account Settings Toggle */}
@@ -118,12 +130,25 @@ export function UserSettings({ userProfileHandler, userLikedPostsHandler, userAc
   );
 }
 
-export function LikedPosts() {
+export function LikedPosts(props) {
   return (
     <div className="liked-posts">
       <h2>Liked Posts</h2>
       <div className="liked-posts-container">
         {/* INSERT LIKED POSTS HERE */}
+        {props.likedPosts?.map((e,idx) => (
+           <UserCards
+                key={idx}
+                source={toBase64(e?.photo?.data)}
+                title={e.user_post_title}
+                desc={e.user_post_desc}
+                post={e}
+                id={e.id}
+                category={e.category}
+                refresh={props.refresh}
+                setRefresh={props.setRefresh}
+              /> 
+        ))}
       </div>
     </div>
   );

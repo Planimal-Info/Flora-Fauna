@@ -83,6 +83,10 @@ class ApiClient {
   async fetchUserFromToken() {
     return await this.request({ endpoint: "auth/me", method: "GET" });
   }
+  //returns the users liked posts.
+  async getLikedPosts(){
+    return await this.request({ endpoint:"auth/liked", method: "GET" })
+  }
 
   //----------------------------//
   //Search Endpoints

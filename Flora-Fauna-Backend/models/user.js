@@ -94,6 +94,36 @@ class User {
         const user = result.rows[0];
         return user
     }
+    
+    //Gets all the liked posts for a user
+    static async getLikedPosts(id){
+        //Gets the post ids using the users id
+        const getLikedPostIds = await db.query(
+            `
+            SELECT user_post_id FROM likes WHERE user_id = $1 AND liked = $2
+            `,
+            [id, true]
+        );
+        console.log(getLikedPostIds)
+        
+        //Gets the posts from the database and stores them in an array to return.
+        let postsArray = [];
+        for(let e in getLikedPostIds?.rows){
+                const results = await db.query(
+                    `
+                    SELECT * FROM user_posts
+                    WHERE id = $1
+                    `,
+                    [getLikedPostIds?.rows[e]?.user_post_id]
+                );
+            if(results.rows[0] != undefined){
+                postsArray.push(results.rows[0]);
+            }
+        } 
+        
+      return postsArray;  
+    }
+
 }
 
 module.exports = User;

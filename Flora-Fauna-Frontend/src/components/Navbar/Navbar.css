@@ -104,7 +104,11 @@
     display: none;
 }
 
-.nextui-popover-content-container {
+.m-links .menu-icon {
+    color: white;
+}
+
+.navbar .nextui-popover-content-container {
     display: none;
 }
 
@@ -150,4 +154,8 @@
         font-weight: 600 !important;
         color: var(--green);
     }
+}
+
+@media screen and (max-width: 400px) {
+    
 }

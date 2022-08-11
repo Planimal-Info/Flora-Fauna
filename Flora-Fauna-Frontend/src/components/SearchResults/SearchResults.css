@@ -9,7 +9,7 @@
 
 .search-results .f-footer {
   position: relative;
-  width: 100%;
+  width: 100vw;
   margin-top: 100vh;
   padding-left: 60px;
 }
@@ -49,5 +49,12 @@
 }
 .search-loading{
   margin-top: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .search-message {
+    font-size: 16px;
+    text-align: center;
+  }
 }
 

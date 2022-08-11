@@ -133,7 +133,7 @@ export function UserSettings({ userProfileHandler, userLikedPostsHandler, userAc
 export function LikedPosts(props) {
   return (
     <div className="liked-posts">
-      <h2>Liked Posts</h2>
+      <h2>Your Liked Posts</h2>
       <div className="liked-posts-container">
         {/* INSERT LIKED POSTS HERE */}
         {props.likedPosts?.map((e,idx) => (

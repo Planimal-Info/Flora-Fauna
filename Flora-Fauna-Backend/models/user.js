@@ -104,8 +104,6 @@ class User {
             `,
             [id, true]
         );
-        console.log(getLikedPostIds)
-        
         //Gets the posts from the database and stores them in an array to return.
         let postsArray = [];
         for(let e in getLikedPostIds?.rows){

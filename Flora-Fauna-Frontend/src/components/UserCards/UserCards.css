@@ -76,3 +76,9 @@
 .flagged-tooltip {
   margin-left: 50px;
 }
+
+@media screen and (max-width: 480px) {
+  .user-card {
+    width: 400px;
+  }
+}

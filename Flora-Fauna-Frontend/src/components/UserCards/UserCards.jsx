@@ -4,6 +4,7 @@ import ModalPopup from "../ModalPopup/ModalPopup";
 import { toBase64 } from "../UserFeed/UserFeed";
 import { useAdminContext } from "../../contexts/admin.jsx";
 import { usePostContext } from "../../contexts/posts";
+import { useAuthContext } from "../../contexts/auth.jsx";
 import { Card, Col, Grid, Link, Text, Tooltip } from "@nextui-org/react";
 
 export default function UserCards(props) {
@@ -11,6 +12,7 @@ export default function UserCards(props) {
     props;
   const { reportPost } = useAdminContext();
   const { updateLikes, getLikes } = usePostContext();
+  const { setRefreshLikes } = useAuthContext();
   const [visible, setVisible] = useState(false);
   const [modalContent, setModalContent] = useState([]);
   const [postLikes, setPostLikes] = useState(0);
@@ -54,6 +56,10 @@ export default function UserCards(props) {
       setPostLikes(0);
       setRefresh(!refresh);
     }
+
+    //Refreshes the likes for user, to be able to dynamically see there liked posts in the profile
+    setRefreshLikes(true);
+    setRefreshLikes(false);
   };
   return (
     <div className="user-card">

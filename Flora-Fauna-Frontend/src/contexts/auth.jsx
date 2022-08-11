@@ -17,6 +17,8 @@ export const AuthContextProvider = ({ children }) => {
   const [error, setError] = useState({});
   const [reqError, setReqError] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [refreshLikes, setRefreshLikes] = useState(false);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   //Check if a token (ff_token) is in storage,
   //if so, fetch user from that token.
@@ -36,6 +38,17 @@ export const AuthContextProvider = ({ children }) => {
     setIsLoading(false);
     setInitial(true);
   }, [refresh]);
+  
+  //Gets all the users liked posts.
+  useEffect(async () => {
+    try{
+      const data = await ApiClient.getLikedPosts();
+      setLikedPosts(data?.data?.likedPosts)
+    }
+    catch(err){
+      console.error(err)
+    }
+  }, [refreshLikes])
 
   //function to login user
   const loginUser = async (data) => {
@@ -116,6 +129,8 @@ export const AuthContextProvider = ({ children }) => {
     logoutUser,
     reqError,
     setRefresh,
+    likedPosts,
+    setRefreshLikes
   };
 
   return (

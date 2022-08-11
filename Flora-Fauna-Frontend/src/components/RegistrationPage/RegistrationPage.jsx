@@ -18,6 +18,7 @@ export default function RegistrationPage() {
   return (
     <div className="registration-page">
       <RegistrationForm user={user} registerUser={registerUser} />
+      <Footer />
     </div>
   );
 }
@@ -155,7 +156,6 @@ export function RegistrationForm({ registerUser, user }) {
           </p>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

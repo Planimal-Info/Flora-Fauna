@@ -6,10 +6,14 @@
 
 .registration-form {
     justify-content: center;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.registration-form .f-footer {
-    margin-top: 100vh;
+.registration-page .f-footer {
+    position: relative;
+    width: 100vw;
+    margin-top: 10vh;
 }
 
 .registration-page {
@@ -21,6 +25,8 @@
     background: var(--l-gray);
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .registration-form .card .split-input-field {
@@ -100,10 +106,7 @@
 }
 @media screen and (max-width: 746px) {
     .registration-form .card {
+        margin-top: 20vh;
         width: 330px;
-    }
-
-    .registration-page {
-        margin-bottom: 40vh;
     }
 }

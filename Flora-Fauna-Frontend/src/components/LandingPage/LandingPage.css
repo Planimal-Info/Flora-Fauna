@@ -121,3 +121,29 @@
       width: 400px;
    }
 }
+
+@media screen and (max-width: 480px) {
+   .landing-page-input {
+      width: 300px;
+   }
+
+   .search-input {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 0;
+      margin-top: 200px;
+   }
+
+   .search-icon {
+      margin-top: 20px;
+   }
+
+   .landing-page-content {
+      height: 50vh;
+   }
+
+   .landing-page::before {
+      margin-bottom: 505px;
+   }
+}

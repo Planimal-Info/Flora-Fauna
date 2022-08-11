@@ -2,15 +2,19 @@
     max-width: 100vw;
     background: var(--l-gray);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding: 0 80px;
     justify-content: center;
     margin-top: 50px;
+    overflow: hidden;
 }
 
 .user-profile .f-footer {
-    margin-top: 153vh;
+    position: relative;
+    margin-top: 10vh;
+    width: 100vw;
+    padding-left: 70px;
 }
 
 .user-profile .content {

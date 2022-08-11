@@ -121,7 +121,7 @@ export function NavLinks({ isLoading, user, logoutUser }) {
                       </li>
                     <Dropdown className="mobile-menu">
                       <Dropdown.Button className="menu-btn" color={selectedColor} light>
-                        <span class="material-symbols-outlined">menu</span>
+                        <span class="material-symbols-outlined menu-icon">menu</span>
                       </Dropdown.Button>
                       <Dropdown.Menu
                         color={selectedColor}

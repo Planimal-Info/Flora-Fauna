@@ -81,4 +81,8 @@
   .user-card {
     width: 400px;
   }
+
+    .single-post .overlay {
+      width: 100%;
+    }
 }

@@ -2,13 +2,16 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  text-align: center;
   align-self: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .search-results .f-footer {
-  bottom: 0;
+  position: relative;
+  width: 100%;
+  margin-top: 100vh;
+  padding-left: 60px;
 }
 
 .search-result-content{

@@ -147,3 +147,19 @@
   color: red;
   margin-top: 10px;
 }
+
+@media screen and (max-width: 746px) {
+  .upload-page .upload-form {
+    width: 528px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .upload-page .upload-form {
+    width: 250px;
+  }
+
+  .file-upload h2 {
+    font-size: 18px;
+  }
+}

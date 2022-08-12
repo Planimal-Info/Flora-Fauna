@@ -6,6 +6,7 @@ import { useAuthContext } from "../../contexts/auth.jsx";
 import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import Footer from "../Footer/Footer";
 import UserCards from "../UserCards/UserCards.jsx";
+import { Dropdown, Text } from "@nextui-org/react";
 
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
@@ -61,7 +62,7 @@ export default function UserProfile() {
               />
             </div>
           </div>
-
+        {/* {user.user.email} */}
           <div className="column right">
             <div className="profile">
               <div className="profile-header"></div>
@@ -69,7 +70,14 @@ export default function UserProfile() {
                 <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
                 <div className="profile-info">
                   {user.user
-                    ? <h2>{user.user.username} / {user.user.email}</h2>
+                    ? <><span className="name-title"><h2>{user.user.username}</h2>
+                      <UserSettingsIcon 
+                        userProfileHandler={userProfileHandler}
+                        userLikedPostsHandler={userLikedPostsHandler}
+                        userAccountHandler={userAccountHandler}
+                      /></span>
+                    </>
+                    
                     : <h2></h2>}
                   <p className="biography">Insert biography blurb</p>
                 </div>
@@ -128,6 +136,43 @@ export function UserSettings({ userProfileHandler, userLikedPostsHandler, userAc
       </ul>
     </div>
   );
+}
+
+export function UserSettingsIcon({ userProfileHandler, userLikedPostsHandler, userAccountHandler }) {
+  
+  const { user } = useAuthContext()
+
+  return(
+    <div className="settings-dropdown">
+                  <Dropdown placement="bottom-left">
+                    <Dropdown.Trigger>
+                      <span class="material-symbols-outlined settings-icon">settings</span>
+                    </Dropdown.Trigger>
+                    <Dropdown.Menu color="secondary" aria-label="Avatar Actions">
+                      <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                        <Text b color="inherit" css={{ d: "flex" }}>
+                          Signed in as
+                        </Text>
+                        <Text b color="inherit" css={{ d: "flex" }}>
+                          {user.user.email}
+                        </Text>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="analytics" withDivider>
+                        <p onClick={userProfileHandler}>Profile</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="system">
+                        <p onClick={userLikedPostsHandler}>Liked Posts</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="configurations">
+                        <p onClick={userAccountHandler}>Account</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="analytics" color="warning" withDivider>
+                        Upload Header Image
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+  )
 }
 
 export function LikedPosts(props) {

@@ -65,6 +65,7 @@
   transition: 0.5s;
   transition-property: top, bottom;
   cursor: pointer;
+  width: 100%;
 }
 
 .single-post .overlay:hover {

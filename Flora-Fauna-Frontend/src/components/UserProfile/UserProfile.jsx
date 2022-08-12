@@ -9,17 +9,6 @@ import Footer from "../Footer/Footer";
 import UserCards from "../UserCards/UserCards.jsx";
 import { Dropdown, Text } from "@nextui-org/react";
 
-export const toBase64 = function (arr) {
-  //Changes ArrayBuffer to base 64
-  const baseSource = btoa(
-    arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
-  );
-  //Takes base64 string and concats to get right source for image
-  const source = `data:image/jpeg;base64,${baseSource}`;
-  return source;
-};
-
-
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
   //Changes ArrayBuffer to base 64

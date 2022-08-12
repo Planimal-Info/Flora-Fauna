@@ -16,6 +16,7 @@ class Posts {
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
+        console.log("test")
         return new BadRequestError(`Missing ${e} in request body`);
       }
     });
@@ -64,8 +65,8 @@ class Posts {
   //Attach image to corresponding post in db
   static async attachImage(image, post_id) {
     //Reads binary data from file and stores it.
+    //console.log(image.path)
     const data = fs.readFileSync(image.path);
-
     //Resize image before adding to database
     const resizedImage = await sharp(data).resize(500, 600).toBuffer();
 

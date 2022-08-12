@@ -1,12 +1,24 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import "./UserProfile.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
+import { usePostContext } from "../../contexts/posts.jsx";
 import AccessForbidden from "../AccessForbidden/AccessForbidden";
 import Footer from "../Footer/Footer";
 import UserCards from "../UserCards/UserCards.jsx";
 import { Dropdown, Text } from "@nextui-org/react";
+
+export const toBase64 = function (arr) {
+  //Changes ArrayBuffer to base 64
+  const baseSource = btoa(
+    arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
+  );
+  //Takes base64 string and concats to get right source for image
+  const source = `data:image/jpeg;base64,${baseSource}`;
+  return source;
+};
+
 
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
@@ -19,13 +31,20 @@ export const toBase64 = function (arr) {
   return source;
 };
 
+
 export default function UserProfile() {
+  const {
+    getUserPosts,
+    userPosts,
+    setUserPosts
+  } = usePostContext();
   const { likedPosts } = useAuthContext();
+
   // Toggle profile section view when settings links are clicked
   const [toggleProfile, setToggleProfile] = useState(true);
   const [toggleLikedPosts, setToggleLikedPosts] = useState(false);
   const [toggleAccount, setToggleAccount] = useState(false);
-
+  
   const userProfileHandler = () => {
     setToggleProfile(true)
     setToggleLikedPosts(false)
@@ -43,6 +62,10 @@ export default function UserProfile() {
     setToggleProfile(false)
     setToggleLikedPosts(false)
   }
+
+  useEffect(() => {
+    getUserPosts();
+  }, []);
 
   //Extract user from context and used to populate data.
   const { user, initialized, refresh, setRefresh } = useAuthContext();
@@ -90,8 +113,17 @@ export default function UserProfile() {
             <div className={toggleProfile ? "profile-content" : "hidden"}>
               <h2>Uploaded Content</h2>
               <div className="uploaded-content">
-                <p className="black">Map/List user posts</p>
-                {/* LIST USERS UPLOADED POSTS HERE */}
+                {userPosts?.map((e, idx) => (
+              <UserCards
+                key={idx}
+                source={toBase64(e?.photo?.data)}
+                title={e.user_post_title}
+                desc={e.user_post_desc}
+                post={e}
+                id={e.id}
+                category={e.category}
+              />
+            ))}
               </div>
             </div>
 
@@ -201,7 +233,7 @@ export function LikedPosts(props) {
 
 export function Account() {
 
-  const { user } = useAuthContext()
+  const { user,updateUserEmail,updateUserPassword } = useAuthContext()
 
   const [values, setValues] = useState({
     newEmail: "",
@@ -224,6 +256,29 @@ export function Account() {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
+  const handleEmailOnSubmit = () => {
+    updateUserEmail(values);
+  };
+  //Commented out validation because it causes errors with the auth/me route,
+  //Needs to be fixed.
+  const changeEmailOnSubmit = () => {
+    handleEmailOnSubmit();
+  };
+
+  const handlePasswordOnSubmit = () => {
+    updateUserPassword(values);
+  };
+  //Commented out validation because it causes errors with the auth/me route,
+  //Needs to be fixed.
+  const changePasswordOnSubmit = () => {
+    if(values.newPassword == values.confPassword)
+    {
+      handlePasswordOnSubmit();
+    } else {
+      console.error("New passwords must match");
+    }
+  };
+
   return (
     <div className="account">
       <h2>Account Settings</h2>
@@ -236,11 +291,14 @@ export function Account() {
             <input 
               className="form-input"
               type="email"
-              name="email"
+              name="newEmail"
               placeholder="Enter new email"
               value={values.newEmail}
               onChange={handleChange}
               />
+              <ibutton onClick={changeEmailOnSubmit} className="submit-new-email btn">
+            Change Email
+          </ibutton>
           </div>
 
           <h2 className="change-password">Change Password</h2>
@@ -281,6 +339,10 @@ export function Account() {
               value={values.confPassword}
               onChange={handleChange}
               />
+              {values.newPassword != values.confPassword? <p>Passwords do not match</p> : ""}
+              <ibutton onClick={changePasswordOnSubmit} className="submit-new-email btn">
+              Change Password
+          </ibutton>
           </div>
         </div>
       </div>

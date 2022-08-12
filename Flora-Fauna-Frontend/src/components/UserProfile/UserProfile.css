@@ -101,7 +101,8 @@
 }
 
 .user-profile .content .column.right .uploaded-content {
-    background: peachpuff;
+    display: flexbox;
+    background: #333333;
     width: 1300px;
     height: 90vh;
     margin-top: 30px;

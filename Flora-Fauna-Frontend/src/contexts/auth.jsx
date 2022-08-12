@@ -76,6 +76,7 @@ export const AuthContextProvider = ({ children }) => {
     setIsLoading(false);
     setInitial(true);
   };
+  
   //function to register user
   const registerUser = async (data) => {
     setIsLoading(true);
@@ -116,6 +117,49 @@ export const AuthContextProvider = ({ children }) => {
     ApiClient.removeToken();
   };
 
+    //updates email of logged in user
+    const updateUserEmail = async (data) => {
+      setIsLoading(true);
+      setInitial(false);
+      const req = async () => {
+        try {
+          await ApiClient.updateEmail({
+            email: data.newEmail,
+          });
+        } catch (err) {
+          setError(err);
+        }
+      };
+      await req();
+    
+      //setRefresh(true);
+      //setRefresh(false);
+    
+      setIsLoading(false);
+      setInitial(true);
+    };
+    //updates password of logged in user
+    const updateUserPassword = async (data) => {
+      setIsLoading(true);
+      setInitial(false);
+      const req = async () => {
+        try {
+          await ApiClient.updatePassword({
+            password: data.newPassword
+          });
+        } catch (err) {
+          setError(err);
+        }
+      };
+      await req();
+  
+      setRefresh(true);
+      setRefresh(false);
+  
+      setIsLoading(false);
+      setInitial(true);
+    };
+
   const authValue = {
     user,
     setUser,
@@ -129,6 +173,8 @@ export const AuthContextProvider = ({ children }) => {
     logoutUser,
     reqError,
     setRefresh,
+    updateUserEmail,
+    updateUserPassword,
     likedPosts,
     setRefreshLikes
   };

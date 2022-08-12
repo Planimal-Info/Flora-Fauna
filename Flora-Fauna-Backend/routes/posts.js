@@ -23,7 +23,9 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
 router.post("/upload", upload.single(`file`), async (req, res, next) => {
   try {
     const { headers } = req;
+
     const addImage = await Posts.attachImage(req.file, headers.postid);
+
     res.status(200).json({ addImage });
   } catch (error) {
     next(error);

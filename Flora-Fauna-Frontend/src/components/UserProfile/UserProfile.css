@@ -131,6 +131,13 @@
     height: 500px;
 }
 
+.profile-passconf {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: var(--yellow);
+}
+
 .user-settings {
     display: flex;
     flex-direction: column;
@@ -264,6 +271,11 @@
     .account {
         width: 970px;
     }
+
+    .nextui-dropdown-item:hover {
+        /* background-color: #fdefd8; */
+        background-color: transparent;
+    }
 }
 
 @media screen and (max-width: 979px) {
@@ -278,4 +290,8 @@
     .user-profile .content .profile .profile-header {
         border-radius: 20px 20px 0 0;
     }
+
+        .account {
+            width: 372px;
+        }
 }

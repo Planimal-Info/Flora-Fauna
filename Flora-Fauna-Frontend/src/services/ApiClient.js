@@ -42,6 +42,7 @@ class ApiClient {
 
   //Send File Images Requests
   async imageRequest({ endpoint, method = "POST", data = {} }) {
+    console.log(data)
     const url = `${this.remoteHostUrl}/${endpoint}`;
     let formData = new FormData();
     formData.set("file", data.image);
@@ -172,6 +173,7 @@ class ApiClient {
       method: "POST",
       data: data,
     });
+    //console.log(post.data.post.id)
     const addImage = await this.imageRequest({
       endpoint: "post/upload",
       method: "POST",
@@ -196,7 +198,23 @@ class ApiClient {
       data: { id: post_id },
     });
   }
-
+  //Sends request for all posts of a single user
+  async getUserPosts() {
+    return await this.request({endpoint: "post/listPosts", method: "GET" });
+  }
+  //Send request to update user email
+  async updateEmail(data) {
+    return await this.request({
+      endpoint:"profile/updateEmail", 
+      method: "POST", 
+      data:data })
+  }
+  async updatePassword(data) {
+    return await this.request({
+      endpoint:"profile/updatePassword", 
+      method: "POST", 
+      data:data })
+  }
   //Sends request to update likes for a post
   async getLikes(data) {
     return await this.request({

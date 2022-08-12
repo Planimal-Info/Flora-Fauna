@@ -4,7 +4,7 @@ const Posts = require("../models/posts.js");
 const User = require("../models/user.js");
 const security = require("../middleware/security");
 const multer = require("multer")
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads' })
 
 //Route to create post and insert into database
 router.post("/create", security.reqAuthUser, async (req, res, next) => {
@@ -12,6 +12,8 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
     const { email } = res.locals.user;
     const user = await User.fetchUser(email);
     const makePost = await Posts.createPosts(req.body, user.id);
+    console.log(makePost)
+    console.log("test")
     res.status(200).json({ post: makePost })
   } catch (error) {
     next(error);
@@ -23,6 +25,8 @@ router.post("/create", security.reqAuthUser, async (req, res, next) => {
 router.post("/upload", upload.single(`file`), async (req, res, next) => {
   try {
     const { headers } = req;
+    //console.log(headers)
+    //console.log(req.file)
     const addImage = await Posts.attachImage(req.file, headers.postid)
     res.status(200).json({ addImage });
     

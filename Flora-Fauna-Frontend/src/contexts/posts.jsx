@@ -7,6 +7,7 @@ const PostContext = createContext(null);
 export const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [latestPost, setLatestPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -47,7 +48,17 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [selectedCategory, selectedTimeFrame]);
+  //Get posts for a single user
+  const getUserPosts = async () => {
+    try {
+      const data = await ApiClient.getUserPosts();
+      setUserPosts(data.data.allUserPosts);
 
+    } catch(err) {
+      setError(err);
+      console.error(err);
+    }
+  };
   //Sends request to make a post
   const createPost = async (data) => {
     setIsLoading(true);
@@ -106,6 +117,9 @@ export const PostContextProvider = ({ children }) => {
     latestPost,
     setPosts,
     getMorePosts,
+    getUserPosts,
+    userPosts,
+    setUserPosts,
     setRefresh,
     refresh,
     updateLikes,

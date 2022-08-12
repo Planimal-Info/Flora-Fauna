@@ -82,7 +82,7 @@
 }
 
 .user-profile .content .profile .profile-info {
-    margin-top: 10px;
+    margin-top: 30px;
 }
 
 .user-profile .content .profile .profile-info h2 {
@@ -97,24 +97,45 @@
 .user-profile .content .profile .profile-upload {
     display: flex;
     justify-content: flex-end;
-    width: 40vw;
+    width: 35vw;
 }
 
 .user-profile .content .column.right .uploaded-content {
-    display: flexbox;
-    background: #333333;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* background: #33333320; */
     width: 1300px;
     height: 90vh;
     margin-top: 30px;
     overflow-y: scroll;
 }
 
+.uploaded-content::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
 .profile-content {
     margin-top: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-content h2 {
     margin-bottom: 30px;
+}
+
+.profile-content .user-card {
+    width: 30%;
+    height: 500px;
+}
+
+.profile-passconf {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: var(--yellow);
 }
 
 .user-settings {
@@ -202,6 +223,11 @@
     margin-right: 15px;
 }
 
+.submit-new-email.btn {
+    margin-top: 10px;
+    width: 370px;
+}
+
 
 /* --------------- MEDIA QUERIES ---------------*/
 @media screen and (max-width: 1550px) {
@@ -245,6 +271,11 @@
     .account {
         width: 970px;
     }
+
+    .nextui-dropdown-item:hover {
+        /* background-color: #fdefd8; */
+        background-color: transparent;
+    }
 }
 
 @media screen and (max-width: 979px) {
@@ -259,4 +290,8 @@
     .user-profile .content .profile .profile-header {
         border-radius: 20px 20px 0 0;
     }
+
+        .account {
+            width: 372px;
+        }
 }

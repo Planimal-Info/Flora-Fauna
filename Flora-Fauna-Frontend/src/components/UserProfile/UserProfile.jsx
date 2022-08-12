@@ -178,16 +178,16 @@ export function UserSettingsIcon({ userProfileHandler, userLikedPostsHandler, us
                           {user.user.email}
                         </Text>
                       </Dropdown.Item>
-                      <Dropdown.Item key="analytics" withDivider>
+                      <Dropdown.Item key="profile" withDivider>
                         <p onClick={userProfileHandler}>Profile</p>
                       </Dropdown.Item>
-                      <Dropdown.Item key="system">
+                      <Dropdown.Item key="likedPosts">
                         <p onClick={userLikedPostsHandler}>Liked Posts</p>
                       </Dropdown.Item>
-                      <Dropdown.Item key="configurations">
+                      <Dropdown.Item key="account">
                         <p onClick={userAccountHandler}>Account</p>
                       </Dropdown.Item>
-                      <Dropdown.Item key="analytics" color="warning" withDivider>
+                      <Dropdown.Item key="upload" color="warning" withDivider>
                         Upload Header Image
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -328,7 +328,7 @@ export function Account() {
               value={values.confPassword}
               onChange={handleChange}
               />
-              {values.newPassword != values.confPassword? <p>Passwords do not match</p> : ""}
+              {values.newPassword != values.confPassword? <p className="profile-passconf">* Passwords do not match</p> : ""}
               <ibutton onClick={changePasswordOnSubmit} className="submit-new-email btn">
               Change Password
           </ibutton>

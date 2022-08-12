@@ -84,6 +84,10 @@ class ApiClient {
   async fetchUserFromToken() {
     return await this.request({ endpoint: "auth/me", method: "GET" });
   }
+  //returns the users liked posts.
+  async getLikedPosts(){
+    return await this.request({ endpoint:"auth/liked", method: "GET" })
+  }
 
   //----------------------------//
   //Search Endpoints
@@ -163,6 +167,26 @@ class ApiClient {
       data: {post: post_id, user: user_id}
     })
   }
+  //Gets posts in Descending order of likes.
+  async getFilteredLiked(filter){
+    const iterator = filter.values();
+    if(iterator?.next()?.value != "Sort"){
+      return await this.request({
+        endpoint: "post/filterLikes",
+        method: "POST",
+        data: {filter: filter}
+      })
+    }
+  }
+
+  //Gets related posts for search results
+  async getRelatedPosts(input){
+    return await this.request({
+      endpoint: "post/related",
+      method: "POST",
+      data: input
+    })
+  }
   //-----------------------//
   //Post Endpoints
   //Sends request to create post and sends another request to store image in that post
@@ -223,6 +247,14 @@ class ApiClient {
         data: data,
       })
   }
+  //Sends request to get current likes for a post.
+  async getCurrentLikes(id){
+    return await this.request({
+      endpoint:"post/get",
+      method: "POST",
+      data: {data: id}
+    })
+  }
   //------------------//
   //Filter Endpoints
   //Gets the filtered Posts from the backend
@@ -236,3 +268,4 @@ class ApiClient {
 }
 
 export default new ApiClient("http://localhost:3001");
+//("https://flora-and-fauna.herokuapp.com");

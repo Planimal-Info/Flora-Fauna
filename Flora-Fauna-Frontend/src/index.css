@@ -40,6 +40,7 @@
   --green: #355401;
   --yellow: #FBBA00;
   --brown: #8F7602;
+  --gray: #111111;
 }
 
 body {
@@ -61,7 +62,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #949494;
+  background-color: var(--yellow);
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
@@ -104,7 +105,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 } */
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -115,4 +116,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

@@ -48,12 +48,29 @@ export const PostContextProvider = ({ children }) => {
       console.error(err);
     }
   }, [selectedCategory, selectedTimeFrame]);
+
+  //Gets most or least liked posts if only a column is selected in the sort filter
+  useEffect(async () => {
+    if (selectedCategory.size === 1 && selectedTimeFrame.size === 1) {
+      try {
+        //Make request to get filtered posts by time,
+        const getFilteredLikes = await ApiClient.getFilteredLiked(
+          selectedTimeFrame,
+        );
+        if (getFilteredLikes != undefined) {
+          setPosts(getFilteredLikes?.data?.sortedPosts);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [selectedTimeFrame]);
+
   //Get posts for a single user
   const getUserPosts = async () => {
     try {
       const data = await ApiClient.getUserPosts();
       setUserPosts(data.data.allUserPosts);
-
     } catch(err) {
       setError(err);
       console.error(err);
@@ -99,15 +116,27 @@ export const PostContextProvider = ({ children }) => {
     }
   };
   //Updates the likes when called on using id
-  const updateLikes = async (id, likes) => {
+  const updateLikes = async (id, likes, liked, postLikes) => {
     try {
-      const obj = { id, likes };
+      const obj = { id, likes, liked, postLikes};
       const sendUpdateLikes = await ApiClient.getLikes(obj);
       return sendUpdateLikes;
     } catch (err) {
       console.error(err);
     }
   };
+
+  //Gets current likes for a post
+  const getLikes = async (id) => {
+    try{
+      const likes = await ApiClient.getCurrentLikes(id);
+      return likes;
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
+
   const postValue = {
     posts,
     isLoading,
@@ -128,6 +157,7 @@ export const PostContextProvider = ({ children }) => {
     filteredPosts,
     selectedTimeFrame,
     setSelectedTimeFrame,
+    getLikes
   };
 
   return (

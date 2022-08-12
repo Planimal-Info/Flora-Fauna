@@ -1,7 +1,20 @@
 .landing-page {
    display: flex;
+   flex-direction: column;
+   height: 100%;
+   overflow: hidden !important;
+} 
+
+.landing-page-content {
+   height: 100vh;
+   width: 100vw;
+   display: flex;
    justify-content: center;
-   height: 60vh;
+   position: relative;
+}
+
+.landing-page .f-footer {
+   position: relative;
 }
 
 .landing-page::before {
@@ -9,7 +22,6 @@
    background-image: url('../../assets/toucan-background.jpg');
    background-size: cover;
    background-repeat: no-repeat;
-   background-size: 100%;
    background-position: center;
    background-attachment: fixed;
    opacity: 0.4;
@@ -18,20 +30,20 @@
    bottom: 0;
    left: 0;
    right: 0;
-   z-index: -1;
+   z-index: -50;
    overflow-y: visible;
-}
-
-.landing-page div{
-   display:flex;
-   justify-content: center;
-   align-items: center;
-   text-align: center;
+   margin-bottom: -100px;
 }
 
 /*------------ Search Input -------------*/
-
+.search-input {
+   display: flex;
+   justify-content: center;
+   text-align: center;
+   margin-top: 400px;
+}
 .landing-page-input {
+   display: flex;
    width: 700px;
    height: 50px;
    margin-right: 15px;
@@ -49,10 +61,13 @@
 /*------------ Search Button/Icon -------------*/
 
 .landing-page .search-icon {
+   display: flex;
+   justify-content: center;
+   align-items: center;
    height: 55px;
    width: 55px;
    border-radius: 50%;
-   background: var(--yellow);
+   background: var(--green);
 }
 
 .landing-page-input:hover, .landing-page-input:focus{
@@ -79,4 +94,56 @@
    font-size: 15px;
    letter-spacing: 0.6px;
    opacity: 0.5;
+}
+
+@media screen and (max-width: 1015px) {
+   .landing-page-input {
+      width: 550px;
+   }
+}
+
+@media screen and (max-width: 746px) {
+   .landing-page-input {
+         width: 400px;
+      }
+   
+   .f-footer div {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-content: center;
+      align-items: center;
+   }
+}
+
+@media screen and (max-width: 481px) {
+   .landing-page-input {
+      width: 400px;
+   }
+}
+
+@media screen and (max-width: 480px) {
+   .landing-page-input {
+      width: 300px;
+   }
+
+   .search-input {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 0;
+      margin-top: 200px;
+   }
+
+   .search-icon {
+      margin-top: 20px;
+   }
+
+   .landing-page-content {
+      height: 50vh;
+   }
+
+   .landing-page::before {
+      margin-bottom: 505px;
+   }
 }

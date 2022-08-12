@@ -4,7 +4,7 @@ import ApiClient from "../services/ApiClient";
 const SearchContext = createContext(null);
 
 export const SearchContextProvider = ({ children }) => {
-  const [searchResults, setSearchResults] = useState({});
+  const [searchResults, setSearchResults] = useState([]);
   const [searchPictureResults, setSearchPics] = useState([]);
   const [searchPictures, setSearchPictures] = useState({});
   const [url, setUrl] = useState({});
@@ -20,39 +20,59 @@ export const SearchContextProvider = ({ children }) => {
   const searchInput = async (data) => {
     setIsLoading(true);
     setInitial(false);
-    setSearchPics([])
+    setSearchPics([]);
     try {
       //Gets the search results from the database
       const req = await ApiClient.searchResults({ data: data });
+      if (req.data?.results?.exists === true) {
+        setSearchResults(req.data?.results?.data);
+        setIsLoading(false);
+        setInitial(true);
+        return;
+      }
       setSearchResults(req);
       //Gets the picture results from the wikipedia API
-      const picReq = await ApiClient.getSearchPictureResults({query: req.data.results})
-      setSearchPics(picReq?.data?.pictureResults)
+      const picReq = await ApiClient.getSearchPictureResults({
+        query: req?.data?.results,
+      });
+      setSearchPics(picReq?.data?.pictureResults);
     } catch (err) {
-      setError(err)
+      setError(err);
+    }
+    setIsLoading(false);
+    setInitial(true);
+  };
+  //Gets the pictures from the current selected planimal, used for the animals details page
+  const getPictures = async (data) => {
+    setIsLoading(true);
+    setInitial(false);
+    try {
+      const req = await ApiClient.searchPictures({ query: data });
+      setSearchPictures(req?.data?.results?.photo);
+      setUrl(req?.data?.results?.url);
+      const key = Object.keys(req?.data?.results?.description)[0];
+      setDescription(req?.data?.results?.description[key]);
+    } catch (err) {
+      setError(err);
     }
     setIsLoading(false);
     setInitial(true);
   };
 
-  //Gets the pictures from the current selected planimal, used for the animals details page
-  const getPictures = async (data) => {
-      setIsLoading(true);
-      setInitial(false);
-      try {
-        const req = await ApiClient.searchPictures({query: data});
-        setSearchPictures(req?.data?.results?.photo);
-        setUrl(req?.data?.results?.url)
-        const key = Object.keys(req?.data?.results?.description)[0];
-        setDescription(req?.data?.results?.description[key])
-      } catch (err) {
-        setError(err)
-      }
-      setIsLoading(false);
-      setInitial(true);
+  //Gets the related posts for the selected animal
+  const getRelatedPosts = async () => {
+    try {
+      const data = await ApiClient.getRelatedPosts({
+        name: currentPlanimal?.common_name,
+        group: currentPlanimal?.taxonomic_group,
+      });
+      return data?.data?.relatedPosts;
+    } catch (err) {
+      console.error(err);
+    }
   };
-
   const searchValue = {
+    setSearchResults,
     searchResults,
     isLoading,
     initialized,
@@ -65,7 +85,8 @@ export const SearchContextProvider = ({ children }) => {
     setUrl,
     url,
     description,
-    searchPictureResults
+    searchPictureResults,
+    getRelatedPosts,
   };
 
   return (

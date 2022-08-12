@@ -3,15 +3,16 @@ const { BadRequestError } = require("../utils/errors");
 const { unlink } = require("node:fs/promises");
 const fs = require("fs");
 const sharp = require("sharp");
+const Fuse = require("fuse.js");
 
 class Posts {
   //Adds a post to the database
   static async createPosts(data, user_id) {
     const requiredFields = [
-      "photo",
-      "caption",
       "title",
+      "caption",
       "category",
+      "animal_name",
     ];
     requiredFields.forEach((e) => {
       if (!data.hasOwnProperty(e)) {
@@ -19,22 +20,33 @@ class Posts {
         return new BadRequestError(`Missing ${e} in request body`);
       }
     });
+
+    //Validation
+    const keys = Object.keys(data.values);
+    keys.forEach((e) => {
+      if (data.values[e].length <= 1) {
+        return new BadRequestError(`Invalid input for ${e}`);
+      }
+    });
+
     const category = data.values.category.toLowerCase();
     const results = await db.query(
       `INSERT INTO user_posts(
           user_post_desc,
           user_id,
           user_post_title,
-          category 
+          category,
+          animal_name
         )
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, user_post_desc, user_id, likes, user_post_title, category
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, user_post_desc, user_id, likes, user_post_title, category, animal_name
         `,
       [
         data.values.caption,
         user_id,
         data.values.title,
         category,
+        data.values.animal_name,
       ],
     );
     return results.rows[0];
@@ -89,9 +101,13 @@ class Posts {
       `,
       [data.id, user.id],
     );
-    //If user hasnt liked the post before, update.
-    if (check.rows.length <= 0) {
-      const updatedLikes = data.likes + 1;
+    
+    //Case when a user first likes a post
+    let updatedLikes = 0;
+    if (check.rows.length === 0 && data?.liked === true) {
+      updatedLikes = data.likes + 1;
+      
+      //Adding the like to the post
       const results = await db.query(
         `
       UPDATE user_posts
@@ -106,18 +122,71 @@ class Posts {
         `
         INSERT into likes(
           user_id,
-          user_post_id
+          user_post_id,
+          liked
         )
-        VALUES($1, $2)
+        VALUES($1, $2, $3)
         RETURNING *
         `,
-        [user.id, data.id],
+        [user.id, data.id, true],
       );
-      //Return the data that the user has liked the picture now.
-      return results.rows[0];
+      return { liked: results.rows[0], check: check.rows[0] };
+    } 
+    //Case when a user hasnt liked the post on the backend but has on the frontend
+    else if (check?.rows[0]?.liked === false && data?.liked === true) {
+      updatedLikes = data.likes + 1;
+      
+      //Update the likes for the post
+      const update = await db.query(
+        `
+        UPDATE user_posts
+        SET likes = $1
+        WHERE id = $2
+        RETURNING *
+        `,
+        [updatedLikes, data.id],
+      );
+      //Update the liked table to reflect the user liking the post
+      const query = await db.query(
+        `
+          UPDATE likes
+          SET liked = $1
+          WHERE user_id = $2 AND user_post_id = $3
+          RETURNING * 
+          `,
+        [true, user.id, data.id],
+      );
+      return { update: update, liked: true };
+    } 
+    //Case where user has liked the post on the backend, but has unliked it on the frontend
+    else if (check?.rows[0]?.liked === true && data?.liked === false) {
+      updatedLikes = data.likes - 1;
+      if (updatedLikes < 0) {
+        updatedLikes = 0;
+      }
+      //Removed from liked table
+      const query = await db.query(
+        `
+          UPDATE likes
+          SET liked = $1
+          WHERE user_id = $2 AND user_post_id = $3
+          RETURNING * 
+          `,
+        [false, user.id, data.id],
+      );
+      //Update the posts likes
+      const update = await db.query(
+        `
+        UPDATE user_posts
+        SET likes = $1
+        WHERE id = $2
+        RETURNING *
+        `,
+        [updatedLikes, data.id],
+      );
+      return { update: update, liked: false, refresh: true };
     }
-    //Return the data that the user has already liked the picture
-    return check.rows[0];
+
   }
 
   //Returns the post that matches the post_id
@@ -162,7 +231,7 @@ class Posts {
     if (post_id.id < 5) {
       return [];
     }
-    
+
     //Gets the the first 50 id that are greater than the given ID.
     const allId = await db.query(
       `
@@ -170,51 +239,132 @@ class Posts {
       WHERE id > $1
       LIMIT 50
       `,
-      [post_id.id]
+      [post_id.id],
     );
 
     //If Nothing is returned then there are no most posts
-    if(allId.rows.length === 0){
+    if (allId.rows.length === 0) {
       return [];
     }
-    
-    //Variable used to loop through and get the posts, done in either increments of 3 or 
+
+    //Variable used to loop through and get the posts, done in either increments of 3 or
     //less than that if the results returned are less than 3
     let nextPostLength = 0;
-    if(allId.rows.length >= 3){
+    if (allId.rows.length >= 3) {
       nextPostLength = 3;
-    }
-    else{
+    } else {
       nextPostLength = allId.rows.length;
     }
     //Gets the posts and adds them to this array, which we will output
     let morePosts = [];
-    for(let i = 0; i < nextPostLength; i++){
+    for (let i = 0; i < nextPostLength; i++) {
       const result = await db.query(
         `
         SELECT * FROM user_posts
         WHERE id = $1
         `,
-        [allId.rows[i].id]
-      )
+        [allId.rows[i].id],
+      );
       morePosts.push(result.rows[0]);
     }
-    
+
     return morePosts;
   }
-
   //Gets the most likes orders in descending order
   static async getMostLiked() {
     const result = await db.query(
       `
       SELECT * FROM user_posts
+      ORDER BY likes DESC
       `,
     );
-    //Sorts the posts and reverses them to get them in ascending to descending order
-    result.sort();
-    result.reverse();
-
     return result.rows;
+  }
+
+  //Gets posts in order by least liked
+  static async getLeastLiked() {
+    const result = await db.query(
+      `
+      SELECT * FROM user_posts
+      ORDER BY likes ASC
+      `,
+    );
+    return result.rows;
+  }
+
+  //Gets related posts for the given input
+  static async getRelatedPosts(input) {
+    const inputString = `${input?.name?.toLowerCase()}`;
+    const groupString = `${input?.group?.toLowerCase()}`;
+    //Options for fuzzy search
+    const options = {
+      isCaseSensitive: false,
+      // includeScore: false,
+      // shouldSort: true,
+      // includeMatches: false,
+      findAllMatches: true,
+      minMatchCharLength: 2,
+      // location: 0,
+      threshold: 0.62,
+      // distance: 100,
+      // useExtendedSearch: false,
+      // ignoreLocation: false,
+      // ignoreFieldNorm: false,
+      // fieldNormWeight: 1,
+      keys: [
+        "animal_name",
+        "category",
+      ],
+    };
+
+    //Getting from posts to search
+    const result1 = await db.query(
+      `
+      SELECT animal_name, id, category FROM user_posts
+      `,
+    );
+    //Constructor for fuzzy search dependecy and calling to get related posts id
+    const fuzzy = new Fuse(result1.rows, options);
+    const relatedPosts = fuzzy.search(inputString);
+
+    //Getting the first 5 entries from the related posts fuzzy search
+    const limitPosts = relatedPosts.slice(0, 5);
+    //Related posts holding array
+    let tempArr = [];
+    //Fuzzy searching for related animal_names in the database and getting the posts
+    for (const e in limitPosts) {
+      const req = async () => {
+        const results = await db.query(
+          `
+          SELECT * FROM user_posts
+          WHERE id = $1
+          `,
+          [relatedPosts[e].item.id],
+        );
+        tempArr.push(results.rows[0]);
+      };
+      await req();
+    }
+
+    return tempArr;
+  }
+
+  //Gets the likes for a post
+  static async getLikes(id, user) {
+    const results = await db.query(
+      `
+      SELECT likes FROM user_posts WHERE id = $1
+      `,
+      [id],
+    );
+    const checkLiked = await db.query(
+      `
+      SELECT * FROM likes
+      WHERE user_id = $1 AND user_post_id = $2
+      `,
+      [user.id, id],
+    );
+    return { postLikes: results.rows[0], checkLiked: checkLiked.rows };
   }
 }
 

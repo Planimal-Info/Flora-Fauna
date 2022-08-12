@@ -17,6 +17,19 @@ export default function AnimalCards(props){
 
     navigate("/animaldetails")
   }
+  let picture = "";
+  let notFound = false;
+  if(props.picture?.length > 0){
+    picture = props.picture
+  }
+  else{
+    picture = props.picture?.source
+  }
+  //Generic picture is there is no picture available.
+  if(picture === undefined){
+    picture = `https://fakeimg.pl/450x1000/000000/?text=Not Found`
+    notFound = true;
+  }
   //Displays information about the animal on a card.
   return(
     <div className="animal-card">
@@ -36,12 +49,13 @@ export default function AnimalCards(props){
       </Col>
     </Card.Header>
     <Card.Image
-      src={props.picture?.source}
+      src={picture}
       objectFit="cover"
       width="100%"
       height={340}
       alt={props.currentPlanimal.common_name}
     />
+    {/* <div className={notFound ? "" : "hidden"}>Not Found</div> */}
   </Card>
     </div>
   )

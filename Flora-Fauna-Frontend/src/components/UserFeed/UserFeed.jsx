@@ -16,6 +16,7 @@ import {
 import Hero from "../Hero/Hero.jsx";
 import UserCards from "../UserCards/UserCards.jsx";
 import SearchFilter from "../SearchFilter/SearchFilter";
+import Footer from "../Footer/Footer";
 
 //Changes array buffer in posts response to base64 to display
 export const toBase64 = function (arr) {
@@ -38,6 +39,8 @@ export default function UserFeed(props) {
     selectedCategory,
     setPosts,
     filteredPosts,
+    refresh,
+    setRefresh,
   } = usePostContext();
   const [showCategories, setShowCategories] = useState(false);
   const [showTimeFrames, setShowTimeFrames] = useState(false);
@@ -75,12 +78,12 @@ export default function UserFeed(props) {
   const loadMore = async () => {
     const id = posts[posts.length - 1].id;
     const morePosts = await getMorePosts(id);
-    if(morePosts.length === 0){
+    if (morePosts.length === 0) {
       setMorePosts([]);
       return;
     }
-    if(posts[0] != morePosts[morePosts.length - 1]){
-      setMorePosts(morePosts)
+    if (posts[0] != morePosts[morePosts.length - 1]) {
+      setMorePosts(morePosts);
     }
   };
   //If there is no user, AKA a viewer. Show only the hero
@@ -112,6 +115,8 @@ export default function UserFeed(props) {
                 post={e}
                 id={e.id}
                 category={e.category}
+                refresh={refresh}
+                setRefresh={setRefresh}
               />
             ))
             : filteredPosts.map((e, idx) => (
@@ -124,6 +129,8 @@ export default function UserFeed(props) {
                   post={e}
                   id={e.id}
                   category={e.category}
+                  refresh={refresh}
+                  setRefresh={setRefresh}
                 />
               ))
             ))}
@@ -131,11 +138,14 @@ export default function UserFeed(props) {
       </div>
       <h2 className={morePosts?.length === 0 ? "" : "hidden"}>No More Posts</h2>
       <button
-        className={posts.length <= 0 || selectedCategory.size > 1 ? "hidden" : "load-more-feed btn"}
+        className={posts.length <= 0 || selectedCategory.size > 1
+          ? "hidden"
+          : "load-more-feed btn"}
         onClick={loadMore}
       >
         Load More
       </button>
+      <Footer />
     </div>
   );
 }

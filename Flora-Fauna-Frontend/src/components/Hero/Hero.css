@@ -52,8 +52,8 @@
 }
 
 .overlay {
-    position: fixed;
-    width: 100%;
+    position: absolute;
+    width: 100vw;
     height: 600px;
     background-color: black;
     z-index: 0;

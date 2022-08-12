@@ -5,7 +5,9 @@ import "./UserProfile.css";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import { usePostContext } from "../../contexts/posts.jsx";
 import AccessForbidden from "../AccessForbidden/AccessForbidden";
+import Footer from "../Footer/Footer";
 import UserCards from "../UserCards/UserCards.jsx";
+import { Dropdown, Text } from "@nextui-org/react";
 
 export const toBase64 = function (arr) {
   //Changes ArrayBuffer to base 64
@@ -17,13 +19,26 @@ export const toBase64 = function (arr) {
   return source;
 };
 
-export default function UserProfile() {
 
+//Changes array buffer in posts response to base64 to display
+export const toBase64 = function (arr) {
+  //Changes ArrayBuffer to base 64
+  const baseSource = btoa(
+    arr?.reduce((data, byte) => data + String.fromCharCode(byte), ""),
+  );
+  //Takes base64 string and concats to get right source for image
+  const source = `data:image/jpeg;base64,${baseSource}`;
+  return source;
+};
+
+
+export default function UserProfile() {
   const {
     getUserPosts,
     userPosts,
     setUserPosts
   } = usePostContext();
+  const { likedPosts } = useAuthContext();
 
   // Toggle profile section view when settings links are clicked
   const [toggleProfile, setToggleProfile] = useState(true);
@@ -53,7 +68,7 @@ export default function UserProfile() {
   }, []);
 
   //Extract user from context and used to populate data.
-  const { user, initialized } = useAuthContext();
+  const { user, initialized, refresh, setRefresh } = useAuthContext();
   //added conditional to combat null errors when rendering in this component
   //All conditionals in the html are to combat null errors
   if (initialized && user != null) {
@@ -70,7 +85,7 @@ export default function UserProfile() {
               />
             </div>
           </div>
-
+        {/* {user.user.email} */}
           <div className="column right">
             <div className="profile">
               <div className="profile-header"></div>
@@ -78,7 +93,14 @@ export default function UserProfile() {
                 <div className="profile-image">{/* PROFILE IMAGE URL */}</div>
                 <div className="profile-info">
                   {user.user
-                    ? <h2>{user.user.username} / {user.user.email}</h2>
+                    ? <><span className="name-title"><h2>{user.user.username}</h2>
+                      <UserSettingsIcon 
+                        userProfileHandler={userProfileHandler}
+                        userLikedPostsHandler={userLikedPostsHandler}
+                        userAccountHandler={userAccountHandler}
+                      /></span>
+                    </>
+                    
                     : <h2></h2>}
                   <p className="biography">Insert biography blurb</p>
                 </div>
@@ -107,7 +129,7 @@ export default function UserProfile() {
 
             {/* Liked Posts Toggle */}
             <div className={toggleLikedPosts ? "profile-content" : "hidden"}>
-              <LikedPosts />
+              <LikedPosts likedPosts={likedPosts} refresh={refresh} setRefresh={setRefresh}/>
             </div>
 
             {/* Account Settings Toggle */}
@@ -117,12 +139,14 @@ export default function UserProfile() {
             
           </div>
         </div>
+        <Footer />
       </div>
     );
   } else {
     return(
       <div>
       <AccessForbidden />
+      <Footer />
       </div>
     )
   }
@@ -146,12 +170,62 @@ export function UserSettings({ userProfileHandler, userLikedPostsHandler, userAc
   );
 }
 
-export function LikedPosts() {
+export function UserSettingsIcon({ userProfileHandler, userLikedPostsHandler, userAccountHandler }) {
+  
+  const { user } = useAuthContext()
+
+  return(
+    <div className="settings-dropdown">
+                  <Dropdown placement="bottom-left">
+                    <Dropdown.Trigger>
+                      <span class="material-symbols-outlined settings-icon">settings</span>
+                    </Dropdown.Trigger>
+                    <Dropdown.Menu color="secondary" aria-label="Avatar Actions">
+                      <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                        <Text b color="inherit" css={{ d: "flex" }}>
+                          Signed in as
+                        </Text>
+                        <Text b color="inherit" css={{ d: "flex" }}>
+                          {user.user.email}
+                        </Text>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="analytics" withDivider>
+                        <p onClick={userProfileHandler}>Profile</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="system">
+                        <p onClick={userLikedPostsHandler}>Liked Posts</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="configurations">
+                        <p onClick={userAccountHandler}>Account</p>
+                      </Dropdown.Item>
+                      <Dropdown.Item key="analytics" color="warning" withDivider>
+                        Upload Header Image
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+  )
+}
+
+export function LikedPosts(props) {
   return (
     <div className="liked-posts">
-      <h2>Liked Posts</h2>
+      <h2>Your Liked Posts</h2>
       <div className="liked-posts-container">
         {/* INSERT LIKED POSTS HERE */}
+        {props.likedPosts?.map((e,idx) => (
+           <UserCards
+                key={idx}
+                source={toBase64(e?.photo?.data)}
+                title={e.user_post_title}
+                desc={e.user_post_desc}
+                post={e}
+                id={e.id}
+                category={e.category}
+                refresh={props.refresh}
+                setRefresh={props.setRefresh}
+              /> 
+        ))}
       </div>
     </div>
   );

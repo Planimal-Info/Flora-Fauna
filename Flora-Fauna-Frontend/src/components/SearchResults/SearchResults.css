@@ -2,9 +2,16 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  text-align: center;
   align-self: center;
   align-items: center;
+  overflow: hidden;
+}
+
+.search-results .f-footer {
+  position: relative;
+  width: 100vw;
+  margin-top: 100vh;
+  padding-left: 60px;
 }
 
 .search-result-content{
@@ -27,18 +34,27 @@
 
 .animal-card-area{
   width: 100%;
-  margin-top: 90px;
+  margin-top: 40px;
   display:flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   gap: 30px;
 }
-
-.no-results-title{
-  margin-top: 40px;
-}
-
 .hidden{
   display: none;
+}
+
+.search-message{
+  margin-top: 40px;
+}
+.search-loading{
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .search-message {
+    font-size: 16px;
+    text-align: center;
+  }
 }
 

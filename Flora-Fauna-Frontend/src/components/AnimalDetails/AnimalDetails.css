@@ -39,3 +39,42 @@
   justify-content: space-around;
   width: 93vw;
 }
+.return-wrapper-none{
+  display: flex;
+  justify-content: space-around;
+  width: 93vw;
+  align-self: top;
+}
+
+.related-posts{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.see-more-btn{
+  padding: 10px;
+  border-radius: 10px;
+  cursor:pointer;
+  transition: background-color .30s;
+}
+.see-more-btn:hover{
+  background-color: rgba(0,0,0 , .5);
+}
+.login-btn-viewer{
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: var(--brown);
+    color: #fff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

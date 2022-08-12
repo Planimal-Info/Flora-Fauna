@@ -1,0 +1,19 @@
+.resources-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px 30px;
+    padding: 30px;
+}
+
+.resources-page .content {
+    display: flex;
+}
+
+.resources-page a {
+    color: var(--yellow);
+}
+
+.resources-page .f-footer {
+    bottom: 0;
+}

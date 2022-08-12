@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import validation from "../../validate";
 import { useAuthContext } from "../../contexts/auth.jsx";
 import "./LoginPage.css";
+import Footer from "../Footer/Footer";
 
 export default function LoginPage() {
-  const { loginUser, user, setUser, reqError, isLoading, initialized } = useAuthContext();
+  const { loginUser, user, setUser, reqError, isLoading, initialized, error } =
+    useAuthContext();
 
   //Checks if a user is logged in and navigates to home if true
   const navigate = useNavigate();
@@ -22,14 +24,17 @@ export default function LoginPage() {
         loginUser={loginUser}
         authErrors={reqError}
         isLoading={isLoading}
+        loginError={error}
       />
+      <Footer />
     </div>
   );
 }
 
-export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
+export function LoginForm({ user, setUser, loginUser, authErrors, isLoading, loginError }) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [reqErrors, setReqErrors] = useState({})
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -44,23 +49,32 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
   };
 
   //Function to call login function
-  const handleLoginOnSubmit = () => {
-    loginUser(values);
+  const handleLoginOnSubmit = async () => {
+    const login = await loginUser(values);
   };
-  //Commented out validation because it causes errors with the auth/me route,
-  //Needs to be fixed.
-  const loginUserOnSubmit = () => {
+  //Login function 
+  const loginUserOnSubmit = async () => {
     setIsProcessing(true);
-    setErrors(validation(values));
-
-    // if (values.passwordConfirm !== values.password) {
-    //   setErrors(validation(values.passwordConfirm));
-    //   setIsProcessing(false);
-    //   return;
-    // } else {
-    //   setErrors((e) => ({ ...e, passwordConfirm: null }));
-    // }
-    handleLoginOnSubmit();
+    //Frontend Error Handling
+    setErrors({});
+    let regex = new RegExp(
+      "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])",
+    );
+    if (regex.test(values.email) === false) {
+      setErrors((prevState) => ({ ...prevState, email: "Invalid Email" }));
+      return;
+    }
+    if (values.password.length < 8) {
+      setErrors((prevState) => ({ ...prevState, password: "Password needs to be longer than 8 letters" }));
+      return;
+    } else {
+      await handleLoginOnSubmit();
+      //Setting error message from invalid email/password combo
+      if(Object.keys(loginError).length > 0){
+        setReqErrors(loginError?.response.data?.error?.message)
+      }
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -95,6 +109,7 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
             />
             {errors.password && <span className="error">{errors.password}
             </span>}
+          <h3 className={reqErrors.length > 0 && Object.keys(errors).length <= 0 ? "error" : "hidden"}>Wrong Password/Email Combo</h3>
           </div>
           <ibutton onClick={loginUserOnSubmit} className="submit-login btn">
             Login
@@ -103,7 +118,7 @@ export function LoginForm({ user, setUser, loginUser, authErrors, isLoading }) {
         <div className="footer">
           <p>
             Don't have an account? Sign up{" "}
-            <Link className="auth-link" to="/registration">here.</Link>
+            <Link className="auth-link" to="/register">here.</Link>
           </p>
         </div>
       </div>

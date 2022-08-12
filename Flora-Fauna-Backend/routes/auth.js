@@ -42,4 +42,16 @@ router.get("/me", security.reqAuthUser,async(req,res,next) => {
     }
 })
 
+//Gets all the liked posts for a user
+router.get("/liked", security.reqAuthUser, async(req,res,next) => {
+    try {
+        const { email } = res.locals.user;
+        const user = await User.fetchUser(email);
+        const likedPosts = await User.getLikedPosts(user.id);
+        res.status(200).json({ likedPosts })
+    }
+    catch(err) {
+     next(err);
+    }
+})
 module.exports = router

@@ -3,7 +3,7 @@ require("colors");
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
 const SECRET_KEY = process.env.SECRET_KEY || "secretDev"
-const API_KEY = process.env.API_KEY
+const API_KEY = "exrEXXrEuN2u9UchWxUidMwQ5j"
 const PEXEL_API_KEY = process.env.PEXEL_API_KEY
 
 function getDataBaseUri(){

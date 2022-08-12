@@ -183,8 +183,79 @@
     margin-top: 50px;
 }
 
+.settings-icon {
+    display: none;
+}
+
 
 /* TEMP STYLES */
 .black {
     color: black;
+}
+
+.name-title {
+    display: flex;
+}
+
+.name-title h2 {
+    margin-right: 15px;
+}
+
+
+/* --------------- MEDIA QUERIES ---------------*/
+@media screen and (max-width: 1550px) {
+    
+    .profile-upload .btn {
+        display: none;
+    }
+
+    .user-profile .content {
+        flex-direction: column;
+    }
+    
+    .user-profile .content .column.left {
+        display: none;
+    }
+
+    .user-profile .content .column.right {
+        justify-content: flex-start;
+    }
+
+    .settings-icon {
+        display: flex;
+    }
+
+    .user-profile .content .profile .profile-header {
+        width: 970px;
+    }
+
+    .user-profile .content .column.right .uploaded-content {
+        width: 970px;
+    }
+
+    .user-profile .content .profile .profile-info {
+        margin-top: 20px;
+    }
+
+        .user-profile .content .profile .profile-upload {
+            width: 35vw;
+        }
+
+    .account {
+        width: 970px;
+    }
+}
+
+@media screen and (max-width: 979px) {
+    .user-profile .content .profile .profile-header {
+        width: 380px;
+    }
+
+    .user-profile .content .column.right .uploaded-content {
+        width: 380px;
+    }
+
+    .user-profile .content .profile .profile-header {
+        border-radius: 20px 20px 0 0;
+    }
 }
